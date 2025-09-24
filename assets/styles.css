@@ -630,6 +630,16 @@ body[data-theme="dark"] .chapter-body pre code .hljs-built_in {
   font-weight: 600;
 }
 
+body[data-theme="light"] .chapter-body pre code .hljs-meta {
+  color: #6f42c1;
+  font-weight: 600;
+}
+
+body[data-theme="dark"] .chapter-body pre code .hljs-meta {
+  color: #e5c07b;
+  font-weight: 600;
+}
+
 body[data-theme="light"] .chapter-body pre code .hljs-number {
   color: #005cc5;
 }
