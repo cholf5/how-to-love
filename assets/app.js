@@ -16,6 +16,26 @@ const dom = {
 };
 
 const PLACEHOLDER_TOKEN = '\u0000';
+const COOKIE_MAX_AGE = 60 * 60 * 24 * 365;
+const COOKIE_KEYS = {
+  theme: 'how-to-love:theme',
+  language: 'how-to-love:language'
+};
+
+function setCookie(key, value, maxAge = COOKIE_MAX_AGE) {
+  document.cookie = `${encodeURIComponent(key)}=${encodeURIComponent(value)}; Max-Age=${maxAge}; Path=/; SameSite=Lax`;
+}
+
+function getCookie(key) {
+  const cookies = document.cookie ? document.cookie.split(';') : [];
+  for (const cookie of cookies) {
+    const [rawName, ...rest] = cookie.trim().split('=');
+    if (decodeURIComponent(rawName) === key) {
+      return decodeURIComponent(rest.join('='));
+    }
+  }
+  return null;
+}
 const basePath = (() => {
   const { pathname } = window.location;
   if (pathname.endsWith('/')) {
@@ -37,9 +57,16 @@ async function init() {
   state.data = await response.json();
 
   const params = new URLSearchParams(window.location.search);
-  state.language = params.get('lang') && state.data.languages[params.get('lang')]
-    ? params.get('lang')
-    : state.data.defaultLanguage || 'en';
+  const defaultLanguage = state.data.defaultLanguage || 'en';
+  const paramLanguage = params.get('lang');
+  const cookieLanguage = getCookie(COOKIE_KEYS.language);
+  state.language = paramLanguage && state.data.languages[paramLanguage]
+    ? paramLanguage
+    : cookieLanguage && state.data.languages[cookieLanguage]
+      ? cookieLanguage
+      : defaultLanguage;
+
+  persistLanguage();
   const chapter = params.get('chapter');
   if (chapter && findChapter(state.language, chapter)) {
     state.chapterId = chapter;
@@ -52,9 +79,13 @@ async function init() {
 }
 
 function setupTheme() {
-  const storedTheme = window.localStorage.getItem('how-to-love:theme');
+  const storedTheme = getCookie(COOKIE_KEYS.theme);
   const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-  state.theme = storedTheme || (prefersDark ? 'dark' : 'light');
+  state.theme = storedTheme === 'dark' || storedTheme === 'light'
+    ? storedTheme
+    : prefersDark
+      ? 'dark'
+      : 'light';
   applyTheme();
 }
 
@@ -77,10 +108,13 @@ function setupEvents() {
       return;
     }
     state.language = nextLanguage;
-    state.chapterId = null;
+    if (!findChapter(nextLanguage, state.chapterId)) {
+      state.chapterId = null;
+    }
+    persistLanguage();
     updateUrl();
     updateFooter();
-    render();
+    render(true);
   });
 
   dom.themeToggle.addEventListener('click', () => {
@@ -110,6 +144,7 @@ function setupEvents() {
       state.chapterId = null;
     }
     dom.languageSelect.value = state.language;
+    persistLanguage();
     updateFooter();
     render(true);
   });
@@ -128,7 +163,13 @@ function applyTheme() {
   document.body.dataset.theme = state.theme;
   const icon = state.theme === 'light' ? '🌙' : '☀️';
   dom.themeToggle.querySelector('.icon').textContent = icon;
-  window.localStorage.setItem('how-to-love:theme', state.theme);
+  setCookie(COOKIE_KEYS.theme, state.theme);
+}
+
+function persistLanguage() {
+  if (state.data && state.data.languages && state.data.languages[state.language]) {
+    setCookie(COOKIE_KEYS.language, state.language);
+  }
 }
 
 function updateUrl(replace = false) {
@@ -161,13 +202,18 @@ function render(skipUrlUpdate = false) {
     }
     renderContents(languageInfo);
   } else {
-    renderChapter(languageInfo);
+    renderChapter(languageInfo, skipUrlUpdate);
   }
 }
 
 function renderContents(languageInfo) {
   const hero = document.createElement('section');
   hero.className = 'hero';
+
+  const banner = document.createElement('img');
+  banner.src = 'images/logo-banner.png';
+  banner.alt = 'How to LÖVE banner';
+  banner.className = 'hero-banner';
 
   const title = document.createElement('h1');
   title.className = 'hero-title';
@@ -182,7 +228,7 @@ function renderContents(languageInfo) {
   const creditLink = '<a href="https://github.com/Sheepolution/how-to-love" target="_blank" rel="noopener">Sheepolution</a>';
   credit.innerHTML = translate(state.language, 'credit', { author: creditLink });
 
-  hero.append(title, subtitle, credit);
+  hero.append(banner, title, subtitle, credit);
   dom.app.appendChild(hero);
 
   const mainSection = document.createElement('section');
@@ -264,14 +310,16 @@ function chapterLabel(index, id) {
   return '☆';
 }
 
-function renderChapter(languageInfo) {
+function renderChapter(languageInfo, skipUrlUpdate = false) {
   const chapter = findChapter(languageInfo, state.chapterId);
   if (!chapter) {
     renderNotFound(languageInfo);
     return;
   }
 
-  updateUrl(true);
+  if (!skipUrlUpdate) {
+    updateUrl(true);
+  }
 
   const container = document.createElement('section');
   container.className = 'chapter-view';
@@ -423,6 +471,7 @@ function renderMarkdown(markdown) {
   let html = '';
   let inCode = false;
   let codeLang = '';
+  let codeLines = [];
   let listType = null;
   let paragraph = [];
 
@@ -440,6 +489,15 @@ function renderMarkdown(markdown) {
     }
   };
 
+  const flushCodeBlock = () => {
+    if (inCode) {
+      html += buildCodeBlock(codeLines.join('\n'), codeLang);
+      inCode = false;
+      codeLang = '';
+      codeLines = [];
+    }
+  };
+
   lines.forEach((line, index) => {
     const trimmed = line.trim();
 
@@ -449,18 +507,18 @@ function renderMarkdown(markdown) {
         closeList();
         inCode = true;
         codeLang = trimmed.slice(3).trim();
-        html += `<pre><code${codeLang ? ` class="language-${escapeAttribute(codeLang)}"` : ''}>`;
+        codeLines = [];
       } else {
-        html = html.replace(/\n?$/, '');
-        html += '</code></pre>';
-        inCode = false;
-        codeLang = '';
+        flushCodeBlock();
       }
       return;
     }
 
     if (inCode) {
-      html += `${escapeHtml(line)}\n`;
+      codeLines.push(line);
+      if (index === lines.length - 1) {
+        flushCodeBlock();
+      }
       return;
     }
 
@@ -511,22 +569,78 @@ function renderMarkdown(markdown) {
     }
 
     paragraph.push(line);
-
-    if (index === lines.length - 1) {
-      flushParagraph();
-      closeList();
-    }
   });
 
-  if (inCode) {
-    html = html.replace(/\n?$/, '');
-    html += '</code></pre>';
-  }
-
+  flushCodeBlock();
   closeList();
   flushParagraph();
 
   return html;
+}
+
+function buildCodeBlock(code, language) {
+  const normalizedLanguage = (language || '').trim();
+  const classNames = [];
+  if (normalizedLanguage) {
+    classNames.push(`language-${sanitizeLanguage(normalizedLanguage)}`);
+  }
+  let contentHtml = escapeHtml(code);
+  if (normalizedLanguage.toLowerCase() === 'lua') {
+    contentHtml = highlightLua(code);
+    classNames.push('hljs');
+  }
+  const classAttr = classNames.length ? ` class="${classNames.join(' ')}"` : '';
+  return `<pre><code${classAttr}>${contentHtml}</code></pre>`;
+}
+
+function highlightLua(code) {
+  const placeholders = [];
+
+  const createPlaceholder = (className, value) => {
+    const token = `${PLACEHOLDER_TOKEN}${placeholders.length}${PLACEHOLDER_TOKEN}`;
+    placeholders.push({ className, value });
+    return token;
+  };
+
+  let working = code;
+
+  const multiLineCommentPattern = /--\[(=*)\[[\s\S]*?\]\1\]/g;
+  working = working.replace(multiLineCommentPattern, match => createPlaceholder('hljs-comment', match));
+
+  const multiLineStringPattern = /\[(=*)\[[\s\S]*?\]\1\]/g;
+  working = working.replace(multiLineStringPattern, match => createPlaceholder('hljs-string', match));
+
+  const stringPattern = /(['"])(?:\\.|(?!\1)[^\\\r\n])*\1/g;
+  working = working.replace(stringPattern, match => createPlaceholder('hljs-string', match));
+
+  const singleLineCommentPattern = /--(?!\[(=*)\[).*$/gm;
+  working = working.replace(singleLineCommentPattern, match => createPlaceholder('hljs-comment', match));
+
+  const numberPattern = /\b0x[\da-fA-F]+\b|\b\d+(?:\.\d+)?(?:[eE][+-]?\d+)?\b/g;
+  working = working.replace(numberPattern, match => createPlaceholder('hljs-number', match));
+
+  const keywordPattern = /\b(?:and|break|do|else|elseif|end|false|for|function|if|in|local|nil|not|or|repeat|return|then|true|until|while)\b/g;
+  working = working.replace(keywordPattern, match => createPlaceholder('hljs-keyword', match));
+
+  const builtinPattern = /\b(?:assert|collectgarbage|dofile|ipairs|load|math|next|pairs|pcall|print|rawequal|rawget|rawset|require|select|self|string|table|tonumber|tostring|type|xpcall|coroutine|os|io|love)\b/g;
+  working = working.replace(builtinPattern, match => createPlaceholder('hljs-built_in', match));
+
+  let escaped = escapeHtml(working);
+
+  placeholders.forEach((item, index) => {
+    const token = `${PLACEHOLDER_TOKEN}${index}${PLACEHOLDER_TOKEN}`;
+    const replacement = `<span class="${item.className}">${escapeHtml(item.value)}</span>`;
+    escaped = escaped.split(token).join(replacement);
+  });
+
+  return escaped;
+}
+
+function sanitizeLanguage(value) {
+  return value
+    .toLowerCase()
+    .replace(/[^0-9a-z+.#-]+/g, '-')
+    .replace(/^-+|-+$/g, '');
 }
 
 function parseInline(text) {
