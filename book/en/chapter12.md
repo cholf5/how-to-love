@@ -1,5 +1,3 @@
-# Chapter 12 - Images
-
 Creating and using images is a very easy task in LÖVE. First we need an image. I'm going to use this image:
 
 ![](/images/book/12/sheep.png)

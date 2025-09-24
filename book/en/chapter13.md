@@ -1,4 +1,3 @@
-# Chapter 13 - Detecting collision
 Let's say we're making a game where you can shoot down monsters. A monster should die when it is hit by a bullet. So what we need to check is: Is the monster colliding with a bullet?
 
 We're going to create a *collision check* function. We will be checking collision between rectangles. This is called AABB collision. So we need to know, when do two rectangles collide?

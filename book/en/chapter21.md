@@ -1,5 +1,3 @@
-# Chapter 21 - Saving and loading
-
 Let's make it so that we can save and load our progress in our game. We do this by writing and reading a file. But first we need to have a game, so let's make a small game where you can pick up coins.
 
 We start with a player that can move.

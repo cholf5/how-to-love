@@ -1,5 +1,3 @@
-# Chapter 16 - Angles and distance
-
 ## Angle
 
 Let's make a circle that moves in the direction of our mouse cursor.
