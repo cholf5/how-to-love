@@ -5,7 +5,8 @@ const state = {
   language: 'en',
   chapterId: null,
   theme: 'light',
-  scrollRestoration: null
+  scrollRestoration: null,
+  scrollRestorationPending: null
 };
 
 const dom = {
@@ -29,6 +30,9 @@ const COOKIE_KEYS = {
   theme: 'how-to-love:theme',
   language: 'how-to-love:language'
 };
+const STORAGE_KEYS = {
+  scrollProgress: 'how-to-love:scroll-progress'
+};
 
 function setCookie(key, value, maxAge = COOKIE_MAX_AGE) {
   document.cookie = `${encodeURIComponent(key)}=${encodeURIComponent(value)}; Max-Age=${maxAge}; Path=/; SameSite=Lax`;
@@ -43,6 +47,83 @@ function getCookie(key) {
     }
   }
   return null;
+}
+
+function getLocalStorage() {
+  try {
+    return window.localStorage;
+  } catch (error) {
+    return null;
+  }
+}
+
+function readScrollProgressStore() {
+  const storage = getLocalStorage();
+  if (!storage) {
+    return {};
+  }
+  try {
+    const raw = storage.getItem(STORAGE_KEYS.scrollProgress);
+    if (!raw) {
+      return {};
+    }
+    const parsed = JSON.parse(raw);
+    if (parsed && typeof parsed === 'object') {
+      return parsed;
+    }
+  } catch (error) {
+    // Ignore malformed JSON and fallback to empty store.
+  }
+  return {};
+}
+
+function writeScrollProgressStore(store) {
+  const storage = getLocalStorage();
+  if (!storage) {
+    return;
+  }
+  try {
+    storage.setItem(STORAGE_KEYS.scrollProgress, JSON.stringify(store));
+  } catch (error) {
+    // Ignore storage write failures.
+  }
+}
+
+function createScrollProgressKey(language, chapterId) {
+  const safeLanguage = typeof language === 'string' ? language : '';
+  const safeChapter = typeof chapterId === 'string' ? chapterId : '';
+  return `${safeLanguage}::${safeChapter}`;
+}
+
+function loadScrollProgress(language, chapterId) {
+  const store = readScrollProgressStore();
+  const key = createScrollProgressKey(language, chapterId);
+  const value = store[key];
+  if (typeof value === 'number' && Number.isFinite(value)) {
+    if (value >= 0 && value <= 1) {
+      return value;
+    }
+  }
+  return null;
+}
+
+function persistScrollProgress(language, chapterId, ratio) {
+  if (typeof ratio !== 'number' || !Number.isFinite(ratio)) {
+    return;
+  }
+  const clamped = Math.min(1, Math.max(0, ratio));
+  const store = readScrollProgressStore();
+  const key = createScrollProgressKey(language, chapterId);
+  store[key] = clamped;
+  writeScrollProgressStore(store);
+}
+
+function persistCurrentScrollProgress() {
+  const ratio = captureScrollProgress();
+  const pending = state.scrollRestorationPending;
+  const effectiveRatio = pending != null ? pending : ratio;
+  persistScrollProgress(state.language, state.chapterId, effectiveRatio);
+  return effectiveRatio;
 }
 const basePath = (() => {
   const { pathname } = window.location;
@@ -79,6 +160,8 @@ async function init() {
   if (chapter && findChapter(state.language, chapter)) {
     state.chapterId = chapter;
   }
+
+  state.scrollRestoration = loadScrollProgress(state.language, state.chapterId);
 
   setupTheme();
   setupLanguageSelect();
@@ -194,6 +277,7 @@ function restoreScrollProgress() {
   }
   const ratio = state.scrollRestoration;
   state.scrollRestoration = null;
+  state.scrollRestorationPending = ratio;
   window.requestAnimationFrame(() => {
     const maxScroll = Math.max(
       document.documentElement.scrollHeight - window.innerHeight,
@@ -201,10 +285,12 @@ function restoreScrollProgress() {
     );
     if (maxScroll <= 0) {
       window.scrollTo({ top: 0, behavior: 'auto' });
+      state.scrollRestorationPending = null;
       return;
     }
     const target = Math.min(maxScroll, Math.max(0, ratio * maxScroll));
     window.scrollTo({ top: target, behavior: 'auto' });
+    state.scrollRestorationPending = null;
   });
 }
 
@@ -214,12 +300,16 @@ function setupEvents() {
     if (!state.data.languages[nextLanguage]) {
       return;
     }
+    const currentProgress = persistCurrentScrollProgress();
     const chapterExistsInNextLanguage = Boolean(
       state.chapterId && findChapter(nextLanguage, state.chapterId)
     );
     state.scrollRestoration = chapterExistsInNextLanguage
-      ? captureScrollProgress()
+      ? currentProgress
       : null;
+    if (chapterExistsInNextLanguage) {
+      persistScrollProgress(nextLanguage, state.chapterId, currentProgress);
+    }
 
     state.language = nextLanguage;
     updateLanguageDropdownSelection();
@@ -269,13 +359,16 @@ function setupEvents() {
   dom.brandLink.addEventListener('click', event => {
     event.preventDefault();
     if (state.chapterId !== null) {
+      persistCurrentScrollProgress();
       state.chapterId = null;
+      state.scrollRestoration = loadScrollProgress(state.language, state.chapterId);
       updateUrl();
       render();
     }
   });
 
   window.addEventListener('popstate', () => {
+    persistCurrentScrollProgress();
     const params = new URLSearchParams(window.location.search);
     const lang = params.get('lang');
     const chapter = params.get('chapter');
@@ -287,6 +380,7 @@ function setupEvents() {
     } else {
       state.chapterId = null;
     }
+    state.scrollRestoration = loadScrollProgress(state.language, state.chapterId);
     dom.languageSelect.value = state.language;
     updateLanguageDropdownSelection();
     persistLanguage();
@@ -323,16 +417,29 @@ function setupEvents() {
     const { previous, next } = getChapterNeighbors(languageInfo, state.chapterId);
     if (event.key === 'ArrowLeft' && previous) {
       event.preventDefault();
+      persistCurrentScrollProgress();
       state.chapterId = previous.id;
       state.scrollRestoration = null;
       updateUrl();
       render();
     } else if (event.key === 'ArrowRight' && next) {
       event.preventDefault();
+      persistCurrentScrollProgress();
       state.chapterId = next.id;
       state.scrollRestoration = null;
       updateUrl();
       render();
+    }
+  });
+
+  const handlePageHide = () => {
+    persistCurrentScrollProgress();
+  };
+  window.addEventListener('beforeunload', handlePageHide);
+  window.addEventListener('pagehide', handlePageHide);
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'hidden') {
+      handlePageHide();
     }
   });
 }
@@ -408,6 +515,12 @@ function updateUrl(replace = false) {
   }
 }
 
+function ensureScrollRestoration() {
+  if (state.scrollRestoration == null) {
+    state.scrollRestoration = loadScrollProgress(state.language, state.chapterId);
+  }
+}
+
 function render(skipUrlUpdate = false) {
   dom.app.innerHTML = '';
   const languageInfo = state.data.languages[state.language];
@@ -415,6 +528,8 @@ function render(skipUrlUpdate = false) {
     dom.app.textContent = 'Language configuration missing.';
     return;
   }
+
+  ensureScrollRestoration();
 
   document.documentElement.lang = state.language;
   dom.brandLink.textContent = languageInfo.bookTitle || dom.brandLink.textContent;
@@ -515,7 +630,9 @@ function buildChapterGrid(chapters) {
     card.append(strong);
     card.addEventListener('click', event => {
       event.preventDefault();
+      persistCurrentScrollProgress();
       state.chapterId = chapter.id;
+      state.scrollRestoration = loadScrollProgress(state.language, state.chapterId);
       updateUrl();
       render();
     });
@@ -716,7 +833,9 @@ function renderNotFound(languageInfo) {
   backLink.textContent = languageInfo.navigation.contents;
   backLink.addEventListener('click', event => {
     event.preventDefault();
+    persistCurrentScrollProgress();
     state.chapterId = null;
+    state.scrollRestoration = loadScrollProgress(state.language, state.chapterId);
     updateUrl();
     render();
   });
@@ -735,7 +854,9 @@ function buildChapterNavigation(languageInfo, chapterId) {
   home.href = createChapterUrl(state.language, '');
   home.addEventListener('click', event => {
     event.preventDefault();
+    persistCurrentScrollProgress();
     state.chapterId = null;
+    state.scrollRestoration = loadScrollProgress(state.language, state.chapterId);
     updateUrl();
     render();
   });
@@ -747,7 +868,9 @@ function buildChapterNavigation(languageInfo, chapterId) {
     previous.href = createChapterUrl(state.language, prevChapter.id);
     previous.addEventListener('click', event => {
       event.preventDefault();
+      persistCurrentScrollProgress();
       state.chapterId = prevChapter.id;
+      state.scrollRestoration = loadScrollProgress(state.language, state.chapterId);
       updateUrl();
       render();
     });
@@ -763,7 +886,9 @@ function buildChapterNavigation(languageInfo, chapterId) {
     next.href = createChapterUrl(state.language, nextChapter.id);
     next.addEventListener('click', event => {
       event.preventDefault();
+      persistCurrentScrollProgress();
       state.chapterId = nextChapter.id;
+      state.scrollRestoration = loadScrollProgress(state.language, state.chapterId);
       updateUrl();
       render();
     });
