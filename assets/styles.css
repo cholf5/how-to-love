@@ -393,6 +393,11 @@ a.icon-button {
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
+  margin: 2.5rem 0 1.5rem;
+}
+
+.chapters-section > .section-header:first-of-type {
+  margin-top: 0;
 }
 
 .section-header .divider {
@@ -486,8 +491,8 @@ a.icon-button {
   padding: 1.2rem 1.4rem;
   overflow-x: auto;
   font-family: "JetBrains Mono", "Fira Code", "Cascadia Mono", "SFMono-Regular", Consolas,
-    "Liberation Mono", "Menlo", "Courier New", monospace, "TsangerJinKai01", "Source Han Sans SC",
-    "Noto Sans SC", "Microsoft YaHei", sans-serif;
+    "Liberation Mono", "Menlo", "Courier New", "Noto Sans Mono CJK SC", "Source Han Mono SC",
+    "Source Han Sans SC", "Noto Sans SC", "Microsoft YaHei", monospace, sans-serif;
   font-size: 0.95rem;
   line-height: 1.7;
 }
@@ -504,8 +509,8 @@ a.icon-button {
   font-size: 0.92em;
   border: 1px solid color-mix(in srgb, var(--code-border) 80%, transparent);
   font-family: "JetBrains Mono", "Fira Code", "Cascadia Mono", "SFMono-Regular", Consolas,
-    "Liberation Mono", "Menlo", "Courier New", monospace, "TsangerJinKai01", "Source Han Sans SC",
-    "Noto Sans SC", "Microsoft YaHei", sans-serif;
+    "Liberation Mono", "Menlo", "Courier New", "Noto Sans Mono CJK SC", "Source Han Mono SC",
+    "Source Han Sans SC", "Noto Sans SC", "Microsoft YaHei", monospace, sans-serif;
 }
 
 .chapter-body pre code {
@@ -596,13 +601,13 @@ body[data-theme="dark"] .chapter-body pre code.hljs {
 body[data-theme="light"] .chapter-body pre code .hljs-comment,
 body[data-theme="light"] .chapter-body pre code .hljs-quote {
   color: #6a737d;
-  font-style: italic;
+  font-style: normal;
 }
 
 body[data-theme="dark"] .chapter-body pre code .hljs-comment,
 body[data-theme="dark"] .chapter-body pre code .hljs-quote {
   color: #5c6370;
-  font-style: italic;
+  font-style: normal;
 }
 
 body[data-theme="light"] .chapter-body pre code .hljs-keyword {
