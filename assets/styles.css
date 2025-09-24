@@ -1,3 +1,11 @@
+@font-face {
+  font-family: "TsangerJinKai01";
+  src: url("./TsangerJinKai01-W04.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
 :root {
   color-scheme: light dark;
   --bg: #f6f7fb;
@@ -38,12 +46,23 @@ body {
 
 body {
   margin: 0;
-  font-family: "Quicksand", "Inter", "Segoe UI", "Noto Sans SC", "Helvetica Neue", Arial,
-    sans-serif;
+  font-family: "Quicksand", "Inter", "TsangerJinKai01", "Segoe UI", "Noto Sans SC",
+    "Helvetica Neue", Arial, sans-serif;
   background: var(--bg);
   color: var(--text);
   transition: background 0.3s ease, color 0.3s ease;
   -webkit-font-smoothing: antialiased;
+}
+
+body:lang(zh),
+body:lang(zh-cn),
+body:lang(zh-hans),
+body:lang(zh-tw),
+body:lang(zh-hant),
+body:lang(zh-CN),
+body:lang(zh-TW) {
+  font-family: "Quicksand", "TsangerJinKai01", "Inter", "Segoe UI", "Helvetica Neue",
+    Arial, sans-serif;
 }
 
 .visually-hidden {
@@ -90,23 +109,62 @@ body {
   align-items: center;
 }
 
+.control {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
 .control select {
   appearance: none;
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  padding: 0.5rem 2rem 0.5rem 0.9rem;
+  border: 1px solid color-mix(in srgb, var(--border) 65%, transparent);
+  border-radius: 0.9rem;
+  padding: 0.55rem 2.5rem 0.55rem 1rem;
   font-size: 0.95rem;
-  background: color-mix(in srgb, var(--surface) 90%, transparent);
+  font-weight: 500;
+  font-family: inherit;
+  line-height: 1.1;
+  background: color-mix(in srgb, var(--surface) 96%, rgba(255, 255, 255, 0.45));
   color: inherit;
   min-width: 8rem;
   cursor: pointer;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease,
+    color 0.2s ease;
+}
+
+.control select:hover {
+  border-color: color-mix(in srgb, var(--accent) 35%, transparent);
+  background: color-mix(in srgb, var(--surface) 100%, rgba(255, 255, 255, 0.55));
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.12);
 }
 
 .control select:focus {
   outline: none;
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 35%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 30%, transparent);
+}
+
+.control::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  right: 1.15rem;
+  width: 0.55rem;
+  height: 0.55rem;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: translateY(-40%) rotate(45deg);
+  opacity: 0.65;
+}
+
+body[data-theme="dark"] .control select {
+  background: color-mix(in srgb, var(--surface) 82%, rgba(15, 23, 42, 0.55));
+  border-color: color-mix(in srgb, var(--border) 55%, transparent);
+}
+
+body[data-theme="dark"] .control select:hover {
+  background: color-mix(in srgb, var(--surface) 90%, rgba(15, 23, 42, 0.35));
+  box-shadow: 0 12px 32px rgba(2, 6, 23, 0.32);
 }
 
 .icon-button {
@@ -214,7 +272,8 @@ a.icon-button {
   color: inherit;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  justify-content: center;
+  min-height: 120px;
   box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
   transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
@@ -225,14 +284,10 @@ a.icon-button {
   border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
 }
 
-.chapter-card span {
-  color: var(--muted);
-  font-size: 0.9rem;
-}
-
 .chapter-card strong {
   font-size: 1.05rem;
   font-weight: 600;
+  line-height: 1.4;
 }
 
 .section-title {
@@ -372,17 +427,18 @@ a.icon-button {
   right: 0.75rem;
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
-  padding: 0.35rem 0.75rem;
-  border-radius: 10px;
-  border: 1px solid var(--border);
-  background: color-mix(in srgb, var(--surface) 92%, transparent);
-  color: inherit;
-  font-size: 0.75rem;
-  font-weight: 600;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  border-radius: 8px;
+  border: 1px solid color-mix(in srgb, var(--border) 65%, transparent);
+  background: color-mix(in srgb, var(--surface) 96%, transparent);
+  color: var(--muted);
   cursor: pointer;
   z-index: 1;
-  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease,
+    box-shadow 0.2s ease, transform 0.15s ease;
 }
 
 .chapter-body .code-copy-button:disabled {
@@ -390,9 +446,11 @@ a.icon-button {
   opacity: 0.75;
 }
 
+
 .chapter-body .code-copy-button:hover {
   transform: translateY(-1px);
-  background: color-mix(in srgb, var(--surface) 100%, transparent);
+  color: var(--text);
+  background: color-mix(in srgb, var(--surface) 100%, rgba(255, 255, 255, 0.35));
   border-color: color-mix(in srgb, var(--accent) 45%, transparent);
   box-shadow: var(--shadow);
 }
@@ -400,16 +458,13 @@ a.icon-button {
 .chapter-body .code-copy-button:focus {
   outline: none;
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 35%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 30%, transparent);
 }
 
-.chapter-body .code-copy-button .code-copy-icon {
-  font-size: 0.95rem;
-  line-height: 1;
-}
-
-.chapter-body .code-copy-button .code-copy-label {
-  line-height: 1;
+.chapter-body .code-copy-icon {
+  width: 1rem;
+  height: 1rem;
+  fill: currentColor;
 }
 
 .chapter-body .code-copy-button.copied {

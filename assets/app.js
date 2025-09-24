@@ -196,6 +196,7 @@ function render(skipUrlUpdate = false) {
     return;
   }
 
+  document.documentElement.lang = state.language;
   dom.brandLink.textContent = languageInfo.bookTitle || dom.brandLink.textContent;
 
   const activeChapter = state.chapterId
@@ -281,19 +282,16 @@ function buildChapterGrid(chapters) {
   const grid = document.createElement('div');
   grid.className = 'chapter-grid';
 
-  chapters.forEach((chapter, index) => {
+  chapters.forEach(chapter => {
     const card = document.createElement('a');
     card.className = 'chapter-card';
     card.href = createChapterUrl(state.language, chapter.id);
     card.dataset.chapterId = chapter.id;
 
-    const label = document.createElement('span');
-    label.textContent = chapterLabel(index, chapter.id);
-
     const strong = document.createElement('strong');
     strong.textContent = chapter.title;
 
-    card.append(label, strong);
+    card.append(strong);
     card.addEventListener('click', event => {
       event.preventDefault();
       state.chapterId = chapter.id;
@@ -318,13 +316,6 @@ function createChapterUrl(language, id) {
   const query = params.toString();
   const base = window.location.pathname.replace(/index\.html$/, '');
   return query ? `${base}?${query}` : base;
-}
-
-function chapterLabel(index, id) {
-  if (id.startsWith('chapter')) {
-    return `#${Number(index).toString().padStart(2, '0')}`;
-  }
-  return '☆';
 }
 
 function renderChapter(languageInfo, skipUrlUpdate = false, chapterOverride = null) {
@@ -478,11 +469,13 @@ function showCopyFeedback(button, message, statusClass) {
 
   labelElement.textContent = message;
   button.setAttribute('aria-label', message);
+  button.setAttribute('title', message);
 
   const defaultLabel = button.dataset.label || message;
   button.__copyResetTimeout = window.setTimeout(() => {
     labelElement.textContent = defaultLabel;
     button.setAttribute('aria-label', defaultLabel);
+    button.setAttribute('title', defaultLabel);
     button.classList.remove('copied', 'error');
     button.__copyResetTimeout = null;
   }, 2000);
@@ -715,11 +708,13 @@ function buildCodeBlock(code, language) {
     'type="button"',
     'class="code-copy-button"',
     `aria-label="${copyLabelAttr}"`,
+    `title="${copyLabelAttr}"`,
     `data-label="${copyLabelAttr}"`,
     `data-success="${copySuccessAttr}"`,
     `data-error="${copyErrorAttr}"`
   ].join(' ');
-  const button = `<button ${buttonAttributes}><span class="code-copy-icon" aria-hidden="true">📋</span><span class="code-copy-label">${escapeHtml(copyLabel)}</span></button>`;
+  const buttonIcon = '<svg class="code-copy-icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"></path><path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"></path></svg>';
+  const button = `<button ${buttonAttributes}>${buttonIcon}<span class="visually-hidden code-copy-label">${escapeHtml(copyLabel)}</span></button>`;
   return `<div class="code-block">${button}<pre><code${classAttr}>${contentHtml}</code></pre></div>`;
 }
 
