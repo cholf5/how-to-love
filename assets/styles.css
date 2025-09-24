@@ -192,8 +192,6 @@ body:lang(zh-TW) {
   overflow: hidden;
 }
 
-.language-dropdown:hover .language-dropdown__menu,
-.language-dropdown:focus-within .language-dropdown__menu,
 .language-dropdown.is-open .language-dropdown__menu {
   opacity: 1;
   transform: translateY(0);
