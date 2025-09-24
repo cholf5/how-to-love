@@ -34,10 +34,31 @@
               />
             </svg>
           </a>
-          <label class="control">
-            <span class="visually-hidden">Language</span>
-            <select id="language-select" aria-label="Language switcher"></select>
-          </label>
+          <div class="control language-dropdown" id="language-dropdown">
+            <span class="visually-hidden" id="language-dropdown-label">Language</span>
+            <button
+              type="button"
+              id="language-dropdown-button"
+              class="language-dropdown__button"
+              aria-haspopup="listbox"
+              aria-controls="language-dropdown-menu"
+              aria-labelledby="language-dropdown-label language-dropdown-current"
+              aria-expanded="false"
+            >
+              <span class="language-dropdown__current" id="language-dropdown-current"></span>
+            </button>
+            <ul
+              class="language-dropdown__menu"
+              id="language-dropdown-menu"
+              role="listbox"
+              aria-labelledby="language-dropdown-label"
+            ></ul>
+            <select
+              id="language-select"
+              class="language-dropdown__select visually-hidden"
+              aria-label="Language switcher"
+            ></select>
+          </div>
           <button id="theme-toggle" type="button" class="icon-button" aria-label="Toggle color theme" title="Toggle color theme">
             <span class="icon">🌙</span>
           </button>

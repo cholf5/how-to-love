@@ -115,7 +115,11 @@ body:lang(zh-TW) {
   align-items: center;
 }
 
-.control select {
+.language-dropdown::after {
+  display: none;
+}
+
+.language-dropdown__button {
   appearance: none;
   border: 1px solid color-mix(in srgb, var(--border) 65%, transparent);
   border-radius: 0.9rem;
@@ -130,41 +134,130 @@ body:lang(zh-TW) {
   cursor: pointer;
   transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease,
     color 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  position: relative;
 }
 
-.control select:hover {
+.language-dropdown__button::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  right: 1.15rem;
+  top: 50%;
+  width: 0.55rem;
+  height: 0.55rem;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: translateY(-50%) rotate(45deg);
+  opacity: 0.65;
+}
+
+.language-dropdown__button:hover {
   border-color: color-mix(in srgb, var(--accent) 35%, transparent);
   background: color-mix(in srgb, var(--surface) 100%, rgba(255, 255, 255, 0.55));
   box-shadow: 0 8px 20px rgba(15, 23, 42, 0.12);
 }
 
-.control select:focus {
+.language-dropdown__button:focus {
   outline: none;
   border-color: var(--accent);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 30%, transparent);
 }
 
-.control::after {
-  content: "";
-  position: absolute;
-  pointer-events: none;
-  right: 1.15rem;
-  width: 0.55rem;
-  height: 0.55rem;
-  border-right: 2px solid currentColor;
-  border-bottom: 2px solid currentColor;
-  transform: translateY(-40%) rotate(45deg);
-  opacity: 0.65;
+.language-dropdown__current {
+  flex: 1;
+  text-align: left;
 }
 
-body[data-theme="dark"] .control select {
+.language-dropdown__menu {
+  list-style: none;
+  margin: 0;
+  padding: 0.4rem 0;
+  position: absolute;
+  top: calc(100% + 0.45rem);
+  right: 0;
+  min-width: 100%;
+  background: color-mix(in srgb, var(--surface) 100%, rgba(255, 255, 255, 0.6));
+  border-radius: 0.9rem;
+  border: 1px solid color-mix(in srgb, var(--border) 75%, transparent);
+  box-shadow: var(--shadow);
+  opacity: 0;
+  transform: translateY(-6px);
+  pointer-events: none;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+  z-index: 20;
+  overflow: hidden;
+}
+
+.language-dropdown:hover .language-dropdown__menu,
+.language-dropdown:focus-within .language-dropdown__menu,
+.language-dropdown.is-open .language-dropdown__menu {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.language-dropdown__option {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  background: none;
+  border: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  padding: 0.55rem 1rem;
+  cursor: pointer;
+  transition: background 0.18s ease, color 0.18s ease;
+}
+
+.language-dropdown__option:hover,
+.language-dropdown__option:focus {
+  outline: none;
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+}
+
+.language-dropdown__option.is-active {
+  background: color-mix(in srgb, var(--accent) 18%, rgba(255, 255, 255, 0.6));
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.language-dropdown__option.is-active:hover,
+.language-dropdown__option.is-active:focus {
+  background: color-mix(in srgb, var(--accent) 25%, rgba(255, 255, 255, 0.55));
+}
+
+.language-dropdown__select {
+  position: absolute;
+}
+
+body[data-theme="dark"] .language-dropdown__button {
   background: color-mix(in srgb, var(--surface) 82%, rgba(15, 23, 42, 0.55));
   border-color: color-mix(in srgb, var(--border) 55%, transparent);
 }
 
-body[data-theme="dark"] .control select:hover {
+body[data-theme="dark"] .language-dropdown__button:hover {
   background: color-mix(in srgb, var(--surface) 90%, rgba(15, 23, 42, 0.35));
   box-shadow: 0 12px 32px rgba(2, 6, 23, 0.32);
+}
+
+body[data-theme="dark"] .language-dropdown__menu {
+  background: color-mix(in srgb, var(--surface) 92%, rgba(15, 23, 42, 0.55));
+  border-color: color-mix(in srgb, var(--border) 75%, transparent);
+}
+
+body[data-theme="dark"] .language-dropdown__option:hover,
+body[data-theme="dark"] .language-dropdown__option:focus {
+  background: color-mix(in srgb, var(--accent) 22%, rgba(15, 23, 42, 0.55));
+}
+
+body[data-theme="dark"] .language-dropdown__option.is-active {
+  background: color-mix(in srgb, var(--accent) 35%, rgba(15, 23, 42, 0.45));
+  color: var(--accent-contrast);
 }
 
 .icon-button {
@@ -392,7 +485,9 @@ a.icon-button {
   border-radius: 16px;
   padding: 1.2rem 1.4rem;
   overflow-x: auto;
-  font-family: "JetBrains Mono", "Fira Code", "Cascadia Mono", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-family: "JetBrains Mono", "Fira Code", "Cascadia Mono", "SFMono-Regular", Consolas,
+    "Liberation Mono", "Menlo", "Courier New", monospace, "TsangerJinKai01", "Source Han Sans SC",
+    "Noto Sans SC", "Microsoft YaHei", sans-serif;
   font-size: 0.95rem;
   line-height: 1.7;
 }
@@ -408,6 +503,9 @@ a.icon-button {
   padding: 0.15rem 0.35rem;
   font-size: 0.92em;
   border: 1px solid color-mix(in srgb, var(--code-border) 80%, transparent);
+  font-family: "JetBrains Mono", "Fira Code", "Cascadia Mono", "SFMono-Regular", Consolas,
+    "Liberation Mono", "Menlo", "Courier New", monospace, "TsangerJinKai01", "Source Han Sans SC",
+    "Noto Sans SC", "Microsoft YaHei", sans-serif;
 }
 
 .chapter-body pre code {
