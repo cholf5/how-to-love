@@ -1,4 +1,3 @@
-# Chapter 2 - Variables
 With programming we can do arithmetics.
 
 What is 3 + 4?

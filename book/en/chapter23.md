@@ -1,5 +1,3 @@
-# Chapter 23 - Resolving collision
-
 In chapter 13 we talked about how we can detect collision. In this chapter we take it a step further. Imagine you have a game where you can move around and there are walls that you can't walk through. To achieve this, we not only need to detect the collision, we also need to make sure the player stops moving and does not get stuck inside the wall. We need to push the player back.
 
 Before we start, I want to tell you that resolving collision is very hard, and it's something that even professionals have trouble dealing with. Look at speedruns for example. There are a lot of glitches where you are able to clip through walls and such. The collision we're going to make is pretty solid but far from perfect. And don't feel bad if you have a hard time understanding what we're doing here.

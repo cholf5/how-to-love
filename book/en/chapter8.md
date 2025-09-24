@@ -1,4 +1,3 @@
-# Chapter 8 - Objects
 In the previous chapter we used tables as numbered lists, but we can also store values in a different way: With strings.
 
 ```lua

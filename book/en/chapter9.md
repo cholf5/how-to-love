@@ -1,5 +1,3 @@
-# Chapter 9 - Multiple files and scope
-
 ## Multiple files
 With multiple files our code will look more organized and easier to navigate. Create a new file called `example.lua`. Make sure it's in the same folder as a new and empty `main.lua`.
 

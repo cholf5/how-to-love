@@ -1,4 +1,3 @@
-# Chapter 6 - If-statements
 ___
 *We use the code from the previous chapter*
 ___
