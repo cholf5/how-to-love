@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>How to LÖVE</title>
+    <link rel="stylesheet" href="assets/styles.css">
+  </head>
+  <body data-theme="light">
+    <div class="layout">
+      <header class="top-bar">
+        <div class="brand">
+          <a href="./" id="brand-link">How to LÖVE</a>
+        </div>
+        <div class="controls">
+          <label class="control">
+            <span class="visually-hidden">Language</span>
+            <select id="language-select" aria-label="Language switcher"></select>
+          </label>
+          <button id="theme-toggle" type="button" class="icon-button" aria-label="Toggle color theme" title="Toggle color theme">
+            <span class="icon">🌙</span>
+          </button>
+        </div>
+      </header>
+      <main id="app" class="content" role="main"></main>
+      <footer class="page-footer">
+        <p id="footer-note"></p>
+      </footer>
+    </div>
+    <script type="module" src="assets/app.js"></script>
+  </body>
+</html>
