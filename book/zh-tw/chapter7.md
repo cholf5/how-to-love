@@ -8,8 +8,7 @@
 
 ```lua
 function love.load()
-        fruits = {}
-
+    fruits = {}
 end
 ```
 
@@ -19,8 +18,8 @@ end
 
 ```lua
 function love.load()
-        -- 每個值之間用逗號分隔，就像參數和實參一樣
-        fruits = {"apple", "banana"}
+    -- 每個值之間用逗號分隔，就像參數和實參一樣
+    fruits = {"apple", "banana"}
 end
 ```
 
@@ -28,9 +27,9 @@ end
 
 ```lua
 function love.load()
-        -- 每個值之間用逗號分隔，就像參數和實參一樣
-        fruits = {"apple", "banana"}
-        table.insert(fruits, "pear")
+    -- 每個值之間用逗號分隔，就像參數和實參一樣
+    fruits = {"apple", "banana"}
+    table.insert(fruits, "pear")
 end
 ```
 
@@ -38,8 +37,8 @@ end
 
 ```lua
 function love.draw()
-        -- 參數：(文本，x 坐標，y 坐標)
-        love.graphics.print("Test", 100, 100)
+    -- 參數：(文本，x 坐標，y 坐標)
+    love.graphics.print("Test", 100, 100)
 end
 ```
 
@@ -53,7 +52,7 @@ end
 
 ```lua
 function love.draw()
-        love.graphics.print(fruits[1], 100, 100)
+    love.graphics.print(fruits[1], 100, 100)
 end
 ```
 
@@ -63,9 +62,9 @@ end
 
 ```lua
 function love.draw()
-        love.graphics.print(fruits[1], 100, 100)
-        love.graphics.print(fruits[2], 100, 200)
-        love.graphics.print(fruits[3], 100, 300)
+    love.graphics.print(fruits[1], 100, 100)
+    love.graphics.print(fruits[2], 100, 200)
+    love.graphics.print(fruits[3], 100, 300)
 end
 ```
 
@@ -81,12 +80,12 @@ for 循環可以把某段代碼重複執行指定次數。
 
 ```lua
 function love.load()
-        fruits = {"apple", "banana"}
-        table.insert(fruits, "pear")
+    fruits = {"apple", "banana"}
+    table.insert(fruits, "pear")
 
-        for i=1,10 do
-                print("hello", i)
-        end
+    for i=1,10 do
+        print("hello", i)
+    end
 end
 ```
 
@@ -100,12 +99,12 @@ end
 
 ```lua
 function love.load()
-        fruits = {"apple", "banana"}
-        table.insert(fruits, "pear")
+    fruits = {"apple", "banana"}
+    table.insert(fruits, "pear")
 
-        for i=1,3 do
-                print(fruits[i])
-        end
+    for i=1,3 do
+        print(fruits[i])
+    end
 end
 ```
 
@@ -119,19 +118,19 @@ ___
 
 ```lua
 function love.load()
-        fruits = {"apple", "banana"}
+    fruits = {"apple", "banana"}
 
-        print(#fruits)
-        -- 輸出：2
+    print(#fruits)
+    -- 輸出：2
 
-        table.insert(fruits, "pear")
+    table.insert(fruits, "pear")
 
-        print(#fruits)
-        -- 輸出：3
+    print(#fruits)
+    -- 輸出：3
 
-        for i=1,#fruits do
-                print(fruits[i])
-        end
+    for i=1,#fruits do
+        print(fruits[i])
+    end
 end
 ```
 
@@ -139,9 +138,9 @@ end
 
 ```lua
 function love.draw()
-        for i=1,#fruits do
-                love.graphics.print(fruits[i], 100, 100)
-        end
+    for i=1,#fruits do
+        love.graphics.print(fruits[i], 100, 100)
+    end
 end
 ```
 
@@ -149,9 +148,9 @@ end
 
 ```lua
 function love.draw()
-        for i=1,#fruits do
-                love.graphics.print(fruits[i], 100, 100 + 50 * i)
-        end
+    for i=1,#fruits do
+        love.graphics.print(fruits[i], 100, 100 + 50 * i)
+    end
 end
 ```
 
@@ -163,9 +162,9 @@ end
 
 ```lua
 function love.load()
-        fruits = {"apple", "banana"}
-        table.insert(fruits, "pear")
-        table.insert(fruits, "pineapple")
+    fruits = {"apple", "banana"}
+    table.insert(fruits, "pear")
+    table.insert(fruits, "pineapple")
 end
 ```
 
@@ -173,10 +172,10 @@ end
 
 ```lua
 function love.load()
-        fruits = {"apple", "banana"}
-        table.insert(fruits, "pear")
-        table.insert(fruits, "pineapple")
-        table.remove(fruits, 2)
+    fruits = {"apple", "banana"}
+    table.insert(fruits, "pear")
+    table.insert(fruits, "pineapple")
+    table.remove(fruits, 2)
 end
 ```
 
@@ -190,12 +189,12 @@ end
 
 ```lua
 function love.load()
-        fruits = {"apple", "banana"}
-        table.insert(fruits, "pear")
-        table.insert(fruits, "pineapple")
-        table.remove(fruits, 2)
-        -- 把表中第 1 個位置的值改成 "tomato"
-        fruits[1] = "tomato"
+    fruits = {"apple", "banana"}
+    table.insert(fruits, "pear")
+    table.insert(fruits, "pineapple")
+    table.remove(fruits, 2)
+    -- 把表中第 1 個位置的值改成 "tomato"
+    fruits[1] = "tomato"
 end
 ```
 
@@ -207,19 +206,19 @@ ___
 
 ```lua
 function love.load()
-        fruits = {"apple", "banana"}
-        table.insert(fruits, "pear")
-        table.insert(fruits, "pineapple")
-        table.remove(fruits, 2)
-        fruits[1] = "tomato"
+    fruits = {"apple", "banana"}
+    table.insert(fruits, "pear")
+    table.insert(fruits, "pineapple")
+    table.remove(fruits, 2)
+    fruits[1] = "tomato"
 
-        for i,v in ipairs(fruits) do
-                print(i, v)
-        end
-        -- 輸出：
-        -- 1, "tomato"
-        -- 2, "pear"
-        -- 3, "pineapple"
+    for i,v in ipairs(fruits) do
+        print(i, v)
+    end
+    -- 輸出：
+    -- 1, "tomato"
+    -- 2, "pear"
+    -- 3, "pineapple"
 end
 ```
 
@@ -229,7 +228,7 @@ end
 
 ```lua
 for i=1, #fruits do
-        v = fruits[i]
+    v = fruits[i]
 end
 ```
 
@@ -237,10 +236,10 @@ end
 
 ```lua
 function love.draw()
-        -- i 和 v 都是變量，所以我們想怎麼命名都可以
-        for i,frt in ipairs(fruits) do
-                love.graphics.print(frt, 100, 100 + 50 * i)
-        end
+    -- i 和 v 都是變量，所以我們想怎麼命名都可以
+    for i,frt in ipairs(fruits) do
+        love.graphics.print(frt, 100, 100 + 50 * i)
+    end
 end
 ```
 

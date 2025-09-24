@@ -6,32 +6,32 @@ Bug 指的是程序（在這裡是遊戲）中出現的問題。調試就是修�
 
 ```lua
 function love.load()
-        circle = {x = 100, y = 100}
-        bullets = {}
+    circle = {x = 100, y = 100}
+    bullets = {}
 end
 
 function love.update(dt)
-        for i,v in ipairs(bullets) do
-                v.x = v.x + 400 * dt
-        end
+    for i,v in ipairs(bullets) do
+        v.x = v.x + 400 * dt
+    end
 end
 
 function love.draw()
-        love.graphics.circle("fill", circle.x, circle.y, 50)
+    love.graphics.circle("fill", circle.x, circle.y, 50)
 
-        for i,v in ipairs(bullets) do
-                love.graphics.circle("fill", v.x, v.y, 10)
-        end
+    for i,v in ipairs(bullets) do
+        love.graphics.circle("fill", v.x, v.y, 10)
+    end
 end
 
 function love.keypressed()
-        if key == "space" then
-                shoot()
-        end
+    if key == "space" then
+        shoot()
+    end
 end
 
 function shoot()
-        table.insert(bullets, {circle.x, circle.y})
+    table.insert(bullets, {circle.x, circle.y})
 end
 ```
 
@@ -47,10 +47,10 @@ end
 
 ```lua
 function love.update(dt)
-        for i,v in ipairs(bullets) do
-                v.x = v.x + 400 * dt
-                print(v.x)
-        end
+    for i,v in ipairs(bullets) do
+        v.x = v.x + 400 * dt
+        print(v.x)
+    end
 end
 ```
 
@@ -64,10 +64,10 @@ io.stdout:setvbuf("no")
 
 ```lua
 function shoot()
-        table.insert(bullets, {circle.x, circle.y})
+    table.insert(bullets, {circle.x, circle.y})
 
-        -- 你知道 print 可以接收無數個參數嗎？
-        print("How many bullets?", #bullets)
+    -- 你知道 print 可以接收無數個參數嗎？
+    print("How many bullets?", #bullets)
 end
 ```
 
@@ -75,12 +75,12 @@ end
 
 ```lua
 function love.keypressed()
-        -- 像這樣加入提示文字可以為輸出提供上下文。
-        -- 當你有很多 print 時特別有用。
-        print("What is the key?", key)
-        if key == "space" then
-                shoot()
-        end
+    -- 像這樣加入提示文字可以為輸出提供上下文。
+    -- 當你有很多 print 時特別有用。
+    print("What is the key?", key)
+    if key == "space" then
+        shoot()
+    end
 end
 ```
 
@@ -88,10 +88,10 @@ end
 
 ```lua
 function love.keypressed(key)
-        print("What is the key?", key)
-        if key == "space" then
-                shoot()
-        end
+    print("What is the key?", key)
+    if key == "space" then
+        shoot()
+    end
 end
 ```
 
@@ -138,7 +138,7 @@ attempt to perform arithmetic on field 'x' (a nil value)
 
 ```
 function shoot()
-        table.insert(bullets, {x = circle.x, y = circle.y})
+    table.insert(bullets, {x = circle.x, y = circle.y})
 end
 ```
 
@@ -152,23 +152,23 @@ Object = require "classic"
 Circle = Object:extend()
 
 function Circle:new()
-        self.x = 100
-        self.y = 100
+    self.x = 100
+    self.y = 100
 end
 
 function Circle:draw(offset)
-        love.graphics.circle("fill", self.x + offset, self.y, 25)
+    love.graphics.circle("fill", self.x + offset, self.y, 25)
 end
 
 function love.load()
-        circle = Circle()
+    circle = Circle()
 end
 
 function love.draw()
-        circle:draw(10)
-        circle:draw(70)
-        circle.draw(140)
-        circle:draw(210)
+    circle:draw(10)
+    circle:draw(70)
+    circle.draw(140)
+    circle:draw(210)
 end
 ```
 
@@ -192,27 +192,27 @@ ___
 
 ```lua
 function love.load()
-        timer = 0
-        show = true
+    timer = 0
+    show = true
 end
 
 function love.update(dt)
-        show = false
-        timer = timer + dt
+    show = false
+    timer = timer + dt
 
-        if timer > 1 then
-                if love.keyboard.isDown("space") then
-                        show = true
-                end
-        if timer > 2 then
-                timer = 0
+    if timer > 1 then
+        if love.keyboard.isDown("space") then
+            show = true
         end
+    if timer > 2 then
+        timer = 0
+    end
 end
 
 function love.draw()
-        if show then
-                love.graphics.rectangle("fill", 100, 100, 100, 100)
-        end
+    if show then
+        love.graphics.rectangle("fill", 100, 100, 100, 100)
+    end
 end
 ```
 
@@ -222,19 +222,19 @@ end
 
 `<eof>` 的意思是 *文件結束*。它期望在文件末尾看到一個 `end`。那我們直接在文件末尾加一個 `end` 就行了嗎？當然不行。是我在某處寫錯了，需要正確修復。錯誤提示說它期待的是在第 6 行的函數裡找到 `end`，那就從那裡開始往下檢查。打開函數後我寫了一個 if 語句，然後又寫了一個 if。關閉第二個 if 後我又開始了另一個 if，然後也把它關閉，接著關閉最外層的 if。不對啊，那時我應該關閉函數才對。我在函數裡漏了一個 `end`。修正如下：
 
-```
+```lua
 function love.update(dt)
-        show = false
-        timer = timer + dt
+    show = false
+    timer = timer + dt
 
-        if timer > 1 then
-                if love.keyboard.isDown("space") then
-                        show = true
-                end
-                if timer > 2 then
-                        timer = 0
-                end
+    if timer > 1 then
+        if love.keyboard.isDown("space") then
+            show = true
         end
+        if timer > 2 then
+            timer = 0
+        end
+    end
 end
 ```
 
@@ -242,10 +242,10 @@ end
 
 另一個常見的錯誤如下所示：
 
-```
+```lua
 function love.load()
-        t = {}
-        table.insert(t, {x = 100, y = 50)
+    t = {}
+    table.insert(t, {x = 100, y = 50)
 end
 ```
 
@@ -255,10 +255,10 @@ end
 
 原因是我沒有把花括號閉合。
 
-```
+```lua
 function love.load()
-        t = {}
-        table.insert(t, {x = 100, y = 50})
+    t = {}
+    table.insert(t, {x = 100, y = 50})
 end
 ```
 

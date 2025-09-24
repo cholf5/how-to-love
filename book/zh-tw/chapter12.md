@@ -10,7 +10,7 @@
 
 ```lua
 function love.load()
-        myImage = love.graphics.newImage("sheep.png")
+    myImage = love.graphics.newImage("sheep.png")
 end
 ```
 
@@ -24,7 +24,7 @@ myImage = love.graphics.newImage("path/to/sheep.png")
 
 ```lua
 function love.draw()
-        love.graphics.draw(myImage, 100, 100)
+    love.graphics.draw(myImage, 100, 100)
 end
 ```
 
@@ -104,7 +104,7 @@ function love.load()
 end
 
 function love.draw()
-        love.graphics.draw(myImage, 100, 100, 0, 2, 2, width/2, height/2)
+    love.graphics.draw(myImage, 100, 100, 0, 2, 2, width/2, height/2)
 end
 ```
 
@@ -121,13 +121,13 @@ function love.load()
 end
 
 function love.draw()
-        love.graphics.setColor(255/255, 200/255, 40/255, 127/255)
-        love.graphics.setColor(1, 0.78, 0.15, 0.5)
-        -- 或者……
-        love.graphics.draw(myImage, 100, 100)
-        -- 不傳入 alpha 參數會自動把它恢復為 1。
-        love.graphics.setColor(1, 1, 1)
-        love.graphics.draw(myImage, 200, 100)
+    love.graphics.setColor(255/255, 200/255, 40/255, 127/255)
+    love.graphics.setColor(1, 0.78, 0.15, 0.5)
+    -- 或者……
+    love.graphics.draw(myImage, 100, 100)
+    -- 不傳入 alpha 參數會自動把它恢復為 1。
+    love.graphics.setColor(1, 1, 1)
+    love.graphics.draw(myImage, 200, 100)
 end
 ```
 

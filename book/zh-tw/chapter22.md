@@ -28,15 +28,15 @@ love.graphics.circle("line", player.x - camera.offset.x, player.y - camera.offse
 ```lua
 --code
 function love.draw()
-        love.graphics.translate(-player.x + 400, -player.y + 300)
-        love.graphics.circle("line", player.x, player.y, player.size)
-        love.graphics.draw(player.image, player.x, player.y,
-                0, 1, 1, player.image:getWidth()/2, player.image:getHeight()/2)
-        for i,v in ipairs(coins) do
-                love.graphics.circle("line", v.x, v.y, v.size)
-                love.graphics.draw(v.image, v.x, v.y,
-                        0, 1, 1, v.image:getWidth()/2, v.image:getHeight()/2)
-        end
+    love.graphics.translate(-player.x + 400, -player.y + 300)
+    love.graphics.circle("line", player.x, player.y, player.size)
+    love.graphics.draw(player.image, player.x, player.y,
+        0, 1, 1, player.image:getWidth()/2, player.image:getHeight()/2)
+    for i,v in ipairs(coins) do
+        love.graphics.circle("line", v.x, v.y, v.size)
+        love.graphics.draw(v.image, v.x, v.y,
+            0, 1, 1, v.image:getWidth()/2, v.image:getHeight()/2)
+    end
 end
 ```
 
@@ -50,26 +50,26 @@ score = 0
 ```
 ```lua
 for i=#coins,1,-1 do
-        if checkCollision(player, coins[i]) then
-                table.remove(coins, i)
-                player.size = player.size + 1
-                score = score + 1
-        end
+    if checkCollision(player, coins[i]) then
+        table.remove(coins, i)
+        player.size = player.size + 1
+        score = score + 1
+    end
 end
 ```
 
 ```lua
 function love.draw()
-        love.graphics.translate(-player.x + 400, -player.y + 300)
-        love.graphics.circle("line", player.x, player.y, player.size)
-        love.graphics.draw(player.image, player.x, player.y,
-                0, 1, 1, player.image:getWidth()/2, player.image:getHeight()/2)
-        for i,v in ipairs(coins) do
-                love.graphics.circle("line", v.x, v.y, v.size)
-                love.graphics.draw(v.image, v.x, v.y,
-                        0, 1, 1, v.image:getWidth()/2, v.image:getHeight()/2)
-        end
-        love.graphics.print(score, 10, 10)
+    love.graphics.translate(-player.x + 400, -player.y + 300)
+    love.graphics.circle("line", player.x, player.y, player.size)
+    love.graphics.draw(player.image, player.x, player.y,
+        0, 1, 1, player.image:getWidth()/2, player.image:getHeight()/2)
+    for i,v in ipairs(coins) do
+        love.graphics.circle("line", v.x, v.y, v.size)
+        love.graphics.draw(v.image, v.x, v.y,
+            0, 1, 1, v.image:getWidth()/2, v.image:getHeight()/2)
+    end
+    love.graphics.print(score, 10, 10)
 end
 ```
 
@@ -77,17 +77,17 @@ end
 
 ```lua
 function love.draw()
-        love.graphics.translate(-player.x + 400, -player.y + 300)
-        love.graphics.circle("line", player.x, player.y, player.size)
-        love.graphics.draw(player.image, player.x, player.y,
-                0, 1, 1, player.image:getWidth()/2, player.image:getHeight()/2)
-        for i,v in ipairs(coins) do
-                love.graphics.circle("line", v.x, v.y, v.size)
-                love.graphics.draw(v.image, v.x, v.y,
-                        0, 1, 1, v.image:getWidth()/2, v.image:getHeight()/2)
-        end
-        love.graphics.translate(player.x - 400, player.y - 300)
-        love.graphics.print(score, 10, 10)
+    love.graphics.translate(-player.x + 400, -player.y + 300)
+    love.graphics.circle("line", player.x, player.y, player.size)
+    love.graphics.draw(player.image, player.x, player.y,
+        0, 1, 1, player.image:getWidth()/2, player.image:getHeight()/2)
+    for i,v in ipairs(coins) do
+        love.graphics.circle("line", v.x, v.y, v.size)
+        love.graphics.draw(v.image, v.x, v.y,
+            0, 1, 1, v.image:getWidth()/2, v.image:getHeight()/2)
+    end
+    love.graphics.translate(player.x - 400, player.y - 300)
+    love.graphics.print(score, 10, 10)
 end
 ```
 
@@ -95,17 +95,17 @@ end
 
 ```lua
 function love.draw()
-        love.graphics.translate(-player.x + 400, -player.y + 300)
-        love.graphics.circle("line", player.x, player.y, player.size)
-        love.graphics.draw(player.image, player.x, player.y,
-                0, 1, 1, player.image:getWidth()/2, player.image:getHeight()/2)
-        for i,v in ipairs(coins) do
-                love.graphics.circle("line", v.x, v.y, v.size)
-                love.graphics.draw(v.image, v.x, v.y,
-                        0, 1, 1, v.image:getWidth()/2, v.image:getHeight()/2)
-        end
-        love.graphics.origin()
-        love.graphics.print(score, 10, 10)
+    love.graphics.translate(-player.x + 400, -player.y + 300)
+    love.graphics.circle("line", player.x, player.y, player.size)
+    love.graphics.draw(player.image, player.x, player.y,
+        0, 1, 1, player.image:getWidth()/2, player.image:getHeight()/2)
+    for i,v in ipairs(coins) do
+        love.graphics.circle("line", v.x, v.y, v.size)
+        love.graphics.draw(v.image, v.x, v.y,
+            0, 1, 1, v.image:getWidth()/2, v.image:getHeight()/2)
+    end
+    love.graphics.origin()
+    love.graphics.print(score, 10, 10)
 end
 ```
 
@@ -114,18 +114,18 @@ end
 ```lua
 --- code
 function love.draw()
-        love.graphics.push() -- 複製當前狀態並壓入棧中。
-                love.graphics.translate(-player.x + 400, -player.y + 300)
-                love.graphics.circle("line", player.x, player.y, player.size)
-                love.graphics.draw(player.image, player.x, player.y,
-                        0, 1, 1, player.image:getWidth()/2, player.image:getHeight()/2)
-                for i,v in ipairs(coins) do
-                        love.graphics.circle("line", v.x, v.y, v.size)
-                        love.graphics.draw(v.image, v.x, v.y,
-                                0, 1, 1, v.image:getWidth()/2, v.image:getHeight()/2)
-                end
-        love.graphics.pop() -- 彈出棧頂狀態並恢復。
-        love.graphics.print(score, 10, 10)
+    love.graphics.push() -- 複製當前狀態並壓入棧中。
+        love.graphics.translate(-player.x + 400, -player.y + 300)
+        love.graphics.circle("line", player.x, player.y, player.size)
+        love.graphics.draw(player.image, player.x, player.y,
+            0, 1, 1, player.image:getWidth()/2, player.image:getHeight()/2)
+        for i,v in ipairs(coins) do
+            love.graphics.circle("line", v.x, v.y, v.size)
+            love.graphics.draw(v.image, v.x, v.y,
+                0, 1, 1, v.image:getWidth()/2, v.image:getHeight()/2)
+        end
+    love.graphics.pop() -- 彈出棧頂狀態並恢復。
+    love.graphics.print(score, 10, 10)
 end
 ```
 
@@ -145,7 +145,7 @@ shakeDuration = 0
 ```lua
 -- In love.update(dt)
 if shakeDuration > 0 then
-        shakeDuration = shakeDuration - dt
+    shakeDuration = shakeDuration - dt
 end
 ```
 
@@ -153,25 +153,25 @@ end
 
 ```lua
 function love.draw()
-        love.graphics.push() -- 複製當前狀態並壓入棧。
-                love.graphics.translate(-player.x + 400, -player.y + 300)
+    love.graphics.push() -- 複製當前狀態並壓入棧。
+        love.graphics.translate(-player.x + 400, -player.y + 300)
 
-                if shakeDuration > 0 then
-                        -- 在 -5 到 5 之間隨機平移。
-                        -- 第二次 translate 會基於前一次的結果進行，不會清除之前的位移。
-                        love.graphics.translate(love.math.random(-5,5), love.math.random(-5,5))
-                end
+        if shakeDuration > 0 then
+            -- 在 -5 到 5 之間隨機平移。
+            -- 第二次 translate 會基於前一次的結果進行，不會清除之前的位移。
+            love.graphics.translate(love.math.random(-5,5), love.math.random(-5,5))
+        end
 
-                love.graphics.circle("line", player.x, player.y, player.size)
-                love.graphics.draw(player.image, player.x, player.y,
-                        0, 1, 1, player.image:getWidth()/2, player.image:getHeight()/2)
-                for i,v in ipairs(coins) do
-                        love.graphics.circle("line", v.x, v.y, v.size)
-                        love.graphics.draw(v.image, v.x, v.y,
-                                0, 1, 1, v.image:getWidth()/2, v.image:getHeight()/2)
-                end
-        love.graphics.pop() -- 彈出狀態並恢復。
-        love.graphics.print(score, 10, 10)
+        love.graphics.circle("line", player.x, player.y, player.size)
+        love.graphics.draw(player.image, player.x, player.y,
+            0, 1, 1, player.image:getWidth()/2, player.image:getHeight()/2)
+        for i,v in ipairs(coins) do
+            love.graphics.circle("line", v.x, v.y, v.size)
+            love.graphics.draw(v.image, v.x, v.y,
+                0, 1, 1, v.image:getWidth()/2, v.image:getHeight()/2)
+        end
+    love.graphics.pop() -- 彈出狀態並恢復。
+    love.graphics.print(score, 10, 10)
 end
 ```
 
@@ -179,12 +179,12 @@ end
 
 ```
 for i=#coins,1,-1 do
-        if checkCollision(player, coins[i]) then
-                table.remove(coins, i)
-                player.size = player.size + 1
-                score = score + 1
-                shakeDuration = 0.3
-        end
+    if checkCollision(player, coins[i]) then
+        table.remove(coins, i)
+        player.size = player.size + 1
+        score = score + 1
+        shakeDuration = 0.3
+    end
 end
 ```
 
@@ -202,34 +202,34 @@ shakeOffset = {x = 0, y = 0}
 ```lua
 -- In love.update(dt)
 if shakeDuration > 0 then
-        shakeDuration = shakeDuration - dt
-        if shakeWait > 0 then
-                shakeWait = shakeWait - dt
-        else
-                shakeOffset.x = love.math.random(-5,5)
-                shakeOffset.y = love.math.random(-5,5)
-                shakeWait = 0.05
-        end
+    shakeDuration = shakeDuration - dt
+    if shakeWait > 0 then
+        shakeWait = shakeWait - dt
+    else
+        shakeOffset.x = love.math.random(-5,5)
+        shakeOffset.y = love.math.random(-5,5)
+        shakeWait = 0.05
+    end
 end
 ```
 
 ```lua
 function love.draw()
-        love.graphics.push()
-                love.graphics.translate(-player.x + 400, -player.y + 300)
-                if shakeDuration > 0 then
-                        love.graphics.translate(shakeOffset.x, shakeOffset.y)
-                end
-                love.graphics.circle("line", player.x, player.y, player.size)
-                love.graphics.draw(player.image, player.x, player.y,
-                        0, 1, 1, player.image:getWidth()/2, player.image:getHeight()/2)
-                for i,v in ipairs(coins) do
-                        love.graphics.circle("line", v.x, v.y, v.size)
-                        love.graphics.draw(v.image, v.x, v.y,
-                                0, 1, 1, v.image:getWidth()/2, v.image:getHeight()/2)
-                end
-        love.graphics.pop()
-        love.graphics.print(score, 10, 10)
+    love.graphics.push()
+        love.graphics.translate(-player.x + 400, -player.y + 300)
+        if shakeDuration > 0 then
+            love.graphics.translate(shakeOffset.x, shakeOffset.y)
+        end
+        love.graphics.circle("line", player.x, player.y, player.size)
+        love.graphics.draw(player.image, player.x, player.y,
+            0, 1, 1, player.image:getWidth()/2, player.image:getHeight()/2)
+        for i,v in ipairs(coins) do
+            love.graphics.circle("line", v.x, v.y, v.size)
+            love.graphics.draw(v.image, v.x, v.y,
+                0, 1, 1, v.image:getWidth()/2, v.image:getHeight()/2)
+        end
+    love.graphics.pop()
+    love.graphics.print(score, 10, 10)
 end
 ```
 
@@ -257,103 +257,103 @@ Canvas 的超類型按層級順序是：
 
 ```lua
 function love.load()
-        player1 = {
-                x = 100,
-                y = 100,
-                size = 25,
-                image = love.graphics.newImage("face.png")
-        }
+    player1 = {
+        x = 100,
+        y = 100,
+        size = 25,
+        image = love.graphics.newImage("face.png")
+    }
 
-        player2 = {
-                x = 300,
-                y = 100,
-                size = 25,
-                image = love.graphics.newImage("face.png")
-        }
+    player2 = {
+        x = 300,
+        y = 100,
+        size = 25,
+        image = love.graphics.newImage("face.png")
+    }
 
-        coins = {}
+    coins = {}
 
-        for i=1,25 do
-                table.insert(coins,
-                        {
-                                x = math.random(50, 650),
-                                y = math.random(50, 450),
-                                size = 10,
-                                image = love.graphics.newImage("dollar.png")
-                        }
-                )
-        end
+    for i=1,25 do
+        table.insert(coins,
+            {
+                x = math.random(50, 650),
+                y = math.random(50, 450),
+                size = 10,
+                image = love.graphics.newImage("dollar.png")
+            }
+        )
+    end
 
-        score1 = 0
-        score2 = 0
+    score1 = 0
+    score2 = 0
 end
 
 function love.update(dt)
-        if love.keyboard.isDown("left") then
-                player1.x = player1.x - 200 * dt
-        elseif love.keyboard.isDown("right") then
-                player1.x = player1.x + 200 * dt
-        end
+    if love.keyboard.isDown("left") then
+        player1.x = player1.x - 200 * dt
+    elseif love.keyboard.isDown("right") then
+        player1.x = player1.x + 200 * dt
+    end
 
-        if love.keyboard.isDown("up") then
-                player1.y = player1.y - 200 * dt
-        elseif love.keyboard.isDown("down") then
-                player1.y = player1.y + 200 * dt
-        end
+    if love.keyboard.isDown("up") then
+        player1.y = player1.y - 200 * dt
+    elseif love.keyboard.isDown("down") then
+        player1.y = player1.y + 200 * dt
+    end
 
-        if love.keyboard.isDown("a") then
-                player2.x = player2.x - 200 * dt
-        elseif love.keyboard.isDown("d") then
-                player2.x = player2.x + 200 * dt
-        end
+    if love.keyboard.isDown("a") then
+        player2.x = player2.x - 200 * dt
+    elseif love.keyboard.isDown("d") then
+        player2.x = player2.x + 200 * dt
+    end
 
-        if love.keyboard.isDown("w") then
-                player2.y = player2.y - 200 * dt
-        elseif love.keyboard.isDown("s") then
-                player2.y = player2.y + 200 * dt
-        end
+    if love.keyboard.isDown("w") then
+        player2.y = player2.y - 200 * dt
+    elseif love.keyboard.isDown("s") then
+        player2.y = player2.y + 200 * dt
+    end
 
-        for i=#coins,1,-1 do
-                if checkCollision(player1, coins[i]) then
-                        table.remove(coins, i)
-                        player1.size = player1.size + 1
-                        score1 = score1 + 1
-                elseif checkCollision(player2, coins[i]) then
-                        table.remove(coins, i)
-                        player2.size = player2.size + 1
-                        score2 = score2 + 1
-                end
+    for i=#coins,1,-1 do
+        if checkCollision(player1, coins[i]) then
+            table.remove(coins, i)
+            player1.size = player1.size + 1
+            score1 = score1 + 1
+        elseif checkCollision(player2, coins[i]) then
+            table.remove(coins, i)
+            player2.size = player2.size + 1
+            score2 = score2 + 1
         end
+    end
 end
 
 function love.draw()
-        love.graphics.push()
-                love.graphics.translate(-player1.x + 400, -player1.y + 300)
+    love.graphics.push()
+        love.graphics.translate(-player1.x + 400, -player1.y + 300)
 
-                love.graphics.circle("line", player1.x, player1.y, player1.size)
-                love.graphics.draw(player1.image, player1.x, player1.y,
-                        0, 1, 1, player1.image:getWidth()/2, player1.image:getHeight()/2)
+        love.graphics.circle("line", player1.x, player1.y, player1.size)
+        love.graphics.draw(player1.image, player1.x, player1.y,
+            0, 1, 1, player1.image:getWidth()/2, player1.image:getHeight()/2)
 
-                love.graphics.circle("line", player2.x, player2.y, player2.size)
-                love.graphics.draw(player2.image, player2.x, player2.y,
-                        0, 1, 1, player2.image:getWidth()/2, player2.image:getHeight()/2)
+        love.graphics.circle("line", player2.x, player2.y, player2.size)
+        love.graphics.draw(player2.image, player2.x, player2.y,
+            0, 1, 1, player2.image:getWidth()/2, player2.image:getHeight()/2)
 
-                for i,v in ipairs(coins) do
-                        love.graphics.circle("line", v.x, v.y, v.size)
-                        love.graphics.draw(v.image, v.x, v.y,
-                                0, 1, 1, v.image:getWidth()/2, v.image:getHeight()/2)
-                end
-        love.graphics.pop()
-        love.graphics.print("Player 1 - " .. score1, 10, 10)
-        love.graphics.print("Player 2 - " .. score2, 10, 30)
+        for i,v in ipairs(coins) do
+            love.graphics.circle("line", v.x, v.y, v.size)
+            love.graphics.draw(v.image, v.x, v.y,
+                0, 1, 1, v.image:getWidth()/2, v.image:getHeight()/2)
+        end
+    love.graphics.pop()
+    love.graphics.print("Player 1 - " .. score1, 10, 10)
+    love.graphics.print("Player 2 - " .. score2, 10, 30)
 end
 
 function checkCollision(p1, p2)
-        -- 用一行算出距離。
-        -- 計算 x、y 坐標的差，再平方、求和，最後取平方根。
-        local distance = math.sqrt((p1.x - p2.x)^2 + (p1.y - p2.y)^2)
-        -- 返回距離是否小於半徑之和。
-        return distance < p1.size + p2.size
+    -- 用一行算出距離。
+    -- 計算 x、y 坐標的差，再平方、求和，最後取平方根。
+    local distance = math.sqrt((p1.x - p2.x)^2 + (p1.y - p2.y)^2)
+    -- 返回距離是否小於半徑之和。
+    return distance < p1.size + p2.size
 end
 ```
 
@@ -368,28 +368,28 @@ screenCanvas = love.graphics.newCanvas(400, 600)
 
 ```lua
 function love.draw()
-        love.graphics.setCanvas(screenCanvas)
-        love.graphics.push()
-                love.graphics.translate(-player1.x + 400, -player1.y + 300)
+    love.graphics.setCanvas(screenCanvas)
+    love.graphics.push()
+        love.graphics.translate(-player1.x + 400, -player1.y + 300)
 
-                love.graphics.circle("line", player1.x, player1.y, player1.size)
-                love.graphics.draw(player1.image, player1.x, player1.y,
-                        0, 1, 1, player1.image:getWidth()/2, player1.image:getHeight()/2)
+        love.graphics.circle("line", player1.x, player1.y, player1.size)
+        love.graphics.draw(player1.image, player1.x, player1.y,
+            0, 1, 1, player1.image:getWidth()/2, player1.image:getHeight()/2)
 
-                love.graphics.circle("line", player2.x, player2.y, player2.size)
-                love.graphics.draw(player2.image, player2.x, player2.y,
-                        0, 1, 1, player2.image:getWidth()/2, player2.image:getHeight()/2)
+        love.graphics.circle("line", player2.x, player2.y, player2.size)
+        love.graphics.draw(player2.image, player2.x, player2.y,
+            0, 1, 1, player2.image:getWidth()/2, player2.image:getHeight()/2)
 
-                for i,v in ipairs(coins) do
-                        love.graphics.circle("line", v.x, v.y, v.size)
-                        love.graphics.draw(v.image, v.x, v.y,
-                                0, 1, 1, v.image:getWidth()/2, v.image:getHeight()/2)
-                end
-        love.graphics.pop()
-        love.graphics.setCanvas()
+        for i,v in ipairs(coins) do
+            love.graphics.circle("line", v.x, v.y, v.size)
+            love.graphics.draw(v.image, v.x, v.y,
+                0, 1, 1, v.image:getWidth()/2, v.image:getHeight()/2)
+        end
+    love.graphics.pop()
+    love.graphics.setCanvas()
 
-        love.graphics.print("Player 1 - " .. score1, 10, 10)
-        love.graphics.print("Player 2 - " .. score2, 10, 30)
+    love.graphics.print("Player 1 - " .. score1, 10, 10)
+    love.graphics.print("Player 2 - " .. score2, 10, 30)
 end
 ```
 
@@ -397,31 +397,31 @@ end
 
 ```lua
 function love.draw()
-        love.graphics.setCanvas(screenCanvas)
-        love.graphics.push()
-                love.graphics.translate(-player1.x + 400, -player1.y + 300)
+    love.graphics.setCanvas(screenCanvas)
+    love.graphics.push()
+        love.graphics.translate(-player1.x + 400, -player1.y + 300)
 
-                love.graphics.circle("line", player1.x, player1.y, player1.size)
-                love.graphics.draw(player1.image, player1.x, player1.y,
-                        0, 1, 1, player1.image:getWidth()/2, player1.image:getHeight()/2)
+        love.graphics.circle("line", player1.x, player1.y, player1.size)
+        love.graphics.draw(player1.image, player1.x, player1.y,
+            0, 1, 1, player1.image:getWidth()/2, player1.image:getHeight()/2)
 
-                love.graphics.circle("line", player2.x, player2.y, player2.size)
-                love.graphics.draw(player2.image, player2.x, player2.y,
-                        0, 1, 1, player2.image:getWidth()/2, player2.image:getHeight()/2)
+        love.graphics.circle("line", player2.x, player2.y, player2.size)
+        love.graphics.draw(player2.image, player2.x, player2.y,
+            0, 1, 1, player2.image:getWidth()/2, player2.image:getHeight()/2)
 
-                for i,v in ipairs(coins) do
-                        love.graphics.circle("line", v.x, v.y, v.size)
-                        love.graphics.draw(v.image, v.x, v.y,
-                                0, 1, 1, v.image:getWidth()/2, v.image:getHeight()/2)
-                end
-        love.graphics.pop()
-        love.graphics.setCanvas()
+        for i,v in ipairs(coins) do
+            love.graphics.circle("line", v.x, v.y, v.size)
+            love.graphics.draw(v.image, v.x, v.y,
+                0, 1, 1, v.image:getWidth()/2, v.image:getHeight()/2)
+        end
+    love.graphics.pop()
+    love.graphics.setCanvas()
 
-        -- 繪製畫布
-        love.graphics.draw(screenCanvas)
+    -- 繪製畫布
+    love.graphics.draw(screenCanvas)
 
-        love.graphics.print("Player 1 - " .. score1, 10, 10)
-        love.graphics.print("Player 2 - " .. score2, 10, 30)
+    love.graphics.print("Player 1 - " .. score1, 10, 10)
+    love.graphics.print("Player 2 - " .. score2, 10, 30)
 end
 ```
 
@@ -431,43 +431,43 @@ end
 
 ```lua
 function love.draw()
-        love.graphics.setCanvas(screenCanvas)
-                love.graphics.clear()
-                drawGame()
-        love.graphics.setCanvas()
-        love.graphics.draw(screenCanvas)
+    love.graphics.setCanvas(screenCanvas)
+        love.graphics.clear()
+        drawGame()
+    love.graphics.setCanvas()
+    love.graphics.draw(screenCanvas)
 
-        love.graphics.setCanvas(screenCanvas)
-                love.graphics.clear()
-                drawGame()
-        love.graphics.setCanvas()
-        love.graphics.draw(screenCanvas, 400)
+    love.graphics.setCanvas(screenCanvas)
+        love.graphics.clear()
+        drawGame()
+    love.graphics.setCanvas()
+    love.graphics.draw(screenCanvas, 400)
 
-        -- 加一條線把兩塊屏幕分隔開
-        love.graphics.line(400, 0, 400, 600)
+    -- 加一條線把兩塊屏幕分隔開
+    love.graphics.line(400, 0, 400, 600)
 
-        love.graphics.print("Player 1 - " .. score1, 10, 10)
-        love.graphics.print("Player 2 - " .. score2, 10, 30)
+    love.graphics.print("Player 1 - " .. score1, 10, 10)
+    love.graphics.print("Player 2 - " .. score2, 10, 30)
 end
 
 function drawGame()
-        love.graphics.push()
-                love.graphics.translate(-player1.x + 200, -player1.y + 300)
+    love.graphics.push()
+        love.graphics.translate(-player1.x + 200, -player1.y + 300)
 
-                love.graphics.circle("line", player1.x, player1.y, player1.size)
-                love.graphics.draw(player1.image, player1.x, player1.y,
-                        0, 1, 1, player1.image:getWidth()/2, player1.image:getHeight()/2)
+        love.graphics.circle("line", player1.x, player1.y, player1.size)
+        love.graphics.draw(player1.image, player1.x, player1.y,
+            0, 1, 1, player1.image:getWidth()/2, player1.image:getHeight()/2)
 
-                love.graphics.circle("line", player2.x, player2.y, player2.size)
-                love.graphics.draw(player2.image, player2.x, player2.y,
-                        0, 1, 1, player2.image:getWidth()/2, player2.image:getHeight()/2)
+        love.graphics.circle("line", player2.x, player2.y, player2.size)
+        love.graphics.draw(player2.image, player2.x, player2.y,
+            0, 1, 1, player2.image:getWidth()/2, player2.image:getHeight()/2)
 
-                for i,v in ipairs(coins) do
-                        love.graphics.circle("line", v.x, v.y, v.size)
-                        love.graphics.draw(v.image, v.x, v.y,
-                                0, 1, 1, v.image:getWidth()/2, v.image:getHeight()/2)
-                end
-        love.graphics.pop()
+        for i,v in ipairs(coins) do
+            love.graphics.circle("line", v.x, v.y, v.size)
+            love.graphics.draw(v.image, v.x, v.y,
+                0, 1, 1, v.image:getWidth()/2, v.image:getHeight()/2)
+        end
+    love.graphics.pop()
 end
 ```
 
@@ -475,42 +475,42 @@ end
 
 ```lua
 function love.draw()
-        love.graphics.setCanvas(screenCanvas)
-                love.graphics.clear()
-                drawGame(player1)
-        love.graphics.setCanvas()
-        love.graphics.draw(screenCanvas)
+    love.graphics.setCanvas(screenCanvas)
+        love.graphics.clear()
+        drawGame(player1)
+    love.graphics.setCanvas()
+    love.graphics.draw(screenCanvas)
 
-        love.graphics.setCanvas(screenCanvas)
-                love.graphics.clear()
-                drawGame(player2)
-        love.graphics.setCanvas()
-        love.graphics.draw(screenCanvas, 400)
+    love.graphics.setCanvas(screenCanvas)
+        love.graphics.clear()
+        drawGame(player2)
+    love.graphics.setCanvas()
+    love.graphics.draw(screenCanvas, 400)
 
-        love.graphics.line(400, 0, 400, 600)
+    love.graphics.line(400, 0, 400, 600)
 
-        love.graphics.print("Player 1 - " .. score1, 10, 10)
-        love.graphics.print("Player 2 - " .. score2, 10, 30)
+    love.graphics.print("Player 1 - " .. score1, 10, 10)
+    love.graphics.print("Player 2 - " .. score2, 10, 30)
 end
 
 function drawGame(focus)
-        love.graphics.push()
-                love.graphics.translate(-focus.x + 200, -focus.y + 300)
+    love.graphics.push()
+        love.graphics.translate(-focus.x + 200, -focus.y + 300)
 
-                love.graphics.circle("line", player1.x, player1.y, player1.size)
-                love.graphics.draw(player1.image, player1.x, player1.y,
-                        0, 1, 1, player1.image:getWidth()/2, player1.image:getHeight()/2)
+        love.graphics.circle("line", player1.x, player1.y, player1.size)
+        love.graphics.draw(player1.image, player1.x, player1.y,
+            0, 1, 1, player1.image:getWidth()/2, player1.image:getHeight()/2)
 
-                love.graphics.circle("line", player2.x, player2.y, player2.size)
-                love.graphics.draw(player2.image, player2.x, player2.y,
-                        0, 1, 1, player2.image:getWidth()/2, player2.image:getHeight()/2)
+        love.graphics.circle("line", player2.x, player2.y, player2.size)
+        love.graphics.draw(player2.image, player2.x, player2.y,
+            0, 1, 1, player2.image:getWidth()/2, player2.image:getHeight()/2)
 
-                for i,v in ipairs(coins) do
-                        love.graphics.circle("line", v.x, v.y, v.size)
-                        love.graphics.draw(v.image, v.x, v.y,
-                                0, 1, 1, v.image:getWidth()/2, v.image:getHeight()/2)
-                end
-        love.graphics.pop()
+        for i,v in ipairs(coins) do
+            love.graphics.circle("line", v.x, v.y, v.size)
+            love.graphics.draw(v.image, v.x, v.y,
+                0, 1, 1, v.image:getWidth()/2, v.image:getHeight()/2)
+        end
+    love.graphics.pop()
 end
 ```
 

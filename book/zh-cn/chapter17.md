@@ -14,13 +14,13 @@
 
 ```lua
 function love.load()
-        frames = {}
+    frames = {}
 
-        table.insert(frames, love.graphics.newImage("jump1.png"))
-        table.insert(frames, love.graphics.newImage("jump2.png"))
-        table.insert(frames, love.graphics.newImage("jump3.png"))
-        table.insert(frames, love.graphics.newImage("jump4.png"))
-        table.insert(frames, love.graphics.newImage("jump5.png"))
+    table.insert(frames, love.graphics.newImage("jump1.png"))
+    table.insert(frames, love.graphics.newImage("jump2.png"))
+    table.insert(frames, love.graphics.newImage("jump3.png"))
+    table.insert(frames, love.graphics.newImage("jump4.png"))
+    table.insert(frames, love.graphics.newImage("jump5.png"))
 end
 ```
 
@@ -28,11 +28,11 @@ end
 
 ```lua
 function love.load()
-        frames = {}
+    frames = {}
 
-        for i=1,5 do
-                table.insert(frames, love.graphics.newImage("jump" .. i .. ".png"))
-        end
+    for i=1,5 do
+        table.insert(frames, love.graphics.newImage("jump" .. i .. ".png"))
+    end
 end
 ```
 
@@ -44,19 +44,19 @@ end
 
 ```lua
 function love.load()
-        frames = {}
+    frames = {}
 
-        for i=1,5 do
-                table.insert(frames, love.graphics.newImage("jump" .. i .. ".png"))
-        end
+    for i=1,5 do
+        table.insert(frames, love.graphics.newImage("jump" .. i .. ".png"))
+    end
 
-        -- 我用一个长一点的名字，免得和名为 frames 的变量混淆
-        currentFrame = 1
+    -- 我用一个长一点的名字，免得和名为 frames 的变量混淆
+    currentFrame = 1
 end
 
 
 function love.update(dt)
-        currentFrame = currentFrame + dt
+    currentFrame = currentFrame + dt
 end
 ```
 
@@ -64,7 +64,7 @@ end
 
 ```lua
 function love.draw()
-        love.graphics.draw(frames[currentFrame])
+    love.graphics.draw(frames[currentFrame])
 end
 ```
 
@@ -76,7 +76,7 @@ end
 
 ```lua
 function love.draw()
-        love.graphics.draw(frames[math.floor(currentFrame)])
+    love.graphics.draw(frames[math.floor(currentFrame)])
 end
 ```
 
@@ -84,10 +84,10 @@ end
 
 ```lua
 function love.update(dt)
-        currentFrame = currentFrame + 10 * dt
-        if currentFrame >= 6 then
-                currentFrame = 1
-        end
+    currentFrame = currentFrame + 10 * dt
+    if currentFrame >= 6 then
+        currentFrame = 1
+    end
 end
 ```
 
@@ -109,7 +109,7 @@ ___
 
 ```lua
 function love.load()
-        image = love.graphics.newImage("jump.png")
+    image = love.graphics.newImage("jump.png")
 end
 ```
 
@@ -119,9 +119,9 @@ end
 
 ```lua
 function love.load()
-        image = love.graphics.newImage("jump.png")
-        frames = {}
-        table.insert(frames, love.graphics.newQuad(0, 0))
+    image = love.graphics.newImage("jump.png")
+    frames = {}
+    table.insert(frames, love.graphics.newQuad(0, 0))
 end
 ```
 
@@ -133,13 +133,13 @@ end
 
 ```lua
 function love.load()
-        image = love.graphics.newImage("jump.png")
-        frames = {}
-        local frame_width = 117
-        local frame_height = 233
-        table.insert(frames, love.graphics.newQuad(0, 0, frame_width, frame_height, image:getWidth(), image:getHeight()))
+    image = love.graphics.newImage("jump.png")
+    frames = {}
+    local frame_width = 117
+    local frame_height = 233
+    table.insert(frames, love.graphics.newQuad(0, 0, frame_width, frame_height, image:getWidth(), image:getHeight()))
 
-        currentFrame = 1
+    currentFrame = 1
 end
 ```
 
@@ -147,7 +147,7 @@ end
 
 ```lua
 function love.draw()
-        love.graphics.draw(image, frames[1], 100, 100)
+    love.graphics.draw(image, frames[1], 100, 100)
 end
 ```
 
@@ -157,12 +157,12 @@ end
 
 ```lua
 function love.load()
-        image = love.graphics.newImage("jump.png")
-        frames = {}
-        local frame_width = 117
-        local frame_height = 233
-        table.insert(frames, love.graphics.newQuad(0, 0, frame_width, frame_height, image:getWidth(), image:getHeight()))
-        table.insert(frames, love.graphics.newQuad(frame_width, 0, frame_width, frame_height, image:getWidth(), image:getHeight()))
+    image = love.graphics.newImage("jump.png")
+    frames = {}
+    local frame_width = 117
+    local frame_height = 233
+    table.insert(frames, love.graphics.newQuad(0, 0, frame_width, frame_height, image:getWidth(), image:getHeight()))
+    table.insert(frames, love.graphics.newQuad(frame_width, 0, frame_width, frame_height, image:getWidth(), image:getHeight()))
 end
 ```
 
@@ -174,20 +174,20 @@ end
 
 ```lua
 function love.load()
-        image = love.graphics.newImage("jump.png")
-        local width = image:getWidth()
-        local height = image:getHeight()
+    image = love.graphics.newImage("jump.png")
+    local width = image:getWidth()
+    local height = image:getHeight()
 
-        frames = {}
+    frames = {}
 
-        local frame_width = 117
-        local frame_height = 233
+    local frame_width = 117
+    local frame_height = 233
 
-        for i=0,4 do
-                table.insert(frames, love.graphics.newQuad(i * frame_width, 0, frame_width, frame_height, width, height))
-        end
+    for i=0,4 do
+        table.insert(frames, love.graphics.newQuad(i * frame_width, 0, frame_width, frame_height, width, height))
+    end
 
-        currentFrame = 1
+    currentFrame = 1
 end
 ```
 
@@ -197,7 +197,7 @@ end
 
 ```lua
 function love.draw()
-        love.graphics.draw(image, frames[math.floor(currentFrame)], 100, 100)
+    love.graphics.draw(image, frames[math.floor(currentFrame)], 100, 100)
 end
 ```
 
@@ -213,24 +213,24 @@ ___
 
 ```lua
 function love.load()
-        image = love.graphics.newImage("jump_2.png")
-        local width = image:getWidth()
-        local height = image:getHeight()
+    image = love.graphics.newImage("jump_2.png")
+    local width = image:getWidth()
+    local height = image:getHeight()
 
-        frames = {}
+    frames = {}
 
-        local frame_width = 117
-        local frame_height = 233
+    local frame_width = 117
+    local frame_height = 233
 
-        for i=0,2 do
-                table.insert(frames, love.graphics.newQuad(i * frame_width, 0, frame_width, frame_height, width, height))
-        end
+    for i=0,2 do
+        table.insert(frames, love.graphics.newQuad(i * frame_width, 0, frame_width, frame_height, width, height))
+    end
 
-        for i=0,1 do
-                table.insert(frames, love.graphics.newQuad(i * frame_width, frame_height, frame_width, frame_height, width, height))
-        end
+    for i=0,1 do
+        table.insert(frames, love.graphics.newQuad(i * frame_width, frame_height, frame_width, frame_height, width, height))
+    end
 
-        currentFrame = 1
+    currentFrame = 1
 end
 ```
 
@@ -242,24 +242,24 @@ end
 
 ```lua
 function love.load()
-        image = love.graphics.newImage("jump_2.png")
-        local width = image:getWidth()
-        local height = image:getHeight()
+    image = love.graphics.newImage("jump_2.png")
+    local width = image:getWidth()
+    local height = image:getHeight()
 
-        frames = {}
+    frames = {}
 
-        local frame_width = 117
-        local frame_height = 233
+    local frame_width = 117
+    local frame_height = 233
 
-        for i=0,1 do
-                -- 我把内层 for 循环里的 i 改成了 j
-                for j=0,2 do
-                        -- 所以这里也要改成 j
-                        table.insert(frames, love.graphics.newQuad(j * frame_width, i * frame_height, frame_width, frame_height, width, height))
-                end
+    for i=0,1 do
+        -- 我把内层 for 循环里的 i 改成了 j
+        for j=0,2 do
+            -- 所以这里也要改成 j
+            table.insert(frames, love.graphics.newQuad(j * frame_width, i * frame_height, frame_width, frame_height, width, height))
         end
+    end
 
-        currentFrame = 1
+    currentFrame = 1
 end
 ```
 
@@ -271,13 +271,13 @@ end
 ```lua
 maxFrames = 5
 for i=0,1 do
-        for j=0,2 do
-                table.insert(frames, love.graphics.newQuad(j * frame_width, i * frame_height, frame_width, frame_height, width, height))
-                if #frames == maxFrames then
-                        break
-                end
+    for j=0,2 do
+        table.insert(frames, love.graphics.newQuad(j * frame_width, i * frame_height, frame_width, frame_height, width, height))
+        if #frames == maxFrames then
+            break
         end
-        print("I don't break!")
+    end
+    print("I don't break!")
 end
 ```
 

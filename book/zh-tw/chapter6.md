@@ -7,7 +7,7 @@ ___
 你可以這樣創建一個 if 語句：
 ```lua
 if condition then
-        -- 代碼
+    -- 代碼
 end
 ```
 
@@ -21,9 +21,9 @@ end
 
 ```lua
 function love.update(dt)
-        if 5 > 9 then
-                x = x + 100 * dt
-        end
+    if 5 > 9 then
+        x = x + 100 * dt
+    end
 end
 ```
 
@@ -33,9 +33,9 @@ end
 
 ```lua
 function love.update(dt)
-        if x < 600 then
-                x = x + 100 * dt
-        end
+    if x < 600 then
+        x = x + 100 * dt
+    end
 end
 ```
 
@@ -73,15 +73,15 @@ x == 10 -- 把 x 和 10 進行比較
 
 ```lua
 function love.load()
-        x = 100
-        move = true
+    x = 100
+    move = true
 end
 
 function love.update(dt)
-        -- 記得用兩個等號！
-        if move == true then
-                x = x + 100 * dt
-        end
+    -- 記得用兩個等號！
+    if move == true then
+        x = x + 100 * dt
+    end
 end
 ```
 
@@ -89,7 +89,7 @@ end
 
 ```lua
 if move then
-        x = x + 100 * dt
+    x = x + 100 * dt
 end
 ```
 
@@ -97,7 +97,7 @@ end
 
 ```lua
 if not move then
-        x = x + 100 * dt
+    x = x + 100 * dt
 end
 ```
 
@@ -105,7 +105,7 @@ end
 
 ```lua
 if 4 ~= 5 then
-        x = x + 100 * dt
+    x = x + 100 * dt
 end
 ```
 
@@ -117,9 +117,9 @@ end
 
 ```lua
 if move then
-        move = false
-        print("這一行仍然會被執行！")
-        x = x + 100 * dt
+    move = false
+    print("這一行仍然會被執行！")
+    x = x + 100 * dt
 end
 ```
 
@@ -131,7 +131,7 @@ end
 把字符串 "right" 作為第一個參數傳入，即可檢查右方向鍵是否被按下。
 ```lua
 if love.keyboard.isDown("right") then
-        x = x + 100 * dt
+    x = x + 100 * dt
 end
 ```
 
@@ -143,9 +143,9 @@ end
 
 ```lua
 if love.keyboard.isDown("right") then
-        x = x + 100 * dt
+    x = x + 100 * dt
 else
-        x = x - 100 * dt -- 把 x 的值減小
+    x = x - 100 * dt -- 把 x 的值減小
 end
 ```
 
@@ -153,9 +153,9 @@ end
 
 ```lua
 if love.keyboard.isDown("right") then
-        x = x + 100 * dt
+    x = x + 100 * dt
 elseif love.keyboard.isDown("left") then
-        x = x - 100 * dt
+    x = x - 100 * dt
 end
 ```
 
@@ -168,7 +168,7 @@ ___
 
  ```lua
 if 5 < 9 and 14 > 7 then
-        print("兩個條件都為真")
+    print("兩個條件都為真")
 end
 ```
 
@@ -176,7 +176,7 @@ end
 
  ```lua
 if 20 < 9 or 14 > 7 or 5 == 10 then
-        print("這些條件裡至少有一個為真")
+    print("這些條件裡至少有一個為真")
 end
 ```
 

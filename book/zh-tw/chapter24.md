@@ -1,6 +1,5 @@
 # 第 24 章 - 平臺遊戲
 
-___
 *我們使用上一章的代碼*
 ___
 
@@ -24,26 +23,26 @@ function love.load()
     table.insert(objects, box)
 
     map = {
-                {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-                {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-                {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-                {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-                {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-                {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-                {1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1},
-                {1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1},
-                {1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1},
-                {1,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1},
-                {1,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1},
-                {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
+        {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+        {1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1},
+        {1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1},
+        {1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1},
+        {1,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1},
+        {1,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1},
+        {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
     }
 
     for i,v in ipairs(map) do
-                for j,w in ipairs(v) do
-                        if w == 1 then
-                            table.insert(objects, Wall((j-1)*50, (i-1)*50))
-                        end
-                end
+        for j,w in ipairs(v) do
+            if w == 1 then
+                table.insert(objects, Wall((j-1)*50, (i-1)*50))
+            end
+        end
     end
 end
 ```
@@ -68,97 +67,95 @@ function love.load()
     table.insert(objects, box)
 
     -- 創建牆體表
-        ---- 在此添加
+    ---- 在此添加
     walls = {}
-        -------------
+    -------------
 
     map = {
-                {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-                {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-                {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-                {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-                {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-                {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-                {1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1},
-                {1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1},
-                {1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1},
-                {1,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1},
-                {1,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1},
-                {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
+        {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+        {1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1},
+        {1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1},
+        {1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1},
+        {1,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1},
+        {1,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1},
+        {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
     }
 
     for i,v in ipairs(map) do
-                for j,w in ipairs(v) do
-                        if w == 1 then
-                                -- 把所有牆體添加到 walls 表中
-                                ---- 將此處改為
-                            table.insert(walls, Wall((j-1)*50, (i-1)*50))
-                                -------------
-                        end
-                end
+        for j,w in ipairs(v) do
+            if w == 1 then
+                -- 把所有牆體添加到 walls 表中
+                ---- 將此處改為
+                table.insert(walls, Wall((j-1)*50, (i-1)*50))
+                -------------
+            end
+        end
     end
 end
 
 function love.update(dt)
     for i,v in ipairs(objects) do
-        v:update(dt)
+    v:update(dt)
     end
 
     -- 更新牆體
-        ---- 在此添加
+    ---- 在此添加
     for i,v in ipairs(walls) do
-        v:update(dt)
+    v:update(dt)
     end
-        -------------
+    -------------
 
     local loop = true
     local limit = 0
 
     while loop do
-        loop = false
+    loop = false
 
-        limit = limit + 1
-        if limit > 100 then
-                        break
+    limit = limit + 1
+    if limit > 100 then
+        break
+    end
+
+    for i=1,#objects-1 do
+        for j=i+1,#objects do
+        local collision = objects[i]:resolveCollision(objects[j])
+        if collision then
+            loop = true
         end
+        end
+    end
 
-        for i=1,#objects-1 do
-            for j=i+1,#objects do
-                local collision = objects[i]:resolveCollision(objects[j])
-                if collision then
-                    loop = true
-                end
+    -- 讓每個對象都與每一堵牆檢查碰撞
+    ---- 在此添加
+    for i,wall in ipairs(walls) do
+        for j,object in ipairs(objects) do
+            local collision = object:resolveCollision(wall)
+            if collision then
+                loop = true
             end
         end
-
-        -- 讓每個對象都與每一堵牆檢查碰撞
-                ---- 在此添加
-        for i,wall in ipairs(walls) do
-                        for j,object in ipairs(objects) do
-                                local collision = object:resolveCollision(wall)
-                                if collision then
-                                        loop = true
-                                end
-                        end
-        end
-                -------------
+    end
+        -------------
     end
 end
 
 function love.draw()
     for i,v in ipairs(objects) do
-        v:draw()
+    v:draw()
     end
 
-        -- 繪製牆體
-        ---- 在此添加
+    -- 繪製牆體
+    ---- 在此添加
     for i,v in ipairs(walls) do
-        v:draw()
+    v:draw()
     end
-        -------------
+    -------------
 end
-```
-
 ```
 
 好了，現在我們可以開始添加平臺物理了。先從下落開始。在 `player.lua` 中，我們已經在按下下方向鍵時讓玩家向下移動。把那個 if 語句移除後，玩家就會自動往下掉。
@@ -169,13 +166,13 @@ function Player:update(dt)
     Player.super.update(self, dt)
 
     if love.keyboard.isDown("left") then
-        self.x = self.x - 200 * dt
+    self.x = self.x - 200 * dt
     elseif love.keyboard.isDown("right") then
-        self.x = self.x + 200 * dt
+    self.x = self.x + 200 * dt
     end
 
     if love.keyboard.isDown("up") then
-        self.y = self.y - 200 * dt
+    self.y = self.y - 200 * dt
     end
 
     -- 移除 if 語句
@@ -244,9 +241,9 @@ function Player:update(dt)
     Player.super.update(self, dt)
 
     if love.keyboard.isDown("left") then
-        self.x = self.x - 200 * dt
+    self.x = self.x - 200 * dt
     elseif love.keyboard.isDown("right") then
-        self.x = self.x + 200 * dt
+    self.x = self.x + 200 * dt
     end
 
     -- 移除垂直方向的移動
@@ -263,35 +260,35 @@ end
 --! file: entity.lua
 function Entity:resolveCollision(e)
     if self.tempStrength > e.tempStrength then
-        return e:resolveCollision(self)
+    return e:resolveCollision(self)
     end
 
     if self:checkCollision(e) then
-        self.tempStrength = e.tempStrength
-        if self:wasVerticallyAligned(e) then
-            if self.x + self.width/2 < e.x + e.width/2 then
-                local pushback = self.x + self.width - e.x
-                self.x = self.x - pushback
-            else
-                local pushback = e.x + e.width - self.x
-                self.x = self.x + pushback
-            end
-        elseif self:wasHorizontallyAligned(e) then
-            if self.y + self.height/2 < e.y + e.height/2 then
-                local pushback = self.y + self.height - e.y
-                self.y = self.y - pushback
-                -- 我們從下方碰到了牆
-                -- 這意味著我們站在地面上
-                -- 重置重力
-                                ---- 在此添加
-                self.gravity = 0
-                                -------------
-            else
-                local pushback = e.y + e.height - self.y
-                self.y = self.y + pushback
-            end
+    self.tempStrength = e.tempStrength
+    if self:wasVerticallyAligned(e) then
+        if self.x + self.width/2 < e.x + e.width/2 then
+        local pushback = self.x + self.width - e.x
+        self.x = self.x - pushback
+        else
+        local pushback = e.x + e.width - self.x
+        self.x = self.x + pushback
         end
-        return true
+    elseif self:wasHorizontallyAligned(e) then
+        if self.y + self.height/2 < e.y + e.height/2 then
+        local pushback = self.y + self.height - e.y
+        self.y = self.y - pushback
+        -- 我們從下方碰到了牆
+        -- 這意味著我們站在地面上
+        -- 重置重力
+                ---- 在此添加
+        self.gravity = 0
+                -------------
+        else
+        local pushback = e.y + e.height - self.y
+        self.y = self.y + pushback
+        end
+    end
+    return true
     end
     return false
 end
@@ -308,10 +305,10 @@ ___
 ```lua
 --! file: main.lua
 function love.keypressed(key)
-        -- 當按下上方向鍵時讓玩家跳躍
-        if key == "up" then
-                player:jump()
-        end
+    -- 當按下上方向鍵時讓玩家跳躍
+    if key == "up" then
+        player:jump()
+    end
 end
 ```
 
@@ -320,7 +317,7 @@ end
 ```lua
 --! file: player.lua
 function Player:jump()
-        self.gravity = -300
+    self.gravity = -300
 end
 ```
 
@@ -342,9 +339,9 @@ function Player:update(dt)
     Player.super.update(self, dt)
 
     if love.keyboard.isDown("left") then
-        self.x = self.x - 200 * dt
+    self.x = self.x - 200 * dt
     elseif love.keyboard.isDown("right") then
-        self.x = self.x + 200 * dt
+    self.x = self.x + 200 * dt
     end
 
     -- 移除該 if 語句
@@ -354,8 +351,8 @@ end
 
 function Player:jump()
     if self.canJump then
-        self.gravity = -300
-        self.canJump = false
+    self.gravity = -300
+    self.canJump = false
     end
 end
 ```
@@ -366,46 +363,46 @@ end
 --! file: entity.lua
 function Entity:resolveCollision(e)
     if self.tempStrength > e.tempStrength then
-        return e:resolveCollision(self)
+    return e:resolveCollision(self)
     end
 
     if self:checkCollision(e) then
-        self.tempStrength = e.tempStrength
-        if self:wasVerticallyAligned(e) then
-            if self.x + self.width/2 < e.x + e.width/2 then
-                -- 用函數替換這些邏輯
-                self:collide(e, "right")
-            else
-                self:collide(e, "left")
-            end
-        elseif self:wasHorizontallyAligned(e) then
-            if self.y + self.height/2 < e.y + e.height/2 then
-                self:collide(e, "bottom")
-            else
-                self:collide(e, "top")
-            end
+    self.tempStrength = e.tempStrength
+    if self:wasVerticallyAligned(e) then
+        if self.x + self.width/2 < e.x + e.width/2 then
+        -- 用函數替換這些邏輯
+        self:collide(e, "right")
+        else
+        self:collide(e, "left")
         end
-        return true
+    elseif self:wasHorizontallyAligned(e) then
+        if self.y + self.height/2 < e.y + e.height/2 then
+        self:collide(e, "bottom")
+        else
+        self:collide(e, "top")
+        end
+    end
+    return true
     end
     return false
 end
 
 -- 當實體的某個方向與某物發生碰撞時
 function Entity:collide(e, direction)
-        if direction == "right" then
-            local pushback = self.x + self.width - e.x
-            self.x = self.x - pushback
-        elseif direction == "left" then
-            local pushback = e.x + e.width - self.x
-            self.x = self.x + pushback
-        elseif direction == "bottom" then
-            local pushback = self.y + self.height - e.y
-            self.y = self.y - pushback
-            self.gravity = 0
-        elseif direction == "top" then
-            local pushback = e.y + e.height - self.y
-            self.y = self.y + pushback
-        end
+    if direction == "right" then
+        local pushback = self.x + self.width - e.x
+        self.x = self.x - pushback
+    elseif direction == "left" then
+        local pushback = e.x + e.width - self.x
+        self.x = self.x + pushback
+    elseif direction == "bottom" then
+        local pushback = self.y + self.height - e.y
+        self.y = self.y - pushback
+        self.gravity = 0
+    elseif direction == "top" then
+        local pushback = e.y + e.height - self.y
+        self.y = self.y + pushback
+    end
 end
 ```
 
@@ -416,7 +413,7 @@ end
 function Player:collide(e, direction)
     Player.super.collide(self, e, direction)
     if direction == "bottom" then
-            self.canJump = true
+        self.canJump = true
     end
 end
 ```
@@ -432,13 +429,13 @@ function Player:update(dt)
     Player.super.update(self, dt)
 
     if love.keyboard.isDown("left") then
-        self.x = self.x - 200 * dt
+    self.x = self.x - 200 * dt
     elseif love.keyboard.isDown("right") then
-        self.x = self.x + 200 * dt
+    self.x = self.x + 200 * dt
     end
 
     if self.last.y ~= self.y then
-        self.canJump = false
+    self.canJump = false
     end
 end
 ```
@@ -461,43 +458,43 @@ ___
 --! file: entity.lua
 function Entity:resolveCollision(e)
     if self.tempStrength > e.tempStrength then
-        return e:resolveCollision(self)
+    return e:resolveCollision(self)
     end
 
     if self:checkCollision(e) then
-        self.tempStrength = e.tempStrength
-        if self:wasVerticallyAligned(e) then
-            if self.x + self.width/2 < e.x + e.width/2 then
-                -- 為雙方調用 checkResolve
-                local a = self:checkResolve(e, "right")
-                local b = e:checkResolve(self, "left")
-                -- 當 a 與 b 都為 true 時才解決碰撞
-                if a and b then
-                    self:collide(e, "right")
-                end
-            else
-                local a = self:checkResolve(e, "left")
-                local b = e:checkResolve(self, "right")
-                if a and b then
-                    self:collide(e, "left")
-                end
-            end
-        elseif self:wasHorizontallyAligned(e) then
-            if self.y + self.height/2 < e.y + e.height/2 then
-                local a = self:checkResolve(e, "bottom")
-                local b = e:checkResolve(self, "top")
-                if a and b then
-                    self:collide(e, "bottom")
-                end
-            else
-                local a = self:checkResolve(e, "top")
-                local b = e:checkResolve(self, "bottom")
-                if a and b then
-                    self:collide(e, "top")
-                end
-            end
+    self.tempStrength = e.tempStrength
+    if self:wasVerticallyAligned(e) then
+        if self.x + self.width/2 < e.x + e.width/2 then
+        -- 為雙方調用 checkResolve
+        local a = self:checkResolve(e, "right")
+        local b = e:checkResolve(self, "left")
+        -- 當 a 與 b 都為 true 時才解決碰撞
+        if a and b then
+            self:collide(e, "right")
         end
-        return true
+        else
+        local a = self:checkResolve(e, "left")
+        local b = e:checkResolve(self, "right")
+        if a and b then
+            self:collide(e, "left")
+        end
+        end
+    elseif self:wasHorizontallyAligned(e) then
+        if self.y + self.height/2 < e.y + e.height/2 then
+        local a = self:checkResolve(e, "bottom")
+        local b = e:checkResolve(self, "top")
+        if a and b then
+            self:collide(e, "bottom")
+        end
+        else
+        local a = self:checkResolve(e, "top")
+        local b = e:checkResolve(self, "bottom")
+        if a and b then
+            self:collide(e, "top")
+        end
+        end
+    end
+    return true
     end
     return false
 end
@@ -516,11 +513,11 @@ end
 --! file: player.lua
 function Player:checkResolve(e, direction)
     if e:is(Box) then
-        if direction == "bottom" then
-                return true
-        else
-                return false
-        end
+    if direction == "bottom" then
+        return true
+    else
+        return false
+    end
     end
     return true
 end

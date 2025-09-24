@@ -6,18 +6,12 @@
 
 ```lua
 function love.load()
-
 end
-
 
 function love.update()
-
-
 end
 
-
 function love.draw()
-
 end
 ```
 
@@ -25,7 +19,7 @@ end
 
 ```lua
 function love.draw()
-        love.graphics.rectangle("line", 100, 50, 200, 150)
+    love.graphics.rectangle("line", 100, 50, 200, 150)
 end
 ```
 
@@ -45,11 +39,11 @@ y 表示“屏幕上的垂直位置”。0 在屏幕的最上方。
 
 ```lua
 function love.load()
-        x = 100
+    x = 100
 end
 
 function love.draw()
-        love.graphics.rectangle("line", x, 50, 200, 150)
+    love.graphics.rectangle("line", x, 50, 200, 150)
 end
 ```
 
@@ -61,7 +55,7 @@ end
 
 ```lua
 function love.update()
-        x = x + 5
+    x = x + 5
 end
 ```
 
@@ -91,8 +85,8 @@ ___
 
 ```lua
 function love.update(dt)
-        print(dt)
-        x = x + 5
+    print(dt)
+    x = x + 5
 end
 ```
 
@@ -110,7 +104,7 @@ delta time 是前一次更新与当前更新之间经过的时间。因此，在
 
 ```lua
 function love.update(dt)
-        x = x + 5 * dt
+    x = x + 5 * dt
 ```
 
 现在我们的矩形在所有电脑上都是每秒移动 5 像素。把 5 改成 100 就能让它移动得更快。
