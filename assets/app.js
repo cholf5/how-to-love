@@ -4,7 +4,8 @@ const state = {
   data: null,
   language: 'en',
   chapterId: null,
-  theme: 'light'
+  theme: 'light',
+  scrollRestoration: null
 };
 
 const dom = {
@@ -18,6 +19,8 @@ const dom = {
   brandLink: document.getElementById('brand-link'),
   footerNote: document.getElementById('footer-note')
 };
+
+let languageDropdownCloseTimeout = null;
 
 const PLACEHOLDER_TOKEN = '\u0000';
 const COOKIE_MAX_AGE = 60 * 60 * 24 * 365;
@@ -123,16 +126,97 @@ function setupLanguageSelect() {
   updateFooter();
 }
 
+function clearLanguageDropdownCloseTimeout() {
+  if (languageDropdownCloseTimeout) {
+    window.clearTimeout(languageDropdownCloseTimeout);
+    languageDropdownCloseTimeout = null;
+  }
+}
+
+function openLanguageDropdown() {
+  if (!dom.languageDropdown || !dom.languageDropdownButton) {
+    return;
+  }
+  clearLanguageDropdownCloseTimeout();
+  dom.languageDropdown.classList.add('is-open');
+  dom.languageDropdownButton.setAttribute('aria-expanded', 'true');
+}
+
+function closeLanguageDropdown(immediate = false) {
+  if (!dom.languageDropdown || !dom.languageDropdownButton) {
+    return;
+  }
+
+  const doClose = () => {
+    dom.languageDropdown.classList.remove('is-open');
+    dom.languageDropdownButton.setAttribute('aria-expanded', 'false');
+  };
+
+  if (immediate) {
+    clearLanguageDropdownCloseTimeout();
+    doClose();
+    return;
+  }
+
+  clearLanguageDropdownCloseTimeout();
+  languageDropdownCloseTimeout = window.setTimeout(() => {
+    languageDropdownCloseTimeout = null;
+    if (!dom.languageDropdown.matches(':hover') && !dom.languageDropdown.matches(':focus-within')) {
+      doClose();
+    }
+  }, 200);
+}
+
+function captureScrollProgress() {
+  const maxScroll = Math.max(
+    document.documentElement.scrollHeight - window.innerHeight,
+    0
+  );
+  if (maxScroll <= 0) {
+    return 0;
+  }
+  const current = window.scrollY || document.documentElement.scrollTop || 0;
+  return current / maxScroll;
+}
+
+function restoreScrollProgress() {
+  if (state.scrollRestoration == null) {
+    return;
+  }
+  const ratio = state.scrollRestoration;
+  state.scrollRestoration = null;
+  window.requestAnimationFrame(() => {
+    const maxScroll = Math.max(
+      document.documentElement.scrollHeight - window.innerHeight,
+      0
+    );
+    if (maxScroll <= 0) {
+      window.scrollTo({ top: 0, behavior: 'auto' });
+      return;
+    }
+    const target = Math.min(maxScroll, Math.max(0, ratio * maxScroll));
+    window.scrollTo({ top: target, behavior: 'auto' });
+  });
+}
+
 function setupEvents() {
   dom.languageSelect.addEventListener('change', event => {
     const nextLanguage = event.target.value;
     if (!state.data.languages[nextLanguage]) {
       return;
     }
+    const chapterExistsInNextLanguage = Boolean(
+      state.chapterId && findChapter(nextLanguage, state.chapterId)
+    );
+    state.scrollRestoration = chapterExistsInNextLanguage
+      ? captureScrollProgress()
+      : null;
+
     state.language = nextLanguage;
     updateLanguageDropdownSelection();
     if (!findChapter(nextLanguage, state.chapterId)) {
       state.chapterId = null;
+      state.scrollRestoration = null;
     }
     persistLanguage();
     updateUrl();
@@ -142,22 +226,28 @@ function setupEvents() {
 
   if (dom.languageDropdown && dom.languageDropdownButton) {
     dom.languageDropdown.addEventListener('mouseenter', () => {
-      dom.languageDropdownButton.setAttribute('aria-expanded', 'true');
+      openLanguageDropdown();
     });
 
     dom.languageDropdown.addEventListener('mouseleave', () => {
-      if (!dom.languageDropdown.matches(':focus-within')) {
-        dom.languageDropdownButton.setAttribute('aria-expanded', 'false');
-      }
+      closeLanguageDropdown();
     });
 
     dom.languageDropdown.addEventListener('focusin', () => {
-      dom.languageDropdownButton.setAttribute('aria-expanded', 'true');
+      openLanguageDropdown();
     });
 
     dom.languageDropdown.addEventListener('focusout', event => {
       if (!dom.languageDropdown.contains(event.relatedTarget)) {
-        dom.languageDropdownButton.setAttribute('aria-expanded', 'false');
+        closeLanguageDropdown();
+      }
+    });
+
+    dom.languageDropdownButton.addEventListener('keydown', event => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        closeLanguageDropdown(true);
+        dom.languageDropdownButton.blur();
       }
     });
   }
@@ -201,13 +291,13 @@ function handleLanguageSelection(code) {
     return;
   }
   if (!state.data.languages[code] || dom.languageSelect.value === code) {
-    dom.languageDropdownButton.setAttribute('aria-expanded', 'false');
+    closeLanguageDropdown(true);
     return;
   }
   dom.languageSelect.value = code;
   const changeEvent = new Event('change', { bubbles: true });
   dom.languageSelect.dispatchEvent(changeEvent);
-  dom.languageDropdownButton.setAttribute('aria-expanded', 'false');
+  closeLanguageDropdown(true);
 }
 
 function updateLanguageDropdownSelection() {
@@ -340,6 +430,7 @@ function renderContents(languageInfo) {
   }
 
   dom.app.appendChild(mainSection);
+  restoreScrollProgress();
 }
 
 function buildSectionHeader(label) {
@@ -447,6 +538,7 @@ function renderChapter(languageInfo, skipUrlUpdate = false, chapterOverride = nu
       setupCodeCopyButtons(article);
       container.appendChild(navBottom);
       article.scrollTop = 0;
+      restoreScrollProgress();
     })
     .catch(() => {
       article.innerHTML = '';
@@ -459,6 +551,7 @@ function renderChapter(languageInfo, skipUrlUpdate = false, chapterOverride = nu
       notice.append(title, message);
       article.appendChild(notice);
       container.appendChild(navBottom);
+      restoreScrollProgress();
     });
 
   dom.app.appendChild(container);
