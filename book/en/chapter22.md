@@ -1,4 +1,3 @@
-# Chapter 22 - Cameras and canvases
 ___
 *We use the code from the previous chapter*
 ___

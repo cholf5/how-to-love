@@ -1,4 +1,3 @@
-﻿
 # Chapter 15 - Distributing your game
 
 ___

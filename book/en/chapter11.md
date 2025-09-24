@@ -1,4 +1,3 @@
-# Chapter 11 - Classes
 Classes are like blueprints. You can create multiple houses with one blueprint. Similarly, we can create multiple objects from one class.
 
 ![](/images/book/11/blueprint.png)

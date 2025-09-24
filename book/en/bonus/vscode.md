@@ -1,5 +1,3 @@
-# Visual Studio Code
-
 Visual Studio Code is a code editor by Microsoft with lots of features. In this chapter we go over some extensions and tricks to optimize the editor for making LÖVE games.
 
 [Install Visual Studio Code](https://code.visualstudio.com/)

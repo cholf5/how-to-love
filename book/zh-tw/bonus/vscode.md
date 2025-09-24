@@ -1,5 +1,3 @@
-# Visual Studio Code
-
 Visual Studio Code 是微軟推出的一款功能非常豐富的代碼編輯器。本章將介紹一些擴展和技巧，幫助你優化編輯器來製作 LÖVE 遊戲。
 
 [安裝 Visual Studio Code](https://code.visualstudio.com/)

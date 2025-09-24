@@ -1,5 +1,3 @@
-# Chapter 19 - Audio
-
 We're going to add audio. This chapter is very short. That's because just like with a lot of things, the LÖVE API makes it very easy for us to add audio to the game.
 
 Download these two files that we will be using in this tutorial:

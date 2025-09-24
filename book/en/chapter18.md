@@ -1,5 +1,3 @@
-# Chapter 18 - Tiles
-
 ___
 
 *Be sure to read the comments in the code, I put a lot of important information in there*

@@ -1,5 +1,3 @@
-# Chapter 3 - Functions
-
 With functions, we can store pieces of code. This allows us to execute this code whenever we want. Functions are also known as `methods`.
 
 There are 2 ways to create a function:

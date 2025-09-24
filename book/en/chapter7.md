@@ -1,5 +1,3 @@
-# Chapter 7 - Tables and for-loops
-
 ## Tables
 Tables are basically lists in which we can store values.
 
