@@ -14,6 +14,21 @@ const dom = {
 };
 
 const PLACEHOLDER_TOKEN = '\u0000';
+const basePath = (() => {
+  const { pathname } = window.location;
+  if (pathname.endsWith('/')) {
+    return pathname;
+  }
+  const lastSlash = pathname.lastIndexOf('/');
+  if (lastSlash === -1) {
+    return '/';
+  }
+  const lastSegment = pathname.slice(lastSlash + 1);
+  if (!lastSegment || lastSegment.includes('.')) {
+    return pathname.slice(0, lastSlash + 1) || '/';
+  }
+  return `${pathname}/`;
+})();
 
 async function init() {
   const response = await fetch('book/chapters.json');
@@ -164,7 +179,16 @@ function renderContents(languageInfo) {
   subtitle.className = 'hero-subtitle';
   subtitle.textContent = languageInfo.description;
 
-  hero.append(title, subtitle);
+  const credit = document.createElement('p');
+  credit.className = 'hero-credit';
+  const creditLink = '<a href="https://github.com/Sheepolution/how-to-love" target="_blank" rel="noopener">Sheepolution</a>';
+  if (state.language === 'zh-cn') {
+    credit.innerHTML = `原著来自 ${creditLink}。`;
+  } else {
+    credit.innerHTML = `Original book by ${creditLink}.`;
+  }
+
+  hero.append(title, subtitle, credit);
   dom.app.appendChild(hero);
 
   const mainSection = document.createElement('section');
@@ -530,7 +554,8 @@ function parseInline(text) {
 
   working = working.replace(/!\[([^\]]*)\]\(([^)\s]+)(?:\s+"([^"]+)")?\)/g, (_, alt, url, title) => {
     const altEsc = escapeHtml(alt);
-    const urlEsc = escapeAttribute(url);
+    const normalizedUrl = normalizeUrl(url);
+    const urlEsc = escapeAttribute(normalizedUrl);
     const titleEsc = title ? escapeHtml(title) : '';
     const titleAttr = titleEsc ? ` title="${titleEsc}"` : '';
     return createPlaceholder(`<img src="${urlEsc}" alt="${altEsc}"${titleAttr}>`);
@@ -538,7 +563,8 @@ function parseInline(text) {
 
   working = working.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_, label, url) => {
     const labelEsc = escapeHtml(label);
-    const urlEsc = escapeAttribute(url.trim());
+    const normalizedUrl = normalizeUrl(url.trim());
+    const urlEsc = escapeAttribute(normalizedUrl);
     return createPlaceholder(`<a href="${urlEsc}" target="_blank" rel="noopener">${labelEsc}</a>`);
   });
 
@@ -566,6 +592,19 @@ function escapeHtml(value) {
 
 function escapeAttribute(value) {
   return escapeHtml(value).replace(/\s/g, encodeURIComponent);
+}
+
+function normalizeUrl(rawUrl) {
+  if (!rawUrl) {
+    return rawUrl;
+  }
+  if (/^[a-zA-Z][a-zA-Z0-9+.-]*:/.test(rawUrl) || rawUrl.startsWith('//') || rawUrl.startsWith('#')) {
+    return rawUrl;
+  }
+  if (rawUrl.startsWith('/')) {
+    return `${basePath}${rawUrl.replace(/^\/+/, '')}`;
+  }
+  return rawUrl;
 }
 
 init().catch(error => {
