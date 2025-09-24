@@ -72,11 +72,9 @@ function love.load()
     y = 50
 end
 
-
 function love.draw()
     love.graphics.rectangle("line", x, y, 100, 100)
 end
-
 
 function love.keypressed(key)
     -- 如果按下空格，就……
