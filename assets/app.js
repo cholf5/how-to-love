@@ -1,3 +1,5 @@
+import { translate } from './i18n.js';
+
 const state = {
   data: null,
   language: 'en',
@@ -119,11 +121,7 @@ function updateFooter() {
     dom.footerNote.textContent = '';
     return;
   }
-  if (state.language === 'en') {
-    dom.footerNote.textContent = 'Built as a static reader for the “How to LÖVE” book. Toggle the theme or language anytime.';
-  } else {
-    dom.footerNote.textContent = '“How to LÖVE” 教程的静态阅读器。你可以随时切换主题和语言。';
-  }
+  dom.footerNote.textContent = translate(state.language, 'footer.note');
 }
 
 function applyTheme() {
@@ -182,11 +180,7 @@ function renderContents(languageInfo) {
   const credit = document.createElement('p');
   credit.className = 'hero-credit';
   const creditLink = '<a href="https://github.com/Sheepolution/how-to-love" target="_blank" rel="noopener">Sheepolution</a>';
-  if (state.language === 'zh-cn') {
-    credit.innerHTML = `原著来自 ${creditLink}。`;
-  } else {
-    credit.innerHTML = `Original book by ${creditLink}.`;
-  }
+  credit.innerHTML = translate(state.language, 'credit', { author: creditLink });
 
   hero.append(title, subtitle, credit);
   dom.app.appendChild(hero);
@@ -299,7 +293,7 @@ function renderChapter(languageInfo) {
 
   const loader = document.createElement('div');
   loader.className = 'loading';
-  loader.textContent = state.language === 'en' ? 'Loading chapter…' : '章节加载中…';
+  loader.textContent = translate(state.language, 'chapter.loading');
   article.appendChild(loader);
 
   container.appendChild(article);
@@ -323,11 +317,9 @@ function renderChapter(languageInfo) {
       const notice = document.createElement('div');
       notice.className = 'notice';
       const title = document.createElement('h2');
-      title.textContent = state.language === 'en' ? 'Unable to load this chapter' : '无法加载该章节';
+      title.textContent = translate(state.language, 'chapter.loadError.title');
       const message = document.createElement('p');
-      message.textContent = state.language === 'en'
-        ? 'Please check the repository files to confirm the markdown exists.'
-        : '请检查仓库中的文件，确认对应的 Markdown 是否存在。';
+      message.textContent = translate(state.language, 'chapter.loadError.message');
       notice.append(title, message);
       article.appendChild(notice);
       container.appendChild(navBottom);
@@ -340,11 +332,9 @@ function renderNotFound(languageInfo) {
   const section = document.createElement('section');
   section.className = 'notice';
   const heading = document.createElement('h2');
-  heading.textContent = state.language === 'en' ? 'Chapter not found' : '未找到章节';
+  heading.textContent = translate(state.language, 'chapter.notFound.title');
   const message = document.createElement('p');
-  message.textContent = state.language === 'en'
-    ? 'We could not find the chapter you were looking for. Try selecting another one from the directory.'
-    : '没有找到请求的章节，请返回目录选择其他章节。';
+  message.textContent = translate(state.language, 'chapter.notFound.message');
   const backLink = document.createElement('a');
   backLink.href = createChapterUrl(state.language, '');
   backLink.textContent = languageInfo.navigation.contents;
