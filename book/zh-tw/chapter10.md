@@ -40,7 +40,6 @@ function love.load()
     tick.delay(function () drawRectangle = true end ,       2)
 end
 
-
 function love.draw()
     -- 如果 drawRectangle 為真，就繪製一個矩形
     if drawRectangle then

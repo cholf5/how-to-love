@@ -40,7 +40,6 @@ function love.load()
 	tick.delay(function () drawRectangle = true end ,	2)
 end
 
-
 function love.draw()
 	--if drawRectangle is true then draw a rectangle
 	if drawRectangle then
