@@ -325,6 +325,11 @@ a.icon-button {
   border-radius: 0 18px 18px 0;
 }
 
+.chapter-body .code-block {
+  position: relative;
+  margin: 1.75rem 0;
+}
+
 .chapter-body pre {
   margin: 1.75rem 0;
   background: var(--code-bg);
@@ -335,6 +340,11 @@ a.icon-button {
   font-family: "JetBrains Mono", "Fira Code", "Cascadia Mono", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
   font-size: 0.95rem;
   line-height: 1.7;
+}
+
+.chapter-body .code-block pre {
+  margin: 0;
+  padding-right: 3.6rem;
 }
 
 .chapter-body code {
@@ -354,6 +364,72 @@ a.icon-button {
 .chapter-body pre code.hljs {
   display: block;
   color: inherit;
+}
+
+.chapter-body .code-copy-button {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  color: inherit;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  z-index: 1;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.chapter-body .code-copy-button:disabled {
+  cursor: wait;
+  opacity: 0.75;
+}
+
+.chapter-body .code-copy-button:hover {
+  transform: translateY(-1px);
+  background: color-mix(in srgb, var(--surface) 100%, transparent);
+  border-color: color-mix(in srgb, var(--accent) 45%, transparent);
+  box-shadow: var(--shadow);
+}
+
+.chapter-body .code-copy-button:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 35%, transparent);
+}
+
+.chapter-body .code-copy-button .code-copy-icon {
+  font-size: 0.95rem;
+  line-height: 1;
+}
+
+.chapter-body .code-copy-button .code-copy-label {
+  line-height: 1;
+}
+
+.chapter-body .code-copy-button.copied {
+  background: var(--accent);
+  color: var(--accent-contrast);
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.chapter-body .code-copy-button.error {
+  background: rgba(220, 38, 38, 0.12);
+  border-color: rgba(220, 38, 38, 0.35);
+  color: #dc2626;
+  box-shadow: none;
+}
+
+body[data-theme="dark"] .chapter-body .code-copy-button.error {
+  background: rgba(248, 113, 113, 0.18);
+  border-color: rgba(248, 113, 113, 0.45);
+  color: #f87171;
 }
 
 body[data-theme="light"] .chapter-body pre code.hljs {
