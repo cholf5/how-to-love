@@ -23,6 +23,7 @@ const dom = {
 let languageDropdownCloseTimeout = null;
 
 const PLACEHOLDER_TOKEN = '\u0000';
+const CPP_LANGUAGE_ALIASES = new Set(['cpp', 'c++', 'cc', 'cxx', 'hpp', 'h++']);
 const COOKIE_MAX_AGE = 60 * 60 * 24 * 365;
 const COOKIE_KEYS = {
   theme: 'how-to-love:theme',
@@ -142,14 +143,22 @@ function openLanguageDropdown() {
   dom.languageDropdownButton.setAttribute('aria-expanded', 'true');
 }
 
-function closeLanguageDropdown(immediate = false) {
+function closeLanguageDropdown(options) {
   if (!dom.languageDropdown || !dom.languageDropdownButton) {
     return;
   }
 
+  const defaults = { immediate: false, force: false };
+  const normalizedOptions = typeof options === 'object' && options !== null
+    ? { ...defaults, ...options }
+    : { ...defaults, immediate: Boolean(options) };
+  const { immediate, force } = normalizedOptions;
+  const dropdown = dom.languageDropdown;
+  const button = dom.languageDropdownButton;
+
   const doClose = () => {
-    dom.languageDropdown.classList.remove('is-open');
-    dom.languageDropdownButton.setAttribute('aria-expanded', 'false');
+    dropdown.classList.remove('is-open');
+    button.setAttribute('aria-expanded', 'false');
   };
 
   if (immediate) {
@@ -161,7 +170,7 @@ function closeLanguageDropdown(immediate = false) {
   clearLanguageDropdownCloseTimeout();
   languageDropdownCloseTimeout = window.setTimeout(() => {
     languageDropdownCloseTimeout = null;
-    if (!dom.languageDropdown.matches(':hover') && !dom.languageDropdown.matches(':focus-within')) {
+    if (force || (!dropdown.matches(':hover') && !dropdown.matches(':focus-within'))) {
       doClose();
     }
   }, 200);
@@ -230,7 +239,7 @@ function setupEvents() {
     });
 
     dom.languageDropdown.addEventListener('mouseleave', () => {
-      closeLanguageDropdown();
+      closeLanguageDropdown({ force: true });
     });
 
     dom.languageDropdown.addEventListener('focusin', () => {
@@ -283,6 +292,48 @@ function setupEvents() {
     persistLanguage();
     updateFooter();
     render(true);
+  });
+
+  window.addEventListener('keydown', event => {
+    if (!state.chapterId) {
+      return;
+    }
+    if (event.defaultPrevented) {
+      return;
+    }
+    if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) {
+      return;
+    }
+    if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') {
+      return;
+    }
+
+    const target = event.target;
+    if (target && typeof target.closest === 'function') {
+      if (target.closest('input, textarea, select, [contenteditable="true"]')) {
+        return;
+      }
+    }
+
+    const languageInfo = state.data.languages[state.language];
+    if (!languageInfo) {
+      return;
+    }
+
+    const { previous, next } = getChapterNeighbors(languageInfo, state.chapterId);
+    if (event.key === 'ArrowLeft' && previous) {
+      event.preventDefault();
+      state.chapterId = previous.id;
+      state.scrollRestoration = null;
+      updateUrl();
+      render();
+    } else if (event.key === 'ArrowRight' && next) {
+      event.preventDefault();
+      state.chapterId = next.id;
+      state.scrollRestoration = null;
+      updateUrl();
+      render();
+    }
   });
 }
 
@@ -689,14 +740,9 @@ function buildChapterNavigation(languageInfo, chapterId) {
     render();
   });
 
-  const allEntries = [
-    ...(languageInfo.chapters || []),
-    ...(languageInfo.bonus || [])
-  ];
-  const currentIndex = allEntries.findIndex(item => item.id === chapterId);
+  const { previous: prevChapter, next: nextChapter } = getChapterNeighbors(languageInfo, chapterId);
 
-  if (currentIndex > 0) {
-    const prevChapter = allEntries[currentIndex - 1];
+  if (prevChapter) {
     previous.textContent = languageInfo.navigation.previous;
     previous.href = createChapterUrl(state.language, prevChapter.id);
     previous.addEventListener('click', event => {
@@ -712,8 +758,7 @@ function buildChapterNavigation(languageInfo, chapterId) {
     previous.setAttribute('aria-disabled', 'true');
   }
 
-  if (currentIndex >= 0 && currentIndex < allEntries.length - 1) {
-    const nextChapter = allEntries[currentIndex + 1];
+  if (nextChapter) {
     next.textContent = languageInfo.navigation.next;
     next.href = createChapterUrl(state.language, nextChapter.id);
     next.addEventListener('click', event => {
@@ -731,6 +776,25 @@ function buildChapterNavigation(languageInfo, chapterId) {
 
   wrapper.append(previous, home, next);
   return wrapper;
+}
+
+function getChapterEntries(languageInfo) {
+  if (!languageInfo) {
+    return [];
+  }
+  return [
+    ...(languageInfo.chapters || []),
+    ...(languageInfo.bonus || [])
+  ];
+}
+
+function getChapterNeighbors(languageInfo, chapterId) {
+  const entries = getChapterEntries(languageInfo);
+  const currentIndex = entries.findIndex(item => item.id === chapterId);
+  return {
+    previous: currentIndex > 0 ? entries[currentIndex - 1] : null,
+    next: currentIndex >= 0 && currentIndex < entries.length - 1 ? entries[currentIndex + 1] : null
+  };
 }
 
 function findChapter(languageInfoOrKey, chapterId) {
@@ -860,13 +924,17 @@ function renderMarkdown(markdown) {
 
 function buildCodeBlock(code, language) {
   const normalizedLanguage = (language || '').trim();
+  const languageKey = normalizedLanguage.toLowerCase();
   const classNames = [];
   if (normalizedLanguage) {
     classNames.push(`language-${sanitizeLanguage(normalizedLanguage)}`);
   }
   let contentHtml = escapeHtml(code);
-  if (normalizedLanguage.toLowerCase() === 'lua') {
+  if (languageKey === 'lua') {
     contentHtml = highlightLua(code);
+    classNames.push('hljs');
+  } else if (CPP_LANGUAGE_ALIASES.has(languageKey)) {
+    contentHtml = highlightCpp(code);
     classNames.push('hljs');
   }
   const classAttr = classNames.length ? ` class="${classNames.join(' ')}"` : '';
@@ -920,6 +988,54 @@ function highlightLua(code) {
   working = working.replace(keywordPattern, match => createPlaceholder('hljs-keyword', match));
 
   const builtinPattern = /\b(?:assert|collectgarbage|dofile|ipairs|load|math|next|pairs|pcall|print|rawequal|rawget|rawset|require|select|self|string|table|tonumber|tostring|type|xpcall|coroutine|os|io|love)\b/g;
+  working = working.replace(builtinPattern, match => createPlaceholder('hljs-built_in', match));
+
+  let escaped = escapeHtml(working);
+
+  placeholders.forEach(item => {
+    const replacement = `<span class="${item.className}">${escapeHtml(item.value)}</span>`;
+    escaped = escaped.split(item.token).join(replacement);
+  });
+
+  return escaped;
+}
+
+function highlightCpp(code) {
+  const placeholders = [];
+
+  const createPlaceholder = (className, value) => {
+    const token = `${PLACEHOLDER_TOKEN}cpp${placeholders.length}${PLACEHOLDER_TOKEN}`;
+    placeholders.push({ className, value, token });
+    return token;
+  };
+
+  let working = code;
+
+  const preprocessorPattern = /^[ \t]*#.*$/gm;
+  working = working.replace(preprocessorPattern, match => createPlaceholder('hljs-meta', match));
+
+  const rawStringPattern = /(?:u8|u|U|L)?R"([A-Za-z0-9_]{0,16})\(([\s\S]*?)\)\1"/g;
+  working = working.replace(rawStringPattern, match => createPlaceholder('hljs-string', match));
+
+  const stringPattern = /(?:u8|u|U|L)?"(?:\\.|[^"\\])*"/g;
+  working = working.replace(stringPattern, match => createPlaceholder('hljs-string', match));
+
+  const charPattern = /(?:u8|u|U|L)?'(?:\\.|[^'\\])+'/g;
+  working = working.replace(charPattern, match => createPlaceholder('hljs-string', match));
+
+  const multiLineCommentPattern = /\/\*[\s\S]*?\*\//g;
+  working = working.replace(multiLineCommentPattern, match => createPlaceholder('hljs-comment', match));
+
+  const singleLineCommentPattern = /\/\/.*$/gm;
+  working = working.replace(singleLineCommentPattern, match => createPlaceholder('hljs-comment', match));
+
+  const numberPattern = /\b(?:0x[0-9a-fA-F'._]+|0b[01'._]+|\d[\d'._]*(?:\.\d[\d'._]*)?(?:[eEpP][+-]?\d[\d'._]*)?)(?:[uUlLfF]*)\b/g;
+  working = working.replace(numberPattern, match => createPlaceholder('hljs-number', match));
+
+  const keywordPattern = /\b(?:alignas|alignof|asm|auto|bool|break|case|catch|char|char8_t|char16_t|char32_t|class|compl|concept|const|consteval|constexpr|constinit|const_cast|continue|co_await|co_return|co_yield|decltype|default|delete|do|double|dynamic_cast|else|enum|explicit|export|extern|false|float|for|friend|goto|if|inline|int|long|mutable|namespace|new|noexcept|nullptr|operator|private|protected|public|register|reinterpret_cast|requires|return|short|signed|sizeof|static|static_assert|static_cast|struct|switch|template|this|thread_local|throw|true|try|typedef|typeid|typename|union|unsigned|using|virtual|void|volatile|wchar_t|while)\b/g;
+  working = working.replace(keywordPattern, match => createPlaceholder('hljs-keyword', match));
+
+  const builtinPattern = /\b(?:std|size_t|ptrdiff_t|int(?:8|16|32|64)_t|uint(?:8|16|32|64)_t|intmax_t|uintmax_t|intptr_t|uintptr_t)\b/g;
   working = working.replace(builtinPattern, match => createPlaceholder('hljs-built_in', match));
 
   let escaped = escapeHtml(working);
