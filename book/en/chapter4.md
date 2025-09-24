@@ -1,5 +1,3 @@
-# Chapter 4 - LÖVE
-
 ## What is LÖVE?
 LÖVE is what we call a *framework*. Simply said: It's a tool that makes programming games easier.
 

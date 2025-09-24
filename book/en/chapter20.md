@@ -1,4 +1,3 @@
-# Chapter 20 - Debugging
 A bug is something that goes wrong in a program (or in our case game). Debugging is the art of fixing these bugs so that they don't occur anymore. As a programmer it's only natural to encounter lots of bugs, so debugging is a very valuable skill to have.
 
 I wrote a short game.

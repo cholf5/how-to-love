@@ -1,5 +1,3 @@
-# Chapter 5 - Moving a rectangle
-
 Now we can start with what I like to call "The fun part". We're going to make stuff move!
 
 Let's start with the 3 main callbacks.

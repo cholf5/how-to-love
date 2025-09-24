@@ -1,5 +1,3 @@
-# Chapter 17 - Animation
-
 ## Frames
 
 Let's make an animated image.

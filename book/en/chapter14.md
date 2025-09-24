@@ -1,5 +1,3 @@
-# Chapter 14 - Game: Shoot the enemy
-
 Let's use everything we learned so far to create a simple game. You can read about programming and making games all you want, but to really learn it you'll have to do it.
 
 A game is essentially a bunch of problems that you have to solve. When you ask an experienced programmer to make PONG, he won't look up a *How to make PONG*. They can divide PONG into separate problems, and know how to solve each one of them. This chapter is to show you how to split a game into multiple tasks.

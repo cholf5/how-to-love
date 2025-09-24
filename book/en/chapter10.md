@@ -1,5 +1,3 @@
-# Chapter 10 - Libraries
-
 A library is code that everyone can use to add certain functionality to their project.
 
 Let's try out a library. We're going to use *tick* by *rxi*. You can find the library on [GitHub](https://github.com/rxi/tick).

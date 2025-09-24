@@ -1,5 +1,3 @@
-# Chapter 1 - Installation
-
 ___
 
 *Chapter 2 and 3 can be done without any installation. You can use [repl.it](https://repl.it/languages/lua) as an alternative if you don't feel like installing software right away. But be sure to read the **A few more things** paragraph at the bottom.*

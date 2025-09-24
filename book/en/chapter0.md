@@ -1,5 +1,3 @@
-# Introduction
-
 ___
 
 *Are you so excited about learning how to make games that you can't be bothered reading my boring introduction? I understand, go ahead and skip this if you want. Good luck!*

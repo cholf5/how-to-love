@@ -1,5 +1,3 @@
-# Chapter 24 - Platformer
-
 ___
 *We use the code from the previous chapter*
 ___
