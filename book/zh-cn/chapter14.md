@@ -20,15 +20,13 @@
 
 ```lua
 function love.load()
-        Object = require "classic"
+    Object = require "classic"
 end
 
 function love.update(dt)
-
 end
 
 function love.draw()
-
 end
 ```
 
@@ -55,12 +53,12 @@ end
 
 ```lua
 function Player:new()
-        self.image = love.graphics.newImage("panda.png")
+    self.image = love.graphics.newImage("panda.png")
 end
 
 
 function Player:draw()
-        love.graphics.draw(self.image)
+    love.graphics.draw(self.image)
 end
 ```
 
@@ -68,23 +66,23 @@ end
 
 ```lua
 function Player:new()
-        self.image = love.graphics.newImage("panda.png")
-        self.x = 300
-        self.y = 20
-        self.speed = 500
-        self.width = self.image:getWidth()
+    self.image = love.graphics.newImage("panda.png")
+    self.x = 300
+    self.y = 20
+    self.speed = 500
+    self.width = self.image:getWidth()
 end
 
 function Player:update(dt)
-        if love.keyboard.isDown("left") then
-                self.x = self.x - self.speed * dt
-        elseif love.keyboard.isDown("right") then
-                self.x = self.x + self.speed * dt
-        end
+    if love.keyboard.isDown("left") then
+        self.x = self.x - self.speed * dt
+    elseif love.keyboard.isDown("right") then
+        self.x = self.x + self.speed * dt
+    end
 end
 
 function Player:draw()
-        love.graphics.draw(self.image, self.x, self.y)
+    love.graphics.draw(self.image, self.x, self.y)
 end
 ```
 
@@ -100,11 +98,11 @@ function love.load()
 end
 
 function love.update(dt)
-        player:update(dt)
+    player:update(dt)
 end
 
 function love.draw()
-        player:draw()
+    player:draw()
 end
 ```
 
@@ -114,25 +112,25 @@ end
 --! file: player.lua
 
 function Player:update(dt)
-        if love.keyboard.isDown("left") then
-                self.x = self.x - self.speed * dt
-        elseif love.keyboard.isDown("right") then
-                self.x = self.x + self.speed * dt
-        end
+    if love.keyboard.isDown("left") then
+        self.x = self.x - self.speed * dt
+    elseif love.keyboard.isDown("right") then
+        self.x = self.x + self.speed * dt
+    end
 
-        --Get the width of the window
-        local window_width = love.graphics.getWidth()
+    --Get the width of the window
+    local window_width = love.graphics.getWidth()
 
-        --If the x is too far too the left then..
-        if self.x < 0 then
-                --Set x to 0
-                self.x = 0
+    --If the x is too far too the left then..
+    if self.x < 0 then
+        --Set x to 0
+        self.x = 0
 
-        --Else, if the x is too far to the right then..
-        elseif self.x > window_width then
-                --Set the x to the window's width.
-                self.x = window_width
-        end
+    --Else, if the x is too far to the right then..
+    elseif self.x > window_width then
+        --Set the x to the window's width.
+        self.x = window_width
+    end
 end
 ```
 
@@ -141,13 +139,13 @@ end
 ```lua
 --If the left side is too far too the left then..
 if self.x < 0 then
-        --Set x to 0
-        self.x = 0
+    --Set x to 0
+    self.x = 0
 
 --Else, if the right side is too far to the right then..
 elseif self.x + self.width > window_width then
-        --Set the right side to the window's width.
-        self.x = window_width - self.width
+    --Set the right side to the window's width.
+    self.x = window_width - self.width
 end
 ```
 
@@ -173,18 +171,18 @@ end
 
 ```lua
 function Enemy:new()
-        self.image = love.graphics.newImage("snake.png")
-        self.x = 325
-        self.y = 450
+    self.image = love.graphics.newImage("snake.png")
+    self.x = 325
+    self.y = 450
     self.speed = 100
 end
 
 function Enemy:update(dt)
-        self.x = self.x + self.speed * dt
+    self.x = self.x + self.speed * dt
 end
 
 function Enemy:draw()
-        love.graphics.draw(self.image, self.x, self.y)
+    love.graphics.draw(self.image, self.x, self.y)
 end
 ```
 
@@ -202,13 +200,13 @@ function love.load()
 end
 
 function love.update(dt)
-        player:update(dt)
-        enemy:update(dt)
+    player:update(dt)
+    enemy:update(dt)
 end
 
 function love.draw()
-        player:draw()
-        enemy:draw()
+    player:draw()
+    enemy:draw()
 end
 ```
 
@@ -216,24 +214,24 @@ end
 
 ```lua
 function Enemy:new()
-        self.image = love.graphics.newImage("snake.png")
-        self.x = 325
-        self.y = 450
+    self.image = love.graphics.newImage("snake.png")
+    self.x = 325
+    self.y = 450
     self.speed = 100
     self.width = self.image:getWidth()
     self.height = self.image:getHeight()
 end
 
 function Enemy:update(dt)
-        self.x = self.x + self.speed * dt
+    self.x = self.x + self.speed * dt
 
-        local window_width = love.graphics.getWidth()
+    local window_width = love.graphics.getWidth()
 
-        if self.x < 0 then
-                self.x = 0
-        elseif self.x + self.width > window_width then
-                self.x = window_width - self.width
-        end
+    if self.x < 0 then
+        self.x = 0
+    elseif self.x + self.width > window_width then
+        self.x = window_width - self.width
+    end
 end
 ```
 
@@ -245,17 +243,17 @@ end
 
 ```lua
 function Enemy:update(dt)
-        self.x = self.x + self.speed * dt
+    self.x = self.x + self.speed * dt
 
-        local window_width = love.graphics.getWidth()
+    local window_width = love.graphics.getWidth()
 
-        if self.x < 0 then
-                self.x = 0
-                self.speed = -self.speed
-        elseif self.x + self.width > window_width then
-                self.x = window_width - self.width
-                self.speed = -self.speed
-        end
+    if self.x < 0 then
+        self.x = 0
+        self.speed = -self.speed
+    elseif self.x + self.width > window_width then
+        self.x = window_width - self.width
+        self.speed = -self.speed
+    end
 end
 ```
 
@@ -273,11 +271,11 @@ ___
 Bullet = Object:extend()
 
 function Bullet:new()
-        self.image = love.graphics.newImage("bullet.png")
+    self.image = love.graphics.newImage("bullet.png")
 end
 
 function Bullet:draw()
-        love.graphics.draw(self.image)
+    love.graphics.draw(self.image)
 end
 ```
 
@@ -286,21 +284,21 @@ end
 ```lua
 --We pass the x and y of the player.
 function Bullet:new(x, y)
-        self.image = love.graphics.newImage("bullet.png")
-        self.x = x
-        self.y = y
-        self.speed = 700
-        --We'll need these for collision checking
-        self.width = self.image:getWidth()
-        self.height = self.image:getHeight()
+    self.image = love.graphics.newImage("bullet.png")
+    self.x = x
+    self.y = y
+    self.speed = 700
+    --We'll need these for collision checking
+    self.width = self.image:getWidth()
+    self.height = self.image:getHeight()
 end
 
 function Bullet:update(dt)
-        self.y = self.y + self.speed * dt
+    self.y = self.y + self.speed * dt
 end
 
 function Bullet:draw()
-        love.graphics.draw(self.image, self.x, self.y)
+    love.graphics.draw(self.image, self.x, self.y)
 end
 ```
 
@@ -325,11 +323,11 @@ end
 ```lua
 --! file: player.lua
 function Player:keyPressed(key)
-        --If the spacebar is pressed
-        if key == "space" then
-                --Put a new instance of Bullet inside listOfBullets.
-                table.insert(listOfBullets, Bullet(self.x, self.y))
-        end
+    --If the spacebar is pressed
+    if key == "space" then
+        --Put a new instance of Bullet inside listOfBullets.
+        table.insert(listOfBullets, Bullet(self.x, self.y))
+    end
 end
 ```
 
@@ -338,7 +336,7 @@ end
 ```lua
 --! file: main.lua
 function love.keypressed(key)
-        player:keyPressed(key)
+    player:keyPressed(key)
 end
 ```
 
@@ -357,21 +355,21 @@ function love.load()
 end
 
 function love.update(dt)
-        player:update(dt)
-        enemy:update(dt)
+    player:update(dt)
+    enemy:update(dt)
 
-        for i,v in ipairs(listOfBullets) do
-                v:update(dt)
-        end
+    for i,v in ipairs(listOfBullets) do
+        v:update(dt)
+    end
 end
 
 function love.draw()
-        player:draw()
-        enemy:draw()
+    player:draw()
+    enemy:draw()
 
-        for i,v in ipairs(listOfBullets) do
-                v:draw()
-        end
+    for i,v in ipairs(listOfBullets) do
+        v:draw()
+    end
 end
 ```
 
@@ -410,10 +408,10 @@ function Bullet:checkCollision(obj)
     and self_left < obj_right
     and self_bottom > obj_top
     and self_top < obj_bottom then
-        self.dead = true
+    self.dead = true
 
-        --Increase enemy speed
-        obj.speed = obj.speed + 50
+    --Increase enemy speed
+    obj.speed = obj.speed + 50
     end
 end
 ```
@@ -422,15 +420,15 @@ end
 
 ```lua
 function love.update(dt)
-        player:update(dt)
-        enemy:update(dt)
+    player:update(dt)
+    enemy:update(dt)
 
-        for i,v in ipairs(listOfBullets) do
-                v:update(dt)
+    for i,v in ipairs(listOfBullets) do
+        v:update(dt)
 
-                --Each bullets checks if there is collision with the enemy
-                v:checkCollision(enemy)
-        end
+        --Each bullets checks if there is collision with the enemy
+        v:checkCollision(enemy)
+    end
 end
 ```
 
@@ -438,19 +436,19 @@ end
 
 ```lua
 function love.update(dt)
-        player:update(dt)
-        enemy:update(dt)
+    player:update(dt)
+    enemy:update(dt)
 
-        for i,v in ipairs(listOfBullets) do
-                v:update(dt)
-                v:checkCollision(enemy)
+    for i,v in ipairs(listOfBullets) do
+        v:update(dt)
+        v:checkCollision(enemy)
 
-                --If the bullet has the property dead and it's true then..
-                if v.dead then
-                        --Remove it from the list
-                        table.remove(listOfBullets, i)
-                end
+        --If the bullet has the property dead and it's true then..
+        if v.dead then
+            --Remove it from the list
+            table.remove(listOfBullets, i)
         end
+    end
 end
 ```
 
@@ -459,13 +457,13 @@ end
 ```lua
 --! file: bullet.lua
 function Bullet:update(dt)
-        self.y = self.y + self.speed * dt
+    self.y = self.y + self.speed * dt
 
-        --If the bullet is out of the screen
-        if self.y > love.graphics.getHeight() then
-                --Restart the game
-                love.load()
-        end
+    --If the bullet is out of the screen
+    if self.y > love.graphics.getHeight() then
+        --Restart the game
+        love.load()
+    end
 end
 ```
 
@@ -487,14 +485,14 @@ function Bullet:checkCollision(obj)
     and self_left < obj_right
     and self_bottom > obj_top
     and self_top < obj_bottom then
-        self.dead = true
+    self.dead = true
 
-        --Increase enemy speed
-        if obj.speed > 0 then
-                obj.speed = obj.speed + 50
-            else
-                obj.speed = obj.speed - 50
-            end
+    --Increase enemy speed
+    if obj.speed > 0 then
+        obj.speed = obj.speed + 50
+        else
+        obj.speed = obj.speed - 50
+        end
     end
 end
 ```

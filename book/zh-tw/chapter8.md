@@ -4,9 +4,9 @@
 
 ```lua
 function love.load()
-        --rect 是 rectangle（矩形）的縮寫
-        rect = {}
-        rect["width"] = 100
+    --rect 是 rectangle（矩形）的縮寫
+    rect = {}
+    rect["width"] = 100
 end
 ```
 
@@ -14,10 +14,10 @@ end
 
 ```lua
 function love.load()
-        rect = {}
-        -- 下面兩行是等價的
-        rect["width"] = 100
-        rect.width = 100
+    rect = {}
+    -- 下面兩行是等價的
+    rect["width"] = 100
+    rect.width = 100
 end
 ```
 
@@ -25,11 +25,11 @@ end
 
 ```lua
 function love.load()
-        rect = {}
-        rect.x = 100
-        rect.y = 100
-        rect.width = 70
-        rect.height = 90
+    rect = {}
+    rect.x = 100
+    rect.y = 100
+    rect.width = 70
+    rect.height = 90
 end
 ```
 
@@ -37,7 +37,7 @@ end
 
 ```lua
 function love.draw()
-        love.graphics.rectangle("line", rect.x, rect.y, rect.width, rect.height)
+    love.graphics.rectangle("line", rect.x, rect.y, rect.width, rect.height)
 end
 ```
 
@@ -45,19 +45,19 @@ end
 
 ```lua
 function love.load()
-        rect = {}
-        rect.x = 100
-        rect.y = 100
-        rect.width = 70
-        rect.height = 90
+    rect = {}
+    rect.x = 100
+    rect.y = 100
+    rect.width = 70
+    rect.height = 90
 
-        -- 添加一個 speed 屬性
-        rect.speed = 100
+    -- 添加一個 speed 屬性
+    rect.speed = 100
 end
 
 function love.update(dt)
-        -- 別忘了乘以 delta time，增加 x 的數值
-        rect.x = rect.x + rect.speed * dt
+    -- 別忘了乘以 delta time，增加 x 的數值
+    rect.x = rect.x + rect.speed * dt
 end
 ```
 
@@ -65,20 +65,20 @@ end
 
 ```lua
 function love.load()
-        -- 記得使用 camelCase（駝峰式命名）！
-        listOfRectangles = {}
+    -- 記得使用 camelCase（駝峰式命名）！
+    listOfRectangles = {}
 end
 
 function createRect()
-        rect = {}
-        rect.x = 100
-        rect.y = 100
-        rect.width = 70
-        rect.height = 90
-        rect.speed = 100
+    rect = {}
+    rect.x = 100
+    rect.y = 100
+    rect.width = 70
+    rect.height = 90
+    rect.speed = 100
 
-        -- 把新的矩形放進列表
-        table.insert(listOfRectangles, rect)
+    -- 把新的矩形放進列表
+    table.insert(listOfRectangles, rect)
 end
 ```
 
@@ -86,10 +86,10 @@ end
 
 ```lua
 function love.keypressed(key)
-        -- 記住，比較時要用兩個等號（==）！
-        if key == "space" then
-                createRect()
-        end
+    -- 記住，比較時要用兩個等號（==）！
+    if key == "space" then
+        createRect()
+    end
 end
 ```
 
@@ -97,17 +97,17 @@ end
 
 最後要做的是修改我們的更新和繪製函數。我們需要遍歷矩形列表。
 
-```
+```lua
 function love.update(dt)
-        for i,v in ipairs(listOfRectangles) do
-                v.x = v.x + v.speed * dt
-        end
+    for i,v in ipairs(listOfRectangles) do
+        v.x = v.x + v.speed * dt
+    end
 end
 
 function love.draw(dt)
-        for i,v in ipairs(listOfRectangles) do
-                love.graphics.rectangle("line", v.x, v.y, v.width, v.height)
-        end
+    for i,v in ipairs(listOfRectangles) do
+        love.graphics.rectangle("line", v.x, v.y, v.width, v.height)
+    end
 end
 ```
 
@@ -137,12 +137,10 @@ ___
 
 ```lua
 tableName.functionName = function ()
-
 end
 
 -- 或者更常見的寫法
 function tableName.functionName()
-
 end
 ```
 

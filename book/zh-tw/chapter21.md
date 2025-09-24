@@ -6,34 +6,34 @@
 
 ```lua
  function love.load()
-        -- 創建一個包含 x、y 以及半徑的玩家對象
-        player = {
-                x = 100,
-                y = 100,
-                size = 25
-        }
+    -- 創建一個包含 x、y 以及半徑的玩家對象
+    player = {
+        x = 100,
+        y = 100,
+        size = 25
+    }
 end
 
 function love.update(dt)
-        -- 允許通過鍵盤移動
-        if love.keyboard.isDown("left") then
-                player.x = player.x - 200 * dt
-        elseif love.keyboard.isDown("right") then
-                player.x = player.x + 200 * dt
-        end
+    -- 允許通過鍵盤移動
+    if love.keyboard.isDown("left") then
+        player.x = player.x - 200 * dt
+    elseif love.keyboard.isDown("right") then
+        player.x = player.x + 200 * dt
+    end
 
-        -- 注意這裡重新開啟了一個 if，而不是繼續 elseif
-        -- 這是因為否則你就沒法斜向移動了。
-        if love.keyboard.isDown("up") then
-                player.y = player.y - 200 * dt
-        elseif love.keyboard.isDown("down") then
-                player.y = player.y + 200 * dt
-        end
+    -- 注意這裡重新開啟了一個 if，而不是繼續 elseif
+    -- 這是因為否則你就沒法斜向移動了。
+    if love.keyboard.isDown("up") then
+        player.y = player.y - 200 * dt
+    elseif love.keyboard.isDown("down") then
+        player.y = player.y + 200 * dt
+    end
 end
 
 function love.draw()
-        -- 玩家和金幣都會被畫成圓形
-        love.graphics.circle("line", player.x, player.y, player.size)
+    -- 玩家和金幣都會被畫成圓形
+    love.graphics.circle("line", player.x, player.y, player.size)
 end
 ```
 
@@ -43,20 +43,20 @@ end
 
 ```lua
  function love.load()
-        -- 創建一個包含 x、y、半徑的玩家對象
-        player = {
-                x = 100,
-                y = 100,
-                size = 25,
-                image = love.graphics.newImage("face.png")
-        }
+    -- 創建一個包含 x、y、半徑的玩家對象
+    player = {
+        x = 100,
+        y = 100,
+        size = 25,
+        image = love.graphics.newImage("face.png")
+    }
 end
 
 function love.draw()
-        love.graphics.circle("line", player.x, player.y, player.size)
-        -- 將頭像的原點設置為圖片中心
-        love.graphics.draw(player.image, player.x, player.y,
-                0, 1, 1, player.image:getWidth()/2, player.image:getHeight()/2)
+    love.graphics.circle("line", player.x, player.y, player.size)
+    -- 將頭像的原點設置為圖片中心
+    love.graphics.draw(player.image, player.x, player.y,
+        0, 1, 1, player.image:getWidth()/2, player.image:getHeight()/2)
 end
 ```
 
@@ -66,52 +66,52 @@ end
 
 ```lua
  function love.load()
-        player = {
-                x = 100,
-                y = 100,
-                size = 25,
-                image = love.graphics.newImage("face.png")
-        }
+    player = {
+        x = 100,
+        y = 100,
+        size = 25,
+        image = love.graphics.newImage("face.png")
+    }
 
-        coins = {}
+    coins = {}
 
-        for i=1,25 do
-                table.insert(coins,
-                        {
-                                -- 使用 math.random 得到隨機位置
-                                x = math.random(50, 650),
-                                y = math.random(50, 450),
-                                size = 10,
-                                image = love.graphics.newImage("dollar.png")
-                        }
-                )
-        end
+    for i=1,25 do
+        table.insert(coins,
+            {
+                -- 使用 math.random 得到隨機位置
+                x = math.random(50, 650),
+                y = math.random(50, 450),
+                size = 10,
+                image = love.graphics.newImage("dollar.png")
+            }
+        )
+    end
 end
 
 function love.update(dt)
-        if love.keyboard.isDown("left") then
-                player.x = player.x - 200 * dt
-        elseif love.keyboard.isDown("right") then
-                player.x = player.x + 200 * dt
-        end
+    if love.keyboard.isDown("left") then
+        player.x = player.x - 200 * dt
+    elseif love.keyboard.isDown("right") then
+        player.x = player.x + 200 * dt
+    end
 
-        if love.keyboard.isDown("up") then
-                player.y = player.y - 200 * dt
-        elseif love.keyboard.isDown("down") then
-                player.y = player.y + 200 * dt
-        end
+    if love.keyboard.isDown("up") then
+        player.y = player.y - 200 * dt
+    elseif love.keyboard.isDown("down") then
+        player.y = player.y + 200 * dt
+    end
 end
 
 function love.draw()
-        love.graphics.circle("line", player.x, player.y, player.size)
-        love.graphics.draw(player.image, player.x, player.y,
-                0, 1, 1, player.image:getWidth()/2, player.image:getHeight()/2)
+    love.graphics.circle("line", player.x, player.y, player.size)
+    love.graphics.draw(player.image, player.x, player.y,
+        0, 1, 1, player.image:getWidth()/2, player.image:getHeight()/2)
 
-        for i,v in ipairs(coins) do
-                love.graphics.circle("line", v.x, v.y, v.size)
-                love.graphics.draw(v.image, v.x, v.y,
-                        0, 1, 1, v.image:getWidth()/2, v.image:getHeight()/2)
-        end
+    for i,v in ipairs(coins) do
+        love.graphics.circle("line", v.x, v.y, v.size)
+        love.graphics.draw(v.image, v.x, v.y,
+            0, 1, 1, v.image:getWidth()/2, v.image:getHeight()/2)
+    end
 end
 ```
 
@@ -121,11 +121,11 @@ end
 
 ```lua
 function checkCollision(p1, p2)
-        -- 用一行就能算出距離
-        -- x、y 相減後平方，再相加，然後開根號
-        local distance = math.sqrt((p1.x - p2.x)^2 + (p1.y - p2.y)^2)
-        -- 返回距離是否小於半徑之和
-        return distance < p1.size + p2.size
+    -- 用一行就能算出距離
+    -- x、y 相減後平方，再相加，然後開根號
+    local distance = math.sqrt((p1.x - p2.x)^2 + (p1.y - p2.y)^2)
+    -- 返回距離是否小於半徑之和
+    return distance < p1.size + p2.size
 end
 ```
 
@@ -133,24 +133,24 @@ end
 
 ```lua
 function love.update(dt)
-        if love.keyboard.isDown("left") then
-                player.x = player.x - 200 * dt
-        elseif love.keyboard.isDown("right") then
-                player.x = player.x + 200 * dt
-        end
+    if love.keyboard.isDown("left") then
+        player.x = player.x - 200 * dt
+    elseif love.keyboard.isDown("right") then
+        player.x = player.x + 200 * dt
+    end
 
-        if love.keyboard.isDown("up") then
-                player.y = player.y - 200 * dt
-        elseif love.keyboard.isDown("down") then
-                player.y = player.y + 200 * dt
-        end
+    if love.keyboard.isDown("up") then
+        player.y = player.y - 200 * dt
+    elseif love.keyboard.isDown("down") then
+        player.y = player.y + 200 * dt
+    end
 
-        for i,v in ipairs(coins) do
-                if checkCollision(player, v) then
-                        table.remove(coins, i)
-                        player.size = player.size + 1
-                end
+    for i,v in ipairs(coins) do
+        if checkCollision(player, v) then
+            table.remove(coins, i)
+            player.size = player.size + 1
         end
+    end
 end
 ```
 
@@ -168,25 +168,25 @@ end
 
 ```lua
  function love.load()
-        player = {
-                x = 100,
-                y = 100,
-                size = 25,
-                image = love.graphics.newImage("face.png")
-        }
+    player = {
+        x = 100,
+        y = 100,
+        size = 25,
+        image = love.graphics.newImage("face.png")
+    }
 
-        coins = {}
+    coins = {}
 
-        for i=1,25 do
-                table.insert(coins,
-                        {
-                                x = love.math.random(50, 650),
-                                y = love.math.random(50, 450),
-                                size = 10,
-                                image = love.graphics.newImage("dollar.png")
-                        }
-                )
-        end
+    for i=1,25 do
+        table.insert(coins,
+            {
+                x = love.math.random(50, 650),
+                y = love.math.random(50, 450),
+                size = 10,
+                image = love.graphics.newImage("dollar.png")
+            }
+        )
+    end
 end
 ```
 
@@ -197,7 +197,7 @@ end
 ```lua
 local test = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j"}
 for i,v in ipairs(test) do
-        table.remove(test, i)
+    table.remove(test, i)
 end
 print(#test)
 -- 輸出：5
@@ -215,26 +215,26 @@ print(#test)
 
 ```lua
 function love.update(dt)
-        if love.keyboard.isDown("left") then
-                player.x = player.x - 200 * dt
-        elseif love.keyboard.isDown("right") then
-                player.x = player.x + 200 * dt
-        end
+    if love.keyboard.isDown("left") then
+        player.x = player.x - 200 * dt
+    elseif love.keyboard.isDown("right") then
+        player.x = player.x + 200 * dt
+    end
 
-        if love.keyboard.isDown("up") then
-                player.y = player.y - 200 * dt
-        elseif love.keyboard.isDown("down") then
-                player.y = player.y + 200 * dt
-        end
+    if love.keyboard.isDown("up") then
+        player.y = player.y - 200 * dt
+    elseif love.keyboard.isDown("down") then
+        player.y = player.y + 200 * dt
+    end
 
-        -- 從末尾開始，直到 1，每次步長為 -1
-        for i=#coins,1,-1 do
-                -- 使用 coins[i] 而不是 v
-                if checkCollision(player, coins[i]) then
-                        table.remove(coins, i)
-                        player.size = player.size + 1
-                end
+    -- 從末尾開始，直到 1，每次步長為 -1
+    for i=#coins,1,-1 do
+        -- 使用 coins[i] 而不是 v
+        if checkCollision(player, coins[i]) then
+            table.remove(coins, i)
+            player.size = player.size + 1
         end
+    end
 end
 ```
 
@@ -248,18 +248,18 @@ ___
 
 ```lua
 function saveGame()
-        data = {}
-        data.player = {
-                x = player.x,
-                y = player.y,
-                size = player.size
-        }
+    data = {}
+    data.player = {
+        x = player.x,
+        y = player.y,
+        size = player.size
+    }
 
-        data.coins = {}
-        for i,v in ipairs(coins) do
-                -- 在這裡 data.coins[i] = value 和 table.insert(data.coins, value) 是一樣的
-                data.coins[i] = {x = v.x, y = v.y}
-        end
+    data.coins = {}
+    for i,v in ipairs(coins) do
+        -- 在這裡 data.coins[i] = value 和 table.insert(data.coins, value) 是一樣的
+        data.coins[i] = {x = v.x, y = v.y}
+    end
 end
 ```
 
@@ -279,21 +279,21 @@ Lume 提供了各種實用的函數，這個教程裡我們需要的是 `seriali
 
 ```lua
 function saveGame()
-        data = {}
-        data.player = {
-                x = player.x,
-                y = player.y,
-                size = player.size
-        }
+    data = {}
+    data.player = {
+        x = player.x,
+        y = player.y,
+        size = player.size
+    }
 
-        data.coins = {}
-        for i,v in ipairs(coins) do
-                -- 在這裡 data.coins[i] = value 和 table.insert(data.coins, value) 是一樣的
-                data.coins[i] = {x = v.x, y = v.y}
-        end
+    data.coins = {}
+    for i,v in ipairs(coins) do
+        -- 在這裡 data.coins[i] = value 和 table.insert(data.coins, value) 是一樣的
+        data.coins[i] = {x = v.x, y = v.y}
+    end
 
-        serialized = lume.serialize(data)
-        print(serialized)
+    serialized = lume.serialize(data)
+    print(serialized)
 end
 ```
 
@@ -303,22 +303,22 @@ end
 
 ```lua
 function saveGame()
-        data = {}
-        data.player = {
-                x = player.x,
-                y = player.y,
-                size = player.size
-        }
+    data = {}
+    data.player = {
+        x = player.x,
+        y = player.y,
+        size = player.size
+    }
 
-        data.coins = {}
-        for i,v in ipairs(coins) do
-                -- 在這裡 data.coins[i] = value 和 table.insert(data.coins, value) 是一樣的
-                data.coins[i] = {x = v.x, y = v.y}
-        end
+    data.coins = {}
+    for i,v in ipairs(coins) do
+        -- 在這裡 data.coins[i] = value 和 table.insert(data.coins, value) 是一樣的
+        data.coins[i] = {x = v.x, y = v.y}
+    end
 
-        serialized = lume.serialize(data)
-        -- 文件擴展名其實無所謂，甚至可以省略
-        love.filesystem.write("savedata.txt", serialized)
+    serialized = lume.serialize(data)
+    -- 文件擴展名其實無所謂，甚至可以省略
+    love.filesystem.write("savedata.txt", serialized)
 end
 ```
 
@@ -326,9 +326,9 @@ end
 
 ```lua
 function love.keypressed(key)
-        if key == "f1" then
-                saveGame()
-        end
+    if key == "f1" then
+        saveGame()
+    end
 end
 ```
 
@@ -352,33 +352,32 @@ ___
 
 ```lua
  function love.load()
+    lume = require "lume"
 
-        lume = require "lume"
+    player = {
+        x = 100,
+        y = 100,
+        size = 25,
+        image = love.graphics.newImage("face.png")
+    }
 
-        player = {
-                x = 100,
-                y = 100,
-                size = 25,
-                image = love.graphics.newImage("face.png")
-        }
+    coins = {}
 
-        coins = {}
+    if love.filesystem.getInfo("savedata.txt") then
+        file = love.filesystem.read("savedata.txt")
+        print(file)
+    end
 
-        if love.filesystem.getInfo("savedata.txt") then
-                file = love.filesystem.read("savedata.txt")
-                print(file)
-        end
-
-        for i=1,25 do
-                table.insert(coins,
-                        {
-                                x = love.math.random(50, 650),
-                                y = love.math.random(50, 450),
-                                size = 10,
-                                image = love.graphics.newImage("dollar.png")
-                        }
-                )
-        end
+    for i=1,25 do
+        table.insert(coins,
+            {
+                x = love.math.random(50, 650),
+                y = love.math.random(50, 450),
+                size = 10,
+                image = love.graphics.newImage("dollar.png")
+            }
+        )
+    end
 end
 ```
 
@@ -386,8 +385,8 @@ end
 
 ```lua
 if love.filesystem.getInfo("savedata.txt") then
-        file = love.filesystem.read("savedata.txt")
-        data = lume.deserialize(file)
+    file = love.filesystem.read("savedata.txt")
+    data = lume.deserialize(file)
 end
 ```
 
@@ -395,48 +394,47 @@ end
 
 ```lua
  function love.load()
+    lume = require "lume"
 
-        lume = require "lume"
+    player = {
+        x = 100,
+        y = 100,
+        size = 25,
+        image = love.graphics.newImage("face.png")
+    }
 
-        player = {
-                x = 100,
-                y = 100,
-                size = 25,
-                image = love.graphics.newImage("face.png")
-        }
+    coins = {}
 
-        coins = {}
+    if love.filesystem.getInfo("savedata.txt") then
+        file = love.filesystem.read("savedata.txt")
+        data = lume.deserialize(file)
 
-        if love.filesystem.getInfo("savedata.txt") then
-                file = love.filesystem.read("savedata.txt")
-                data = lume.deserialize(file)
+        -- 應用玩家信息
+        player.x = data.player.x
+        player.y = data.player.y
+        player.size = data.player.size
 
-                -- 應用玩家信息
-                player.x = data.player.x
-                player.y = data.player.y
-                player.size = data.player.size
-
-                for i,v in ipairs(data.coins) do
-                        coins[i] = {
-                                x = v.x,
-                                y = v.y,
-                                size = 10,
-                                image = love.graphics.newImage("dollar.png")
-                        }
-                end
-        else
-                -- 只有在沒有存檔時才執行
-                for i=1,25 do
-                        table.insert(coins,
-                                {
-                                        x = love.math.random(50, 650),
-                                        y = love.math.random(50, 450),
-                                        size = 10,
-                                        image = love.graphics.newImage("dollar.png")
-                                }
-                        )
-                end
+        for i,v in ipairs(data.coins) do
+            coins[i] = {
+                x = v.x,
+                y = v.y,
+                size = 10,
+                image = love.graphics.newImage("dollar.png")
+            }
         end
+    else
+        -- 只有在沒有存檔時才執行
+        for i=1,25 do
+            table.insert(coins,
+                {
+                    x = love.math.random(50, 650),
+                    y = love.math.random(50, 450),
+                    size = 10,
+                    image = love.graphics.newImage("dollar.png")
+                }
+            )
+        end
+    end
 end
 ```
 
@@ -450,12 +448,12 @@ ___
 
 ```lua
 function love.keypressed(key)
-        if key == "f1" then
-                saveGame()
-        elseif key == "f2" then
-        love.filesystem.remove("savedata.txt")
-                love.event.quit("restart")
-        end
+    if key == "f1" then
+        saveGame()
+    elseif key == "f2" then
+    love.filesystem.remove("savedata.txt")
+        love.event.quit("restart")
+    end
 end
 ```
 

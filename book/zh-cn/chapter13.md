@@ -46,32 +46,32 @@
 
 ```lua
 function love.load()
-        -- 创建两个矩形
-        r1 = {
-                x = 10,
-                y = 100,
-                width = 100,
-                height = 100
-        }
+    -- 创建两个矩形
+    r1 = {
+        x = 10,
+        y = 100,
+        width = 100,
+        height = 100
+    }
 
-        r2 = {
-                x = 250,
-                y = 120,
-                width = 150,
-                height = 120
-        }
+    r2 = {
+        x = 250,
+        y = 120,
+        width = 150,
+        height = 120
+    }
 end
 
 
 function love.update(dt)
-        -- 让其中一个矩形移动
-        r1.x = r1.x + 100 * dt
+    -- 让其中一个矩形移动
+    r1.x = r1.x + 100 * dt
 end
 
 
 function love.draw()
-        love.graphics.rectangle("line", r1.x, r1.y, r1.width, r1.height)
-        love.graphics.rectangle("line", r2.x, r2.y, r2.width, r2.height)
+    love.graphics.rectangle("line", r1.x, r1.y, r1.width, r1.height)
+    love.graphics.rectangle("line", r2.x, r2.y, r2.width, r2.height)
 end
 ```
 
@@ -87,16 +87,16 @@ end
 
 ```lua
 function checkCollision(a, b)
-        -- 在局部变量中，常见的写法是使用下划线而非驼峰命名
-        local a_left = a.x
-        local a_right = a.x + a.width
-        local a_top = a.y
-        local a_bottom = a.y + a.height
+    -- 在局部变量中，常见的写法是使用下划线而非驼峰命名
+    local a_left = a.x
+    local a_right = a.x + a.width
+    local a_top = a.y
+    local a_bottom = a.y + a.height
 
-        local b_left = b.x
-        local b_right = b.x + b.width
-        local b_top = b.y
-        local b_bottom = b.y + b.height
+    local b_left = b.x
+    local b_right = b.x + b.width
+    local b_top = b.y
+    local b_bottom = b.y + b.height
 end
 ```
 
@@ -104,31 +104,31 @@ end
 
 ```lua
 function checkCollision(a, b)
-        -- 在局部变量中，常见的写法是使用下划线而非驼峰命名
-        local a_left = a.x
-        local a_right = a.x + a.width
-        local a_top = a.y
-        local a_bottom = a.y + a.height
+    -- 在局部变量中，常见的写法是使用下划线而非驼峰命名
+    local a_left = a.x
+    local a_right = a.x + a.width
+    local a_top = a.y
+    local a_bottom = a.y + a.height
 
-        local b_left = b.x
-        local b_right = b.x + b.width
-        local b_top = b.y
-        local b_bottom = b.y + b.height
+    local b_left = b.x
+    local b_right = b.x + b.width
+    local b_top = b.y
+    local b_bottom = b.y + b.height
 
-        -- 如果红色矩形的右边比蓝色矩形的左边更靠右
-        if  a_right > b_left
-        -- 并且红色矩形的左边比蓝色矩形的右边更靠左
-        and a_left < b_right
-        -- 并且红色矩形的下边比蓝色矩形的上边更靠下
-        and a_bottom > b_top
-        -- 并且红色矩形的上边比蓝色矩形的下边更靠上，那么……
-        and a_top < b_bottom then
-                -- 它们发生了碰撞！
-                return true
-        else
-                -- 只要上述条件有任意一个不成立，就返回 false
-                return false
-        end
+    -- 如果红色矩形的右边比蓝色矩形的左边更靠右
+    if  a_right > b_left
+    -- 并且红色矩形的左边比蓝色矩形的右边更靠左
+    and a_left < b_right
+    -- 并且红色矩形的下边比蓝色矩形的上边更靠下
+    and a_bottom > b_top
+    -- 并且红色矩形的上边比蓝色矩形的下边更靠上，那么……
+    and a_top < b_bottom then
+        -- 它们发生了碰撞！
+        return true
+    else
+        -- 只要上述条件有任意一个不成立，就返回 false
+        return false
+    end
 end
 ```
 
@@ -136,22 +136,22 @@ end
 
 ```lua
 function checkCollision(a, b)
-        -- 在局部变量中，常见的写法是使用下划线而非驼峰命名
-        local a_left = a.x
-        local a_right = a.x + a.width
-        local a_top = a.y
-        local a_bottom = a.y + a.height
+    -- 在局部变量中，常见的写法是使用下划线而非驼峰命名
+    local a_left = a.x
+    local a_right = a.x + a.width
+    local a_top = a.y
+    local a_bottom = a.y + a.height
 
-        local b_left = b.x
-        local b_right = b.x + b.width
-        local b_top = b.y
-        local b_bottom = b.y + b.height
+    local b_left = b.x
+    local b_right = b.x + b.width
+    local b_top = b.y
+    local b_bottom = b.y + b.height
 
-        -- 直接返回这个布尔表达式，而无需 if 语句
-        return  a_right > b_left
-                and a_left < b_right
-                and a_bottom > b_top
-                and a_top < b_bottom
+    -- 直接返回这个布尔表达式，而无需 if 语句
+    return  a_right > b_left
+        and a_left < b_right
+        and a_bottom > b_top
+        and a_top < b_bottom
 end
 ```
 
@@ -159,17 +159,17 @@ end
 
 ```lua
 function love.draw()
-        -- 创建一个名为 mode 的局部变量
-        local mode
-        if checkCollision(r1, r2) then
-                -- 如果发生碰撞，就填充绘制矩形
-                mode = "fill"
-        else
-                -- 否则绘制线框
-                mode = "line"
-        end
+    -- 创建一个名为 mode 的局部变量
+    local mode
+    if checkCollision(r1, r2) then
+        -- 如果发生碰撞，就填充绘制矩形
+        mode = "fill"
+    else
+        -- 否则绘制线框
+        mode = "line"
+    end
 
-        -- 将该变量作为第一个参数传入
+    -- 将该变量作为第一个参数传入
     love.graphics.rectangle(mode, r1.x, r1.y, r1.width, r1.height)
     love.graphics.rectangle(mode, r2.x, r2.y, r2.width, r2.height)
 end

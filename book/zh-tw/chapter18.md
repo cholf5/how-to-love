@@ -12,7 +12,7 @@ ___
 
 ```lua
 function love.load()
-        tilemap = {1, 0, 0, 1, 1, 0, 1, 1, 1, 0}
+    tilemap = {1, 0, 0, 1, 1, 0, 1, 1, 1, 0}
 end
 ```
 
@@ -20,15 +20,15 @@ end
 
 ```lua
 function love.draw()
-        -- 再次回顧 ipairs
-        -- ipairs 是一種特殊函數，可以用來遍歷表
-        -- 每次循環 i 會變成循環的當前下標，所以依次為 1、2、3、4……
-        -- 每次循環 v 會變成下標 i 對應的值，在這裡就是 1、0、0、1、1、0 等等
-        for i,v in ipairs(tilemap) do
-                if v == 1 then
-                        love.graphics.rectangle("line", i * 25, 100, 25, 25)
-                end
+    -- 再次回顧 ipairs
+    -- ipairs 是一種特殊函數，可以用來遍歷表
+    -- 每次循環 i 會變成循環的當前下標，所以依次為 1、2、3、4……
+    -- 每次循環 v 會變成下標 i 對應的值，在這裡就是 1、0、0、1、1、0 等等
+    for i,v in ipairs(tilemap) do
+        if v == 1 then
+            love.graphics.rectangle("line", i * 25, 100, 25, 25)
         end
+    end
 end
 ```
 
@@ -38,13 +38,13 @@ end
 
 ```lua
 function love.load()
-        tilemap = {
-                {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-                {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-                {1, 0, 0, 1, 1, 1, 1, 0, 0, 1},
-                {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-                {1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
-        }
+    tilemap = {
+        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+        {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+        {1, 0, 0, 1, 1, 1, 1, 0, 0, 1},
+        {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
+    }
 end
 ```
 
@@ -76,21 +76,21 @@ end
 
 ```lua
 function love.draw()
-        -- 先不用 ipairs
+    -- 先不用 ipairs
 
-        -- i 從 1 循環到 tilemap 中的值數量
-        for i=1,#tilemap do
-                -- j 從 1 循環到該行中的值數量
-                for j=1,#tilemap[i] do
-                        -- 如果第 i 行第 j 列的值等於 1
-                        if tilemap[i][j] == 1 then
-                                -- 畫出矩形
-                                -- 使用 i 和 j 來定位矩形
-                                -- j 控制 x，i 控制 y
-                                love.graphics.rectangle("line", j * 25, i * 25, 25, 25)
-                        end
-                end
+    -- i 從 1 循環到 tilemap 中的值數量
+    for i=1,#tilemap do
+        -- j 從 1 循環到該行中的值數量
+        for j=1,#tilemap[i] do
+            -- 如果第 i 行第 j 列的值等於 1
+            if tilemap[i][j] == 1 then
+                -- 畫出矩形
+                -- 使用 i 和 j 來定位矩形
+                -- j 控制 x，i 控制 y
+                love.graphics.rectangle("line", j * 25, i * 25, 25, 25)
+            end
         end
+    end
 end
 ```
 
@@ -102,13 +102,13 @@ end
 
 ```lua
 function love.draw()
-        for i,row in ipairs(tilemap) do
-                for j,tile in ipairs(row) do
-                        if tile == 1 then
-                                love.graphics.rectangle("line", j * 25, i * 25, 25, 25)
-                        end
-                end
+    for i,row in ipairs(tilemap) do
+        for j,tile in ipairs(row) do
+            if tile == 1 then
+                love.graphics.rectangle("line", j * 25, i * 25, 25, 25)
+            end
         end
+    end
 end
 ```
 
@@ -118,41 +118,41 @@ end
 
 ```lua
 function love.load()
-        tilemap = {
-                {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-                {1, 2, 2, 2, 2, 2, 2, 2, 2, 1},
-                {1, 2, 3, 4, 5, 5, 4, 3, 2, 1},
-                {1, 2, 2, 2, 2, 2, 2, 2, 2, 1},
-                {1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
-        }
+    tilemap = {
+        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+        {1, 2, 2, 2, 2, 2, 2, 2, 2, 1},
+        {1, 2, 3, 4, 5, 5, 4, 3, 2, 1},
+        {1, 2, 2, 2, 2, 2, 2, 2, 2, 1},
+        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
+    }
 end
 
 function love.draw()
-        for i,row in ipairs(tilemap) do
-                for j,tile in ipairs(row) do
-                        -- 先檢查瓦片是否為 0
-                        if tile ~= 0 then
+    for i,row in ipairs(tilemap) do
+        for j,tile in ipairs(row) do
+            -- 先檢查瓦片是否為 0
+            if tile ~= 0 then
 
-                                -- 根據瓦片編號設置顏色
-                                if tile == 1 then
-                                        -- setColor 使用 RGB，A 可選
-                                        -- 紅、綠、藍、透明度
-                                        love.graphics.setColor(1, 1, 1)
-                                elseif tile == 2 then
-                                        love.graphics.setColor(1, 0, 0)
-                                elseif tile == 3 then
-                                        love.graphics.setColor(1, 0, 1)
-                                elseif tile == 4 then
-                                        love.graphics.setColor(0, 0, 1)
-                                elseif tile == 5 then
-                                        love.graphics.setColor(0, 1, 1)
-                                end
-
-                                -- 繪製瓦片
-                                love.graphics.rectangle("fill", j * 25, i * 25, 25, 25)
-                        end
+                -- 根據瓦片編號設置顏色
+                if tile == 1 then
+                    -- setColor 使用 RGB，A 可選
+                    -- 紅、綠、藍、透明度
+                    love.graphics.setColor(1, 1, 1)
+                elseif tile == 2 then
+                    love.graphics.setColor(1, 0, 0)
+                elseif tile == 3 then
+                    love.graphics.setColor(1, 0, 1)
+                elseif tile == 4 then
+                    love.graphics.setColor(0, 0, 1)
+                elseif tile == 5 then
+                    love.graphics.setColor(0, 1, 1)
                 end
+
+                -- 繪製瓦片
+                love.graphics.rectangle("fill", j * 25, i * 25, 25, 25)
+            end
         end
+    end
 end
 ```
 
@@ -160,39 +160,39 @@ end
 
 ```lua
 function love.load()
-        tilemap = {
-                {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-                {1, 2, 2, 2, 2, 2, 2, 2, 2, 1},
-                {1, 2, 3, 4, 5, 5, 4, 3, 2, 1},
-                {1, 2, 2, 2, 2, 2, 2, 2, 2, 1},
-                {1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
-        }
+    tilemap = {
+        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+        {1, 2, 2, 2, 2, 2, 2, 2, 2, 1},
+        {1, 2, 3, 4, 5, 5, 4, 3, 2, 1},
+        {1, 2, 2, 2, 2, 2, 2, 2, 2, 1},
+        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
+    }
 
-        -- 創建名為 colors 的表
-        colors = {
-                -- 用裝滿 RGB 數值的表填充它
-                {1, 1, 1},
-                {1, 0, 0},
-                {1, 0, 1},
-                {0, 0, 1},
-                {0, 1, 1}
-        }
+    -- 創建名為 colors 的表
+    colors = {
+        -- 用裝滿 RGB 數值的表填充它
+        {1, 1, 1},
+        {1, 0, 0},
+        {1, 0, 1},
+        {0, 0, 1},
+        {0, 1, 1}
+    }
 end
 
 function love.draw()
-        for i,row in ipairs(tilemap) do
-                for j,tile in ipairs(row) do
-                        -- 先檢查瓦片是否為 0
-                        if tile ~= 0 then
-                                -- 設置顏色。.setColor() 也接受包含 3 個數字的表。
-                                -- 我們傳入下標為 tile 值的表。
-                                -- 所以如果 tile 等於 3，就傳入 colors[3]，即 {1, 0, 1}
-                                love.graphics.setColor(colors[tile])
-                                -- 繪製瓦片
-                                love.graphics.rectangle("fill", j * 25, i * 25, 25, 25)
-                        end
-                end
+    for i,row in ipairs(tilemap) do
+        for j,tile in ipairs(row) do
+            -- 先檢查瓦片是否為 0
+            if tile ~= 0 then
+                -- 設置顏色。.setColor() 也接受包含 3 個數字的表。
+                -- 我們傳入下標為 tile 值的表。
+                -- 所以如果 tile 等於 3，就傳入 colors[3]，即 {1, 0, 1}
+                love.graphics.setColor(colors[tile])
+                -- 繪製瓦片
+                love.graphics.rectangle("fill", j * 25, i * 25, 25, 25)
+            end
         end
+    end
 end
 ```
 
@@ -208,42 +208,41 @@ end
 
 ```lua
 function love.load()
+    -- 載入圖像
+    image = love.graphics.newImage("tile.png")
 
-        -- 載入圖像
-        image = love.graphics.newImage("tile.png")
+    -- 獲取寬度與高度
+    width = image:getWidth()
+    height = image:getHeight()
 
-        -- 獲取寬度與高度
-        width = image:getWidth()
-        height = image:getHeight()
+    tilemap = {
+        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+        {1, 2, 2, 2, 2, 2, 2, 2, 2, 1},
+        {1, 2, 3, 4, 5, 5, 4, 3, 2, 1},
+        {1, 2, 2, 2, 2, 2, 2, 2, 2, 1},
+        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
+    }
 
-        tilemap = {
-                {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-                {1, 2, 2, 2, 2, 2, 2, 2, 2, 1},
-                {1, 2, 3, 4, 5, 5, 4, 3, 2, 1},
-                {1, 2, 2, 2, 2, 2, 2, 2, 2, 1},
-                {1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
-        }
-
-        colors = {
-                -- 用裝滿 RGB 數值的表填充它
-                {1, 1, 1},
-                {1, 0, 0},
-                {1, 0, 1},
-                {0, 0, 1},
-                {0, 1, 1}
-        }
+    colors = {
+        -- 用裝滿 RGB 數值的表填充它
+        {1, 1, 1},
+        {1, 0, 0},
+        {1, 0, 1},
+        {0, 0, 1},
+        {0, 1, 1}
+    }
 end
 
 function love.draw()
-        for i,row in ipairs(tilemap) do
-                for j,tile in ipairs(row) do
-                        if tile ~= 0 then
-                                love.graphics.setColor(colors[tile])
-                                -- 繪製圖像
-                                love.graphics.draw(image, j * width, i * height)
-                        end
-                end
+    for i,row in ipairs(tilemap) do
+        for j,tile in ipairs(row) do
+            if tile ~= 0 then
+                love.graphics.setColor(colors[tile])
+                -- 繪製圖像
+                love.graphics.draw(image, j * width, i * height)
+            end
         end
+    end
 end
 ```
 
@@ -260,47 +259,47 @@ end
 ```lua
 function love.load()
 
-        -- 載入圖像
-        image = love.graphics.newImage("tileset.png")
+    -- 載入圖像
+    image = love.graphics.newImage("tileset.png")
 
-        -- 創建 quad 時需要整張圖像的寬度與高度
-        local image_width = image:getWidth()
-        local image_height = image:getHeight()
+    -- 創建 quad 時需要整張圖像的寬度與高度
+    local image_width = image:getWidth()
+    local image_height = image:getHeight()
 
-        -- 每個瓦片的寬和高都是 32, 32
-        -- 因此我們可以這樣寫：
-        width = 32
-        height = 32
-        -- 但假設我們不知道瓦片的寬高
-        -- 也可以利用瓦片集中的行數與列數
-        -- 我們的瓦片集有 2 行 3 列
-        -- 但我們需要減去 2，以抵消為防止滲色而預留的空像素
-        width = (image_width / 3) - 2
-        height = (image_height / 2) - 2
+    -- 每個瓦片的寬和高都是 32, 32
+    -- 因此我們可以這樣寫：
+    width = 32
+    height = 32
+    -- 但假設我們不知道瓦片的寬高
+    -- 也可以利用瓦片集中的行數與列數
+    -- 我們的瓦片集有 2 行 3 列
+    -- 但我們需要減去 2，以抵消為防止滲色而預留的空像素
+    width = (image_width / 3) - 2
+    height = (image_height / 2) - 2
 
-        -- 創建 quad
-        quads = {}
+    -- 創建 quad
+    quads = {}
 
-        for i=0,1 do
-                for j=0,2 do
-                        -- 之所以把代碼拆成多行
-                        -- 只是為了能放進頁面裡
-                        table.insert(quads,
-                                love.graphics.newQuad(
-                                        1 + j * (width + 2),
-                                        1 + i * (height + 2),
-                                        width, height,
-                                        image_width, image_height))
-                end
+    for i=0,1 do
+        for j=0,2 do
+            -- 之所以把代碼拆成多行
+            -- 只是為了能放進頁面裡
+            table.insert(quads,
+                love.graphics.newQuad(
+                    1 + j * (width + 2),
+                    1 + i * (height + 2),
+                    width, height,
+                    image_width, image_height))
         end
+    end
 
-        tilemap = {
-                {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-                {1, 2, 2, 2, 2, 2, 2, 2, 2, 1},
-                {1, 2, 3, 4, 5, 5, 4, 3, 2, 1},
-                {1, 2, 2, 2, 2, 2, 2, 2, 2, 1},
-                {1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
-        }
+    tilemap = {
+        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+        {1, 2, 2, 2, 2, 2, 2, 2, 2, 1},
+        {1, 2, 3, 4, 5, 5, 4, 3, 2, 1},
+        {1, 2, 2, 2, 2, 2, 2, 2, 2, 1},
+        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
+    }
 
 end
 ```
@@ -317,14 +316,14 @@ end
 
 ```lua
 tilemap = {
-        {1, 6, 6, 2, 1, 6, 6, 2},
-        {3, 0, 0, 4, 5, 0, 0, 3},
-        {3, 0, 0, 0, 0, 0, 0, 3},
-        {4, 2, 0, 0, 0, 0, 1, 5},
-        {1, 5, 0, 0, 0, 0, 4, 2},
-        {3, 0, 0, 0, 0, 0, 0, 3},
-        {3, 0, 0, 1, 2, 0, 0, 3},
-        {4, 6, 6, 5, 4, 6, 6, 5}
+    {1, 6, 6, 2, 1, 6, 6, 2},
+    {3, 0, 0, 4, 5, 0, 0, 3},
+    {3, 0, 0, 0, 0, 0, 0, 3},
+    {4, 2, 0, 0, 0, 0, 1, 5},
+    {1, 5, 0, 0, 0, 0, 4, 2},
+    {3, 0, 0, 0, 0, 0, 0, 3},
+    {3, 0, 0, 1, 2, 0, 0, 3},
+    {4, 6, 6, 5, 4, 6, 6, 5}
 }
 ```
 
@@ -334,14 +333,14 @@ tilemap = {
 
 ```lua
 function love.draw()
-        for i,row in ipairs(tilemap) do
-                for j,tile in ipairs(row) do
-                        if tile ~= 0 then
-                                -- 使用正確的 quad 繪製圖像
-                                love.graphics.draw(image, quads[tile], j * width, i * height)
-                        end
-                end
+    for i,row in ipairs(tilemap) do
+        for j,tile in ipairs(row) do
+            if tile ~= 0 then
+                -- 使用正確的 quad 繪製圖像
+                love.graphics.draw(image, quads[tile], j * width, i * height)
+            end
         end
+    end
 end
 ```
 
@@ -359,43 +358,43 @@ end
 
 ```lua
 function love.load()
-        image = love.graphics.newImage("tileset.png")
+    image = love.graphics.newImage("tileset.png")
 
-        local image_width = image:getWidth()
-        local image_height = image:getHeight()
-        width = (image_width / 3) - 2
-        height = (image_height / 2) - 2
+    local image_width = image:getWidth()
+    local image_height = image:getHeight()
+    width = (image_width / 3) - 2
+    height = (image_height / 2) - 2
 
-        quads = {}
+    quads = {}
 
-        for i=0,1 do
-                for j=0,2 do
-                        table.insert(quads,
-                                love.graphics.newQuad(
-                                        1 + j * (width + 2),
-                                        1 + i * (height + 2),
-                                        width, height,
-                                        image_width, image_height))
-                end
+    for i=0,1 do
+        for j=0,2 do
+            table.insert(quads,
+                love.graphics.newQuad(
+                    1 + j * (width + 2),
+                    1 + i * (height + 2),
+                    width, height,
+                    image_width, image_height))
         end
+    end
 
-        tilemap = {
-                {1, 6, 6, 2, 1, 6, 6, 2},
-                {3, 0, 0, 4, 5, 0, 0, 3},
-                {3, 0, 0, 0, 0, 0, 0, 3},
-                {4, 2, 0, 0, 0, 0, 1, 5},
-                {1, 5, 0, 0, 0, 0, 4, 2},
-                {3, 0, 0, 0, 0, 0, 0, 3},
-                {3, 0, 0, 1, 2, 0, 0, 3},
-                {4, 6, 6, 5, 4, 6, 6, 5}
-        }
+    tilemap = {
+        {1, 6, 6, 2, 1, 6, 6, 2},
+        {3, 0, 0, 4, 5, 0, 0, 3},
+        {3, 0, 0, 0, 0, 0, 0, 3},
+        {4, 2, 0, 0, 0, 0, 1, 5},
+        {1, 5, 0, 0, 0, 0, 4, 2},
+        {3, 0, 0, 0, 0, 0, 0, 3},
+        {3, 0, 0, 1, 2, 0, 0, 3},
+        {4, 6, 6, 5, 4, 6, 6, 5}
+    }
 
-        -- 創建我們的玩家
-        player = {
-                image = love.graphics.newImage("player.png"),
-                tile_x = 2,
-                tile_y = 2
-        }
+    -- 創建我們的玩家
+    player = {
+        image = love.graphics.newImage("player.png"),
+        tile_x = 2,
+        tile_y = 2
+    }
 end
 ```
 
@@ -405,21 +404,21 @@ end
 
 ```lua
 function love.keypressed(key)
-        local x = player.tile_x
-        local y = player.tile_y
+    local x = player.tile_x
+    local y = player.tile_y
 
-        if key == "left" then
-                x = x - 1
-        elseif key == "right" then
-                x = x + 1
-        elseif key == "up" then
-                y = y - 1
-        elseif key == "down" then
-                y = y + 1
-        end
+    if key == "left" then
+        x = x - 1
+    elseif key == "right" then
+        x = x + 1
+    elseif key == "up" then
+        y = y - 1
+    elseif key == "down" then
+        y = y + 1
+    end
 
-        player.tile_x = x
-        player.tile_y = y
+    player.tile_x = x
+    player.tile_y = y
 end
 ```
 
@@ -427,17 +426,17 @@ end
 
 ```lua
 function love.draw()
-        for i,row in ipairs(tilemap) do
-                for j,tile in ipairs(row) do
-                        if tile ~= 0 then
-                                -- 使用正確的 quad 繪製圖像
-                                love.graphics.draw(image, quads[tile], j * width, i * height)
-                        end
-                end
+    for i,row in ipairs(tilemap) do
+        for j,tile in ipairs(row) do
+            if tile ~= 0 then
+                -- 使用正確的 quad 繪製圖像
+                love.graphics.draw(image, quads[tile], j * width, i * height)
+            end
         end
+    end
 
-        -- 繪製玩家，並將瓦片坐標乘以瓦片寬高
-        love.graphics.draw(player.image, player.tile_x * width, player.tile_y * height)
+    -- 繪製玩家，並將瓦片坐標乘以瓦片寬高
+    love.graphics.draw(player.image, player.tile_x * width, player.tile_y * height)
 end
 ```
 
@@ -449,7 +448,7 @@ end
 
 ```lua
 function isEmpty(x, y)
-        return tilemap[y][x] == 0
+    return tilemap[y][x] == 0
 end
 ```
 
@@ -459,23 +458,23 @@ x 和 y 看起來像是反過來了，但這是正確的。因為 y 對應的是
 
 ```lua
 function love.keypressed(key)
-        local x = player.tile_x
-        local y = player.tile_y
+    local x = player.tile_x
+    local y = player.tile_y
 
-        if key == "left" then
-                x = x - 1
-        elseif key == "right" then
-                x = x + 1
-        elseif key == "up" then
-                y = y - 1
-        elseif key == "down" then
-                y = y + 1
-        end
+    if key == "left" then
+        x = x - 1
+    elseif key == "right" then
+        x = x + 1
+    elseif key == "up" then
+        y = y - 1
+    elseif key == "down" then
+        y = y + 1
+    end
 
-        if isEmpty(x, y) then
-                player.tile_x = x
-                player.tile_y = y
-        end
+    if isEmpty(x, y) then
+        player.tile_x = x
+        player.tile_y = y
+    end
 end
 ```
 

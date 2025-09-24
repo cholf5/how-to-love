@@ -8,20 +8,20 @@
 
 ```lua
 function love.load()
-        -- 创建一个名为 circle 的对象
-        circle = {}
+    -- 创建一个名为 circle 的对象
+    circle = {}
 
-        -- 为它设置 x、y、radius 和 speed 属性
-        circle.x = 100
-        circle.y = 100
-        circle.radius = 25
-        circle.speed = 200
+    -- 为它设置 x、y、radius 和 speed 属性
+    circle.x = 100
+    circle.y = 100
+    circle.radius = 25
+    circle.speed = 200
 end
 
 
 function love.draw()
-        -- 绘制圆
-        love.graphics.circle("line", circle.x, circle.y, circle.radius)
+    -- 绘制圆
+    love.graphics.circle("line", circle.x, circle.y, circle.radius)
 end
 ```
 
@@ -35,25 +35,25 @@ end
 
 ```lua
 function love.update(dt)
-        -- love.mouse.getPosition 返回光标的 x 和 y 位置。
-        mouse_x, mouse_y = love.mouse.getPosition()
+    -- love.mouse.getPosition 返回光标的 x 和 y 位置。
+    mouse_x, mouse_y = love.mouse.getPosition()
 
-        angle = math.atan2(mouse_y - circle.y, mouse_x - circle.x)
+    angle = math.atan2(mouse_y - circle.y, mouse_x - circle.x)
 end
 
 
 function love.draw()
-        love.graphics.circle("line", circle.x, circle.y, circle.radius)
+    love.graphics.circle("line", circle.x, circle.y, circle.radius)
 
-        -- 输出角度
-        love.graphics.print("angle: " .. angle, 10, 10)
+    -- 输出角度
+    love.graphics.print("angle: " .. angle, 10, 10)
 
-        -- 这些线用来可视化水平和垂直方向的速度
-        love.graphics.line(circle.x, circle.y, mouse_x, circle.y)
-        love.graphics.line(circle.x, circle.y, circle.x, mouse_y)
+    -- 这些线用来可视化水平和垂直方向的速度
+    love.graphics.line(circle.x, circle.y, mouse_x, circle.y)
+    love.graphics.line(circle.x, circle.y, circle.x, mouse_y)
 
-        -- 角度线
-        love.graphics.line(circle.x, circle.y, mouse_x, mouse_y)
+    -- 角度线
+    love.graphics.line(circle.x, circle.y, mouse_x, mouse_y)
 end
 ```
 
@@ -136,28 +136,27 @@ circle.y = circle.y + circle.speed * sin * dt
 
 ```lua
 function love.update(dt)
-        -- love.mouse.getPosition 返回光标的 x 和 y 位置。
-        mouse_x, mouse_y = love.mouse.getPosition()
+    -- love.mouse.getPosition 返回光标的 x 和 y 位置。
+    mouse_x, mouse_y = love.mouse.getPosition()
 
-        angle = math.atan2(mouse_y - circle.y, mouse_x - circle.x)
+    angle = math.atan2(mouse_y - circle.y, mouse_x - circle.x)
 
-        cos = math.cos(angle)
-        sin = math.sin(angle)
+    cos = math.cos(angle)
+    sin = math.sin(angle)
 
-        -- 让圆朝着鼠标移动
-        circle.x = circle.x + circle.speed * cos * dt
-        circle.y = circle.y + circle.speed * sin * dt
+    -- 让圆朝着鼠标移动
+    circle.x = circle.x + circle.speed * cos * dt
+    circle.y = circle.y + circle.speed * sin * dt
 end
 
 
 function love.draw()
-        love.graphics.circle("line", circle.x, circle.y, circle.radius)
+    love.graphics.circle("line", circle.x, circle.y, circle.radius)
 
-
-        -- 角度线
-        love.graphics.line(circle.x, circle.y, mouse_x, mouse_y)
-        love.graphics.line(circle.x, circle.y, mouse_x, circle.y)
-        love.graphics.line(circle.x, circle.y, circle.x, mouse_y)
+    -- 角度线
+    love.graphics.line(circle.x, circle.y, mouse_x, mouse_y)
+    love.graphics.line(circle.x, circle.y, mouse_x, circle.y)
+    love.graphics.line(circle.x, circle.y, circle.x, mouse_y)
 
 end
 ```
@@ -182,10 +181,10 @@ ___
 
 ```lua
 function love.draw()
-        love.graphics.circle("line", circle.x, circle.y, circle.radius)
-        love.graphics.line(circle.x, circle.y, mouse_x, mouse_y)
-        love.graphics.line(circle.x, circle.y, mouse_x, circle.y)
-        love.graphics.line(mouse_x, mouse_y, mouse_x, circle.y)
+    love.graphics.circle("line", circle.x, circle.y, circle.radius)
+    love.graphics.line(circle.x, circle.y, mouse_x, mouse_y)
+    love.graphics.line(circle.x, circle.y, mouse_x, circle.y)
+    love.graphics.line(mouse_x, mouse_y, mouse_x, circle.y)
 end
 ```
 
@@ -197,8 +196,8 @@ end
 
 ```lua
 function getDistance(x1, y1, x2, y2)
-        local horizontal_distance = x1 - x2
-        local vertical_distance = y1 - y2
+    local horizontal_distance = x1 - x2
+    local vertical_distance = y1 - y2
 end
 ```
 
@@ -206,12 +205,12 @@ end
 
 ```lua
 function getDistance(x1, y1, x2, y2)
-        local horizontal_distance = x1 - x2
-        local vertical_distance = y1 - y2
+    local horizontal_distance = x1 - x2
+    local vertical_distance = y1 - y2
 
-        -- 两种写法都可以
-        local a = horizontal_distance * horizontal_distance
-        local b = vertical_distance ^2
+    -- 两种写法都可以
+    local a = horizontal_distance * horizontal_distance
+    local b = vertical_distance ^2
 end
 ```
 
@@ -219,15 +218,15 @@ end
 
 ```lua
 function getDistance(x1, y1, x2, y2)
-        local horizontal_distance = x1 - x2
-        local vertical_distance = y1 - y2
-        -- 两种写法都可以
-        local a = horizontal_distance * horizontal_distance
-        local b = vertical_distance ^2
+    local horizontal_distance = x1 - x2
+    local vertical_distance = y1 - y2
+    -- 两种写法都可以
+    local a = horizontal_distance * horizontal_distance
+    local b = vertical_distance ^2
 
-        local c = a + b
-        local distance = math.sqrt(c)
-        return distance
+    local c = a + b
+    local distance = math.sqrt(c)
+    return distance
 end
 ```
 
@@ -235,13 +234,13 @@ end
 
 ```lua
 function love.draw()
-        love.graphics.circle("line", circle.x, circle.y, circle.radius)
-        love.graphics.line(circle.x, circle.y, mouse_x, mouse_y)
-        love.graphics.line(circle.x, circle.y, mouse_x, circle.y)
-        love.graphics.line(mouse_x, mouse_y, mouse_x, circle.y)
+    love.graphics.circle("line", circle.x, circle.y, circle.radius)
+    love.graphics.line(circle.x, circle.y, mouse_x, mouse_y)
+    love.graphics.line(circle.x, circle.y, mouse_x, circle.y)
+    love.graphics.line(mouse_x, mouse_y, mouse_x, circle.y)
 
-        local distance = getDistance(circle.x, circle.y, mouse_x, mouse_y)
-        love.graphics.circle("line", circle.x, circle.y, distance)
+    local distance = getDistance(circle.x, circle.y, mouse_x, mouse_y)
+    love.graphics.circle("line", circle.x, circle.y, distance)
 end
 ```
 
@@ -251,17 +250,17 @@ end
 
 ```lua
 function love.update(dt)
-        mouse_x, mouse_y = love.mouse.getPosition()
-        angle = math.atan2(mouse_y - circle.y, mouse_x - circle.x)
-        cos = math.cos(angle)
-        sin = math.sin(angle)
+    mouse_x, mouse_y = love.mouse.getPosition()
+    angle = math.atan2(mouse_y - circle.y, mouse_x - circle.x)
+    cos = math.cos(angle)
+    sin = math.sin(angle)
 
-        local distance = getDistance(circle.x, circle.y, mouse_x, mouse_y)
+    local distance = getDistance(circle.x, circle.y, mouse_x, mouse_y)
 
-        if distance < 400 then
-                circle.x = circle.x + circle.speed * cos * (distance/100) * dt
-                circle.y = circle.y + circle.speed * sin * (distance/100) * dt
-        end
+    if distance < 400 then
+        circle.x = circle.x + circle.speed * cos * (distance/100) * dt
+        circle.y = circle.y + circle.speed * sin * (distance/100) * dt
+    end
 end
 ```
 ![](/images/book/16/following_circle_distance_speed.gif)
@@ -281,27 +280,27 @@ ___
 
 ```lua
 function love.load()
-        arrow = {}
-        arrow.x = 200
-        arrow.y = 200
-        arrow.speed = 300
-        arrow.angle = 0
-        arrow.image = love.graphics.newImage("arrow_right.png")
+    arrow = {}
+    arrow.x = 200
+    arrow.y = 200
+    arrow.speed = 300
+    arrow.angle = 0
+    arrow.image = love.graphics.newImage("arrow_right.png")
 end
 
 function love.update(dt)
-        mouse_x, mouse_y = love.mouse.getPosition()
-        arrow.angle = math.atan2(mouse_y - arrow.y, mouse_x - arrow.x)
-        cos = math.cos(arrow.angle)
-        sin = math.sin(arrow.angle)
+    mouse_x, mouse_y = love.mouse.getPosition()
+    arrow.angle = math.atan2(mouse_y - arrow.y, mouse_x - arrow.x)
+    cos = math.cos(arrow.angle)
+    sin = math.sin(arrow.angle)
 
-        arrow.x = arrow.x + arrow.speed * cos * dt
-        arrow.y = arrow.y + arrow.speed * sin * dt
+    arrow.x = arrow.x + arrow.speed * cos * dt
+    arrow.y = arrow.y + arrow.speed * sin * dt
 end
 
 function love.draw()
-        love.graphics.draw(arrow.image, arrow.x, arrow.y, arrow.angle)
-        love.graphics.circle("fill", mouse_x, mouse_y, 5)
+    love.graphics.draw(arrow.image, arrow.x, arrow.y, arrow.angle)
+    love.graphics.circle("fill", mouse_x, mouse_y, 5)
 end
 ```
 
@@ -314,23 +313,23 @@ end
 
 ```lua
 function love.load()
-        arrow = {}
-        arrow.x = 200
-        arrow.y = 200
-        arrow.speed = 300
-        arrow.angle = 0
-        arrow.image = love.graphics.newImage("arrow_right.png")
-        arrow.origin_x = arrow.image:getWidth() / 2
-        arrow.origin_y = arrow.image:getHeight() / 2
+    arrow = {}
+    arrow.x = 200
+    arrow.y = 200
+    arrow.speed = 300
+    arrow.angle = 0
+    arrow.image = love.graphics.newImage("arrow_right.png")
+    arrow.origin_x = arrow.image:getWidth() / 2
+    arrow.origin_y = arrow.image:getHeight() / 2
 end
 ```
 
 ```lua
 function love.draw()
-        love.graphics.draw(arrow.image,
-                arrow.x, arrow.y, arrow.angle, 1, 1,
-                arrow.origin_x, arrow.origin_y)
-        love.graphics.circle("fill", mouse_x, mouse_y, 5)
+    love.graphics.draw(arrow.image,
+        arrow.x, arrow.y, arrow.angle, 1, 1,
+        arrow.origin_x, arrow.origin_y)
+    love.graphics.circle("fill", mouse_x, mouse_y, 5)
 end
 ```
 

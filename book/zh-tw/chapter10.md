@@ -12,7 +12,7 @@
 
 ```lua
 function love.load()
-        tick = require "tick"
+    tick = require "tick"
 end
 ```
 
@@ -22,7 +22,7 @@ end
 
 ```lua
 function love.update(dt)
-        tick.update(dt)
+    tick.update(dt)
 end
 ```
 
@@ -30,22 +30,22 @@ end
 
 ```lua
 function love.load()
-        tick = require "tick"
+    tick = require "tick"
 
-        -- 創建一個布爾值
-        drawRectangle = false
+    -- 創建一個布爾值
+    drawRectangle = false
 
-        -- 第一個參數是函數
-        -- 第二個參數是等待多久調用這個函數
-        tick.delay(function () drawRectangle = true end ,       2)
+    -- 第一個參數是函數
+    -- 第二個參數是等待多久調用這個函數
+    tick.delay(function () drawRectangle = true end ,       2)
 end
 
 
 function love.draw()
-        -- 如果 drawRectangle 為真，就繪製一個矩形
-        if drawRectangle then
-                love.graphics.rectangle("fill", 100, 100, 300, 200)
-        end
+    -- 如果 drawRectangle 為真，就繪製一個矩形
+    if drawRectangle then
+        love.graphics.rectangle("fill", 100, 100, 300, 200)
+    end
 end
 ```
 
@@ -69,23 +69,23 @@ Lua 自帶了一些庫，稱為 *標準庫*。它們就是 Lua 內置的函數�
 
 ```lua
 function love.load()
-        x = 30
-        y = 50
+    x = 30
+    y = 50
 end
 
 
 function love.draw()
-        love.graphics.rectangle("line", x, y, 100, 100)
+    love.graphics.rectangle("line", x, y, 100, 100)
 end
 
 
 function love.keypressed(key)
-        -- 如果按下空格，就……
-        if key == "space" then
-                -- 讓 x 和 y 變成 100 到 500 之間的隨機數
-                x = math.random(100, 500)
-                y = math.random(100, 500)
-        end
+    -- 如果按下空格，就……
+    if key == "space" then
+        -- 讓 x 和 y 變成 100 到 500 之間的隨機數
+        x = math.random(100, 500)
+        y = math.random(100, 500)
+    end
 end
 ```
 

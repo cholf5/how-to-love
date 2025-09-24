@@ -10,24 +10,24 @@ LÖVE 是用 *C++* 和 *OpenGL* 編寫的，這兩者都被認為非常難。LÖ
 ```cpp
 void Graphics::ellipse(DrawMode mode, float x, float y, float a, float b, int points)
 {
-        float two_pi = static_cast<float>(LOVE_M_PI * 2);
-        if (points <= 0) points = 1;
-        float angle_shift = (two_pi / points);
-        float phi = .0f;
+    float two_pi = static_cast<float>(LOVE_M_PI * 2);
+    if (points <= 0) points = 1;
+    float angle_shift = (two_pi / points);
+    float phi = .0f;
 
-        float *coords = new float[2 * (points + 1)];
-        for (int i = 0; i < points; ++i, phi += angle_shift)
-        {
-                coords[2*i+0] = x + a * cosf(phi);
-                coords[2*i+1] = y + b * sinf(phi);
-        }
+    float *coords = new float[2 * (points + 1)];
+    for (int i = 0; i < points; ++i, phi += angle_shift)
+    {
+        coords[2*i+0] = x + a * cosf(phi);
+        coords[2*i+1] = y + b * sinf(phi);
+    }
 
-        coords[2*points+0] = coords[0];
-        coords[2*points+1] = coords[1];
+    coords[2*points+0] = coords[0];
+    coords[2*points+1] = coords[1];
 
-        polygon(mode, coords, (points + 1) * 2);
+    polygon(mode, coords, (points + 1) * 2);
 
-        delete[] coords;
+    delete[] coords;
 }
 ```
 
@@ -52,7 +52,7 @@ love.graphics.rectangle("line", 200, 30, 120, 100)
 
 ```lua
 function test(a, b)
-        return a + b
+    return a + b
 end
 print(test(10, 20))
 --Output: 30
@@ -97,7 +97,7 @@ DrawMode 是一個字符串，可以是 "fill" 或 "line"，用於控制形狀�
 因此，如果我們想要繪製一個填充的矩形，可以這樣做：
 ```lua
 function love.draw()
-        love.graphics.rectangle("fill", 100, 200, 50, 80)
+    love.graphics.rectangle("fill", 100, 200, 50, 80)
 end
 ```
 

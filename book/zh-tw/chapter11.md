@@ -14,7 +14,7 @@
 
 ```lua
 function love.load()
-        Object = require "classic"
+    Object = require "classic"
 end
 ```
 
@@ -27,7 +27,7 @@ end
 Rectangle = Object.extend(Object)
 
 function Rectangle.new(self)
-        self.test = math.random(1, 1000)
+    self.test = math.random(1, 1000)
 end
 ```
 
@@ -36,13 +36,13 @@ end
 ```lua
 --! file: main.lua
 function love.load()
-        Object = require "classic"
-        -- 別忘了加載文件
-        require "rectangle"
+    Object = require "classic"
+    -- 別忘了加載文件
+    require "rectangle"
 
-        r1 = Rectangle()
-        r2 = Rectangle()
-        print(r1.test, r2.test)
+    r1 = Rectangle()
+    r2 = Rectangle()
+    print(r1.test, r2.test)
 end
 ```
 
@@ -65,21 +65,21 @@ end
 Rectangle = Object.extend(Object)
 
 function Rectangle.new(self)
-        self.x = 100
-        self.y = 100
-        self.width = 200
-        self.height = 150
-        self.speed = 100
+    self.x = 100
+    self.y = 100
+    self.width = 200
+    self.height = 150
+    self.speed = 100
 end
 
 
 function Rectangle.update(self, dt)
-        self.x = self.x + self.speed * dt
+    self.x = self.x + self.speed * dt
 end
 
 
 function Rectangle.draw(self)
-        love.graphics.rectangle("line", self.x, self.y, self.width, self.height)
+    love.graphics.rectangle("line", self.x, self.y, self.width, self.height)
 end
 ```
 
@@ -89,20 +89,20 @@ end
 --! file: main.lua
 
 function love.load()
-        Object = require "classic"
-        require "rectangle"
-        r1 = Rectangle()
-        r2 = Rectangle()
+    Object = require "classic"
+    require "rectangle"
+    r1 = Rectangle()
+    r2 = Rectangle()
 end
 
 
 function love.update(dt)
-        r1.update(r1, dt)
+    r1.update(r1, dt)
 end
 
 
 function love.draw()
-        r1.draw(r1)
+    r1.draw(r1)
 end
 ```
 
@@ -115,14 +115,14 @@ end
 ```lua
 --! file: main.lua
 function love.update(dt)
-        -- Lua 會把它轉換為：r1.update(r1, dt)
-        r1:update(dt)
+    -- Lua 會把它轉換為：r1.update(r1, dt)
+    r1:update(dt)
 end
 
 
 function love.draw()
-        -- Lua 會把它轉換為：r1.draw(r1)
-        r1:draw()
+    -- Lua 會把它轉換為：r1.draw(r1)
+    r1:draw()
 end
 ```
 
@@ -136,23 +136,23 @@ Rectangle = Object:extend()
 
 -- Lua 會把它轉換為：Rectangle.new(self)
 function Rectangle:new()
-        self.x = 100
-        self.y = 100
-        self.width = 200
-        self.height = 150
-        self.speed = 100
+    self.x = 100
+    self.y = 100
+    self.width = 200
+    self.height = 150
+    self.speed = 100
 end
 
 
 -- Lua 會把它轉換為：Rectangle.update(self, dt)
 function Rectangle:update(dt)
-        self.x = self.x + self.speed * dt
+    self.x = self.x + self.speed * dt
 end
 
 
 -- Lua 會把它轉換為：Rectangle.draw(self)
 function Rectangle:draw()
-        love.graphics.rectangle("line", self.x, self.y, self.width, self.height)
+    love.graphics.rectangle("line", self.x, self.y, self.width, self.height)
 end
 ```
 
@@ -163,11 +163,11 @@ end
 ```lua
 --! file: rectangle.lua
 function Rectangle:new(x, y, width, height)
-        self.x = x
-        self.y = y
-        self.width = width
-        self.height = height
-        self.speed = 100
+    self.x = x
+    self.y = y
+    self.width = width
+    self.height = height
+    self.speed = 100
 end
 ```
 
@@ -177,22 +177,22 @@ end
 --! file: main.lua
 
 function love.load()
-        Object = require "classic"
-        require "rectangle"
-        r1 = Rectangle(100, 100, 200, 50)
-        r2 = Rectangle(350, 80, 25, 140)
+    Object = require "classic"
+    require "rectangle"
+    r1 = Rectangle(100, 100, 200, 50)
+    r2 = Rectangle(350, 80, 25, 140)
 end
 
 
 function love.update(dt)
-        r1:update(dt)
-        r2:update(dt)
+    r1:update(dt)
+    r2:update(dt)
 end
 
 
 function love.draw()
-        r1:draw()
-        r2:draw()
+    r1:draw()
+    r2:draw()
 end
 ```
 
@@ -221,14 +221,14 @@ ___
 Shape = Object:extend()
 
 function Shape:new(x, y)
-        self.x = x
-        self.y = y
-        self.speed = 100
+    self.x = x
+    self.y = y
+    self.speed = 100
 end
 
 
 function Shape:update(dt)
-        self.x = self.x + self.speed * dt
+    self.x = self.x + self.speed * dt
 end
 ```
 
@@ -240,11 +240,11 @@ end
 --! file: main.lua
 
 function love.load()
-        Object = require "classic"
-        require "shape"
-        require "rectangle"
-        r1 = Rectangle()
-        r2 = Rectangle()
+    Object = require "classic"
+    require "shape"
+    require "rectangle"
+    r1 = Rectangle()
+    r2 = Rectangle()
 end
 ```
 
@@ -253,13 +253,13 @@ end
 Rectangle = Shape:extend()
 
 function Rectangle:new(x, y, width, height)
-        Rectangle.super.new(self, x, y)
-        self.width = width
-        self.height = height
+    Rectangle.super.new(self, x, y)
+    self.width = width
+    self.height = height
 end
 
 function Rectangle:draw()
-        love.graphics.rectangle("line", self.x, self.y, self.width, self.height)
+    love.graphics.rectangle("line", self.x, self.y, self.width, self.height)
 end
 ```
 
@@ -278,14 +278,14 @@ end
 Circle = Shape:extend()
 
 function Circle:new(x, y, radius)
-        Circle.super.new(self, x, y)
-        -- 圓形沒有寬度或高度，只有半徑。
-        self.radius = radius
+    Circle.super.new(self, x, y)
+    -- 圓形沒有寬度或高度，只有半徑。
+    self.radius = radius
 end
 
 
 function Circle:draw()
-        love.graphics.circle("line", self.x, self.y, self.radius)
+    love.graphics.circle("line", self.x, self.y, self.radius)
 end
 ```
 
@@ -299,19 +299,19 @@ end
 --! file: main.lua
 
 function love.load()
-        Object = require "classic"
-        -- 別忘了加載文件
-        require "shape"
+    Object = require "classic"
+    -- 別忘了加載文件
+    require "shape"
 
-        require "rectangle"
+    require "rectangle"
 
-        -- 別忘了加載文件
-        require "circle"
+    -- 別忘了加載文件
+    require "circle"
 
-        r1 = Rectangle(100, 100, 200, 50)
+    r1 = Rectangle(100, 100, 200, 50)
 
-        -- 把 r2 變成 Circle，而不是 Rectangle
-        r2 = Circle(350, 80, 40)
+    -- 把 r2 變成 Circle，而不是 Rectangle
+    r2 = Circle(350, 80, 40)
 end
 ```
 
@@ -361,14 +361,14 @@ ___
 local Shape = Object:extend()
 
 function Shape:new(x, y)
-        self.x = x
-        self.y = y
-        self.speed = 100
+    self.x = x
+    self.y = y
+    self.speed = 100
 end
 
 
 function Shape:update(dt)
-        self.x = self.x + self.speed * dt
+    self.x = self.x + self.speed * dt
 end
 
 return Shape
@@ -385,13 +385,13 @@ local Shape = require "shape"
 local Rectangle = Shape:extend()
 
 function Rectangle:new(x, y, width, height)
-        Rectangle.super.new(self, x, y)
-        self.width = width
-        self.height = height
+    Rectangle.super.new(self, x, y)
+    self.width = width
+    self.height = height
 end
 
 function Rectangle:draw()
-        love.graphics.rectangle("line", self.x, self.y, self.width, self.height)
+    love.graphics.rectangle("line", self.x, self.y, self.width, self.height)
 end
 
 -- 最後把它返回。
@@ -404,16 +404,16 @@ return Rectangle
 --! file: main.lua
 
 function love.load()
-        Object = require "classic"
-        -- 不再需要在這裡 require shape。
+    Object = require "classic"
+    -- 不再需要在這裡 require shape。
 
-        local Rectangle = require "rectangle"
+    local Rectangle = require "rectangle"
 
-        local Circle = require "circle"
+    local Circle = require "circle"
 
-        r1 = Rectangle(100, 100, 200, 50)
+    r1 = Rectangle(100, 100, 200, 50)
 
-        r2 = Circle(350, 80, 40)
+    r2 = Circle(350, 80, 40)
 end
 ```
 
@@ -426,15 +426,15 @@ end
 local r1, r2
 
 function love.load()
-        Object = require "classic"
+    Object = require "classic"
 
-        local Rectangle = require "rectangle"
+    local Rectangle = require "rectangle"
 
-        local Circle = require "circle"
+    local Circle = require "circle"
 
-        r1 = Rectangle(100, 100, 200, 50)
+    r1 = Rectangle(100, 100, 200, 50)
 
-        r2 = Circle(350, 80, 40)
+    r2 = Circle(350, 80, 40)
 end
 ```
 

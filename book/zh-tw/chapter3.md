@@ -6,7 +6,7 @@
 
 ```lua
 example = function ()
-        print("Hello World!")
+    print("Hello World!")
 end
 ```
 
@@ -14,7 +14,7 @@ end
 
 ```lua
 function example()
-        print("Hello World!")
+    print("Hello World!")
 end
 ```
 
@@ -37,7 +37,7 @@ ___
 
 ```lua
 function sayNumber(num)
-        print("I like the number " .. num)
+    print("I like the number " .. num)
 end
 
 sayNumber(15)
@@ -67,7 +67,7 @@ ___
 
 ```lua
 function giveMeFive()
-        return 5
+    return 5
 end
 
 a = giveMeFive()
@@ -82,7 +82,7 @@ print(a)
 ```lua
 -- 多個參數和實參之間用逗號分隔
 function sum(a, b)
-        return a + b
+    return a + b
 end
 
 print(sum(200, 95))

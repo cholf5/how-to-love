@@ -52,7 +52,7 @@ local test = 20
 ```lua
 --! file: example.lua
 if true then
-        local test = 20
+    local test = 20
 end
 
 print(test)
@@ -78,13 +78,13 @@ print(test)
 local test = 20
 
 function some_function(test)
-        if true then
-                local test = 40
-                print(test)
-                -- 输出：40
-        end
+    if true then
+        local test = 40
         print(test)
-        -- 输出：30
+        -- 输出：40
+    end
+    print(test)
+    -- 输出：30
 end
 
 some_function(30)
@@ -150,19 +150,19 @@ print(hello)
 
 ```lua
 function love.load()
-        listOfRectangles = {}
+    listOfRectangles = {}
 end
 
 function createRect()
-        local rect = {}
-        rect.x = 100
-        rect.y = 100
-        rect.width = 70
-        rect.height = 90
-        rect.speed = 100
+    local rect = {}
+    rect.x = 100
+    rect.y = 100
+    rect.width = 70
+    rect.height = 90
+    rect.speed = 100
 
-        -- 把新矩形放进列表
-        table.insert(listOfRectangles, rect)
+    -- 把新矩形放进列表
+    table.insert(listOfRectangles, rect)
 end
 ```
 
@@ -173,7 +173,7 @@ end
 local listOfRectangles = {}
 
 function love.load()
-        -- 既然它已经是空表了，这个函数现在可以删掉
+    -- 既然它已经是空表了，这个函数现在可以删掉
 end
 ```
 
