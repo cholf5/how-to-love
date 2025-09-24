@@ -46,8 +46,6 @@ function love.draw()
 		love.graphics.rectangle("fill", 100, 100, 300, 200)
 	end
 end
-
-
 ```
 Did we just pass a function as an argument? Sure, why not? A function is a type of variable after all.
 
@@ -73,11 +71,9 @@ function love.load()
 	y = 50
 end
 
-
 function love.draw()
 	love.graphics.rectangle("line", x, y, 100, 100)
 end
-
 
 function love.keypressed(key)
 	--If space is pressed then..
