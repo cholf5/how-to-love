@@ -15,6 +15,11 @@ const dictionaries = {
       notFound: {
         title: 'Chapter not found',
         message: 'We could not find the chapter you were looking for. Try selecting another one from the directory.'
+      },
+      copyCode: {
+        label: 'Copy',
+        success: 'Copied!',
+        error: 'Unable to copy'
       }
     }
   },
@@ -32,6 +37,11 @@ const dictionaries = {
       notFound: {
         title: '未找到章节',
         message: '没有找到请求的章节，请返回目录选择其他章节。'
+      },
+      copyCode: {
+        label: '复制',
+        success: '已复制',
+        error: '复制失败'
       }
     }
   },
@@ -49,6 +59,11 @@ const dictionaries = {
       notFound: {
         title: '找不到章節',
         message: '沒有找到請求的章節，請返回目錄選擇其他章節。'
+      },
+      copyCode: {
+        label: '複製',
+        success: '已複製',
+        error: '複製失敗'
       }
     }
   }

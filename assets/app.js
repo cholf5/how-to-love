@@ -196,13 +196,30 @@ function render(skipUrlUpdate = false) {
     return;
   }
 
+  dom.brandLink.textContent = languageInfo.bookTitle || dom.brandLink.textContent;
+
+  const activeChapter = state.chapterId
+    ? findChapter(languageInfo, state.chapterId)
+    : null;
+
+  updateDocumentTitle(languageInfo, activeChapter);
+
   if (!state.chapterId) {
     if (!skipUrlUpdate) {
       updateUrl(true);
     }
     renderContents(languageInfo);
   } else {
-    renderChapter(languageInfo, skipUrlUpdate);
+    renderChapter(languageInfo, skipUrlUpdate, activeChapter);
+  }
+}
+
+function updateDocumentTitle(languageInfo, chapter) {
+  const baseTitle = (languageInfo && languageInfo.bookTitle) || 'How to LÖVE';
+  if (chapter && chapter.title) {
+    document.title = `${baseTitle} - ${chapter.title}`;
+  } else {
+    document.title = baseTitle;
   }
 }
 
@@ -310,8 +327,8 @@ function chapterLabel(index, id) {
   return '☆';
 }
 
-function renderChapter(languageInfo, skipUrlUpdate = false) {
-  const chapter = findChapter(languageInfo, state.chapterId);
+function renderChapter(languageInfo, skipUrlUpdate = false, chapterOverride = null) {
+  const chapter = chapterOverride || findChapter(languageInfo, state.chapterId);
   if (!chapter) {
     renderNotFound(languageInfo);
     return;
@@ -357,6 +374,7 @@ function renderChapter(languageInfo, skipUrlUpdate = false) {
     })
     .then(markdown => {
       article.innerHTML = renderMarkdown(markdown);
+      setupCodeCopyButtons(article);
       container.appendChild(navBottom);
       article.scrollTop = 0;
     })
@@ -374,6 +392,100 @@ function renderChapter(languageInfo, skipUrlUpdate = false) {
     });
 
   dom.app.appendChild(container);
+}
+
+function setupCodeCopyButtons(root) {
+  const buttons = root.querySelectorAll('.code-copy-button');
+  buttons.forEach(button => {
+    button.addEventListener('click', async () => {
+      const codeBlock = button.closest('.code-block');
+      if (!codeBlock) {
+        return;
+      }
+      const codeElement = codeBlock.querySelector('code');
+      if (!codeElement) {
+        return;
+      }
+      const codeText = codeElement.textContent;
+      const defaultLabel = button.dataset.label || '';
+      const successLabel = button.dataset.success || defaultLabel;
+      const errorLabel = button.dataset.error || defaultLabel;
+
+      try {
+        button.disabled = true;
+        await copyCodeToClipboard(codeText);
+        showCopyFeedback(button, successLabel, 'copied');
+      } catch (error) {
+        console.error(error);
+        showCopyFeedback(button, errorLabel, 'error');
+      } finally {
+        button.disabled = false;
+      }
+    });
+  });
+}
+
+async function copyCodeToClipboard(text) {
+  if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
+    await navigator.clipboard.writeText(text);
+    return;
+  }
+
+  return new Promise((resolve, reject) => {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    textarea.setAttribute('readonly', '');
+    textarea.style.position = 'fixed';
+    textarea.style.top = '-9999px';
+    textarea.style.opacity = '0';
+    document.body.appendChild(textarea);
+    textarea.focus();
+    textarea.select();
+
+    try {
+      const successful = document.execCommand('copy');
+      document.body.removeChild(textarea);
+      if (successful) {
+        resolve();
+      } else {
+        reject(new Error('Copy command was unsuccessful'));
+      }
+    } catch (error) {
+      document.body.removeChild(textarea);
+      reject(error);
+    }
+  });
+}
+
+function showCopyFeedback(button, message, statusClass) {
+  const labelElement = button.querySelector('.code-copy-label');
+  if (!labelElement) {
+    return;
+  }
+
+  if (button.__copyResetTimeout) {
+    clearTimeout(button.__copyResetTimeout);
+  }
+
+  button.classList.remove('copied', 'error');
+  if (statusClass) {
+    button.classList.add(statusClass);
+  }
+
+  if (typeof button.blur === 'function') {
+    button.blur();
+  }
+
+  labelElement.textContent = message;
+  button.setAttribute('aria-label', message);
+
+  const defaultLabel = button.dataset.label || message;
+  button.__copyResetTimeout = window.setTimeout(() => {
+    labelElement.textContent = defaultLabel;
+    button.setAttribute('aria-label', defaultLabel);
+    button.classList.remove('copied', 'error');
+    button.__copyResetTimeout = null;
+  }, 2000);
 }
 
 function renderNotFound(languageInfo) {
@@ -467,7 +579,10 @@ function findChapter(languageInfoOrKey, chapterId) {
 }
 
 function renderMarkdown(markdown) {
-  const lines = markdown.replace(/\r\n?/g, '\n').split('\n');
+  const normalized = markdown
+    .replace(/\r\n?/g, '\n')
+    .replace(/\t/g, '    ');
+  const lines = normalized.split('\n');
   let html = '';
   let inCode = false;
   let codeLang = '';
@@ -590,15 +705,30 @@ function buildCodeBlock(code, language) {
     classNames.push('hljs');
   }
   const classAttr = classNames.length ? ` class="${classNames.join(' ')}"` : '';
-  return `<pre><code${classAttr}>${contentHtml}</code></pre>`;
+  const copyLabel = translate(state.language, 'chapter.copyCode.label');
+  const copySuccess = translate(state.language, 'chapter.copyCode.success');
+  const copyError = translate(state.language, 'chapter.copyCode.error');
+  const copyLabelAttr = escapeHtml(copyLabel);
+  const copySuccessAttr = escapeHtml(copySuccess);
+  const copyErrorAttr = escapeHtml(copyError);
+  const buttonAttributes = [
+    'type="button"',
+    'class="code-copy-button"',
+    `aria-label="${copyLabelAttr}"`,
+    `data-label="${copyLabelAttr}"`,
+    `data-success="${copySuccessAttr}"`,
+    `data-error="${copyErrorAttr}"`
+  ].join(' ');
+  const button = `<button ${buttonAttributes}><span class="code-copy-icon" aria-hidden="true">📋</span><span class="code-copy-label">${escapeHtml(copyLabel)}</span></button>`;
+  return `<div class="code-block">${button}<pre><code${classAttr}>${contentHtml}</code></pre></div>`;
 }
 
 function highlightLua(code) {
   const placeholders = [];
 
   const createPlaceholder = (className, value) => {
-    const token = `${PLACEHOLDER_TOKEN}${placeholders.length}${PLACEHOLDER_TOKEN}`;
-    placeholders.push({ className, value });
+    const token = `${PLACEHOLDER_TOKEN}p${placeholders.length}q${PLACEHOLDER_TOKEN}`;
+    placeholders.push({ className, value, token });
     return token;
   };
 
@@ -627,10 +757,9 @@ function highlightLua(code) {
 
   let escaped = escapeHtml(working);
 
-  placeholders.forEach((item, index) => {
-    const token = `${PLACEHOLDER_TOKEN}${index}${PLACEHOLDER_TOKEN}`;
+  placeholders.forEach(item => {
     const replacement = `<span class="${item.className}">${escapeHtml(item.value)}</span>`;
-    escaped = escaped.split(token).join(replacement);
+    escaped = escaped.split(item.token).join(replacement);
   });
 
   return escaped;
