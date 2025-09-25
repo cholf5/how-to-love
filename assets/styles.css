@@ -410,6 +410,10 @@ a.icon-button {
   gap: 2rem;
 }
 
+.chapter-header {
+  text-align: center;
+}
+
 .chapter-header h1 {
   margin: 0;
   font-size: clamp(2.2rem, 5vw, 3rem);
