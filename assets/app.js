@@ -1214,10 +1214,10 @@ function parseInline(text) {
   working = working.replace(/(\*\*|__)(.+?)\1/g, (_, __, content) => `<strong>${content}</strong>`);
   working = working.replace(/(\*|_)([^*_]+?)\1/g, (_, __, content) => `<em>${content}</em>`);
 
-  placeholders.forEach((html, index) => {
+  for (let index = placeholders.length - 1; index >= 0; index -= 1) {
     const token = `${PLACEHOLDER_TOKEN}${index}${PLACEHOLDER_TOKEN}`;
-    working = working.split(token).join(html);
-  });
+    working = working.split(token).join(placeholders[index]);
+  }
 
   return working;
 }
